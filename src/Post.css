@@ -1,0 +1,98 @@
+
+.userNameImage {
+  display: flex;
+  
+}
+
+
+.userNameImage img {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  
+}
+.userNameImage a {
+ padding-top: 0.5rem; 
+  margin-left: -60%;
+  }
+  .userNameImage p {
+    margin-top: -0.009rem; 
+    margin-left: 1rem; 
+   
+     }
+     .postContent{
+        text-align: left;
+      
+      
+     }
+    
+     .postContent img{
+      margin: 0px;
+      padding-top: 10px;
+      width: 100%; 
+      height: auto; 
+      margin-bottom: 10px;
+      border-radius: 40px;
+   }
+     .numberLikeComment{
+        display: flex;
+        margin-left: 6%;
+
+        gap: 40%;
+     }
+    
+     .actions {
+      display: flex;
+     
+      gap: 20px;
+      margin-top: 10px;
+    }
+    
+    .actions div {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      border: none;
+      width: 100rem;
+      background-color: #6c757d;
+      color: white;
+      cursor: pointer;
+    }
+    
+
+    .comments {
+      margin-top: 10px;
+    }
+    
+    .comment {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-top: 5px;
+    }
+    .addComment{
+      border: 1px solid #ddd;
+        padding-top: 0.6rem; 
+        padding-bottom: 0.3rem; 
+     text-align: left;
+     padding-left: 1%;
+     margin-bottom: 1rem;
+     padding-right: 1%;
+     margin-top: 1rem;
+     display: flex;
+     gap: 2%;
+    }
+    
+    .addComment img{  border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+    
+    .addComment input{  
+      width: 100%;
+      text-align:left;
+      margin-top: -5px;
+      padding-top: -1px;
+      border: 0px solid #ddd;
+    background-color: #fafafa;
+    }

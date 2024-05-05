@@ -1,40 +1,129 @@
 import { useEffect, useState } from "react";
-
-
+import './Post.css';
+import Comment from './Comment.jsx';
+import Like from './Like.jsx';
 
 function Post(props){
-  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTQ1ODI4NzQsImV4cCI6MTcxNDY2OTI3NH0.YjRKp00mEIr90fa6pez42CiZwc-V8M-B_Wmm9VhC2M8');
   const [userInfo, setUserInfo] = useState({username:'',image:''});
-
+  const [dufImage, setDufImage] = useState('49e40f05-46ad-42b6-a2f3-6270d67cb6df_download.jpeg');
+  const [postLike, setPostLike] = useState([]);
+  const [postComment, setPostComment] = useState([]);
+  const [input,setinput]=useState('');
+  const [showComments, setShowComments] = useState(false);
+  
   useEffect(() => {
     console.log("USEEFFECT == profii" ) ;
     fetch(props.info._links["the post owner"].href, {
       headers: {
-          'Authorization': 'Bearer ' + token 
+          'Authorization': 'Bearer ' +  props.token
       }
     })
-    .then(response => response.json()) // تحويل البيانات إلى JSON
+    .then(response => response.json()) 
     .then(data => {
       setUserInfo(data);
-      console.log(data);
+      console.log(userInfo .image +"ddd");
     })
     .catch(error => console.error('Error fetching data:', error));
-  }, []);// لازم نغير الديبيندنسي 
+  }, []);
 
-    return <>
+  useEffect(() => {
+    fetch(props.info._links["the post's comment"].href, {
+      headers: {
+          'Authorization': 'Bearer ' +  props.token
+      }
+    })
+    .then(response => response.json()) 
+    .then(data => {
+      if (data._embedded && data._embedded.comments) {
+        setPostComment(data._embedded.comments);
+        console.log(postComment);
+      } else {
+        setPostComment([]);
+       
+      }
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  }, []);
+  
+  useEffect(() => {
+    fetch(props.info._links["the post's like"].href, {
+      headers: {
+          'Authorization': 'Bearer ' +  props.token
+      }
+    })
+    .then(response => response.json()) 
+    .then(data => {
+      if (data.length > 0) {
+        setPostLike(data); 
+        console.log(postLike); 
+      } else {
+        setPostLike([]);
+      }
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  },[props.token, props.info._links["the post's like"].href]);
+  
+
+  const handleLike = () => {
+    return (
+      <Like  createLike={props.info._links["create like"].href} isLikee={props.info._links["the post's like"].href} token={props.token } postId={props.id}  userName={props.userName}></Like>
+    );
+  };
+  const handleComment = () => {
+    return (
+      <>
+        {postComment.map(comment => (
+          <Comment key={comment.id} comment={comment} dufImage={dufImage} />
+        ))}
+      </>
+    );
+  };
+
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
+  
+  return (
+    <div className="post">
     
-<div style={{ display: 'flex' }}>
-{userInfo.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
-{/* هاي بدنا نرجع نعملها ب الراوت */}
-  <a href="/Profile">{userInfo.username}</a> 
- 
-  </div>     
-     <div> {props.info.content}</div>
-     {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
-     {/* {props.postVideoUrl==null? <></>: <img src={props.postVideoUrl} alt="" />} */}
+      <div className="userNameImage" >
+        {userInfo.image == ''||userInfo.image == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" />: <img  src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
+        {/* هاي بدنا نرجع نعملها ب الراوت */}
+        <div><a href="/Profile">{userInfo.username}</a> 
+        <p>{props.info.timestamp}</p></div>
+      </div>     
 
-    
+      <div className="postContent"> {props.info.content}
+        {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
+      </div>
 
-    </>
- }
- export default Post;
+      <div className="numberLikeComment">
+        <div > {postLike.length} Likes </div>
+        <div > {postComment.length} Comment </div>
+      </div>
+
+      <div className="actions">
+      <div> {handleLike()}</div>
+      <div onClick={toggleComments}> Comment</div>
+        <div onClick={handleComment}> Share</div>
+      </div>
+
+      <div className="addComment">
+        {props.userImage == ''||props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" />: <img  src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
+        <input type="text" placeholder="        enter your comment" onChange={e=>{setinput(e.target.value);console.log({input})}}></input>
+        <button onClick={handleComment}> 
+          <span className="material-symbols-outlined">
+            send
+          </span>
+        </button>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+      </div>
+
+      <div id="comments" >
+        {showComments && handleComment()}
+      </div>
+    </div>
+  );
+}
+
+export default Post;
