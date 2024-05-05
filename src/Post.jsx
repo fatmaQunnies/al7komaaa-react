@@ -26,24 +26,31 @@ function Post(props){
     .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  
   useEffect(() => {
-    fetch(props.info._links["the post's comment"].href, {
-      headers: {
-          'Authorization': 'Bearer ' +  props.token
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(props.info._links["the post's comment"].href, {
+          headers: {
+            Authorization: 'Bearer ' + props.token
+          }
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Error fetching post comments: ${response.statusText}`);
+        }
+  
+        const data = await response.json();
+        const comments = data._embedded ? data._embedded.comments : [];
+        setPostComment(()=>comments);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
       }
-    })
-    .then(response => response.json()) 
-    .then(data => {
-      if (data._embedded && data._embedded.comments) {
-        setPostComment(data._embedded.comments);
-        console.log(postComment);
-      } else {
-        setPostComment([]);
-      }
-    })
-    .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
+    };
+  
+    
+    fetchComments();
+  }, [props.token, props.info._links["the post's comment"].href,postComment]);
   
   useEffect(() => {
     fetch(props.info._links["the post's like"].href, {
@@ -55,7 +62,7 @@ function Post(props){
     .then(data => {
       if (data.length > 0) {
         setPostLike(data); 
-        console.log(postLike); 
+        console.log(postLike ); 
       } else {
         setPostLike([]);
       }
@@ -78,7 +85,7 @@ function Post(props){
           Authorization: 'Bearer ' + props.token,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ content: input })
+        body: JSON.stringify({ content: input }) 
       });
   
       if (response.ok) {
@@ -113,14 +120,14 @@ function Post(props){
   return (
     <div className="post">
       <div className="userNameImage">
-        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${userInfo.image}`)} alt="" />}
+        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
         <div><a href="/Profile">{userInfo.username}</a>
           <p>{props.info.timestamp}</p></div>
       </div>
 
       <div className="postContent">
         {props.info.content}
-        {props.info.image == null ? <></> : <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${props.info.image}`)} alt="" />}
+        {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
       </div>
 
       <div className="numberLikeComment">
@@ -135,7 +142,7 @@ function Post(props){
       </div>
 
       <div className="addComment">
-        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${props.userImage}`)} alt="" />}
+        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
         <input type="text" placeholder="enter your comment" onChange={e => setinput(e.target.value)}></input>
         <button onClick={handleSend}>
           <span className="material-symbols-outlined">

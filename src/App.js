@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [user, setUser] = useState([{username:'',image:''}]);
-  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTQ5Mjk2NjIsImV4cCI6MTcxNTAxNjA2Mn0.ulFjUE95aOl0LQwYEiEwywoj5mPjwdmmfhIIQKcHlXE');
+  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTQ5Mzc2NDcsImV4cCI6MTcxNTAyNDA0N30.WStLsdVsJakWTQNjbik0tJUh_UduB2hPKvH6oln37v0');
 
   const [postContent, setPostContent] = useState([]);
 
