@@ -39,11 +39,11 @@ function Post(props){
         console.log(postComment);
       } else {
         setPostComment([]);
-       
       }
     })
     .catch(error => console.error('Error fetching data:', error));
   }, []);
+
   
   useEffect(() => {
     fetch(props.info._links["the post's like"].href, {
@@ -69,11 +69,38 @@ function Post(props){
       <Like  createLike={props.info._links["create like"].href} isLikee={props.info._links["the post's like"].href} token={props.token } postId={props.id}  userName={props.userName}></Like>
     );
   };
+
+  const handleSend = async () => {
+    try {
+      const response = await fetch(props.info._links["createComment"].href, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + props.token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content: input })
+      });
+  
+      if (response.ok) {
+        
+        console.log( "celina");
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
+
+ 
+
   const handleComment = () => {
     return (
       <>
+       
         {postComment.map(comment => (
-          <Comment key={comment.id} comment={comment} dufImage={dufImage} />
+          <Comment key={comment.id} comment={comment} dufImage={dufImage} input={input}  />
         ))}
       </>
     );
@@ -85,16 +112,15 @@ function Post(props){
   
   return (
     <div className="post">
-    
-      <div className="userNameImage" >
-        {userInfo.image == ''||userInfo.image == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" />: <img  src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
-        {/* هاي بدنا نرجع نعملها ب الراوت */}
-        <div><a href="/Profile">{userInfo.username}</a> 
-        <p>{props.info.timestamp}</p></div>
-      </div>     
+      <div className="userNameImage">
+        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${userInfo.image}`)} alt="" />}
+        <div><a href="/Profile">{userInfo.username}</a>
+          <p>{props.info.timestamp}</p></div>
+      </div>
 
-      <div className="postContent"> {props.info.content}
-        {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
+      <div className="postContent">
+        {props.info.content}
+        {props.info.image == null ? <></> : <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${props.info.image}`)} alt="" />}
       </div>
 
       <div className="numberLikeComment">
@@ -109,9 +135,9 @@ function Post(props){
       </div>
 
       <div className="addComment">
-        {props.userImage == ''||props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" />: <img  src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
-        <input type="text" placeholder="        enter your comment" onChange={e=>{setinput(e.target.value);console.log({input})}}></input>
-        <button onClick={handleComment}> 
+        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/lenovo/Desktop/project313/project-al7komaaa/${props.userImage}`)} alt="" />}
+        <input type="text" placeholder="enter your comment" onChange={e => setinput(e.target.value)}></input>
+        <button onClick={handleSend}>
           <span className="material-symbols-outlined">
             send
           </span>
