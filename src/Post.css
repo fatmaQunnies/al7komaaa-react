@@ -96,3 +96,11 @@
       border: 0px solid #ddd;
     background-color: #fafafa;
     }
+    .postDate{
+      color: #444444;
+    }
+    .userNameAnchor{
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-size: 18px;
+    }
