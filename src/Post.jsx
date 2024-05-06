@@ -51,7 +51,8 @@ function Post(props){
     
     fetchComments();
   }, [props.token, props.info._links["the post's comment"].href,postComment]);
-  
+
+ 
   useEffect(() => {
     fetch(props.info._links["the post's like"].href, {
       headers: {
@@ -61,14 +62,14 @@ function Post(props){
     .then(response => response.json()) 
     .then(data => {
       if (data.length > 0) {
-        setPostLike(data); 
-        console.log(postLike ); 
+        setPostLike(()=>data); 
+        console.log(postLike); 
       } else {
         setPostLike([]);
       }
     })
     .catch(error => console.error('Error fetching data:', error));
-  },[props.token, props.info._links["the post's like"].href]);
+  },[props.token]);
   
 
   const handleLike = () => {
@@ -100,7 +101,6 @@ function Post(props){
   };
   
 
- 
 
   const handleComment = () => {
     return (
@@ -121,8 +121,8 @@ function Post(props){
     <div className="post">
       <div className="userNameImage">
         {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
-        <div><a href="/Profile">{userInfo.username}</a>
-          <p>{props.info.timestamp}</p></div>
+        <div><a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
+          <p className="postDate"> {props.info.timestamp}</p></div>
       </div>
 
       <div className="postContent">
@@ -143,7 +143,7 @@ function Post(props){
 
       <div className="addComment">
         {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
-        <input type="text" placeholder="enter your comment" onChange={e => setinput(e.target.value)}></input>
+        <input type="text" placeholder="    enter your comment" onChange={e => setinput(e.target.value)}></input>
         <button onClick={handleSend}>
           <span className="material-symbols-outlined">
             send
