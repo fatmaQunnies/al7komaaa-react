@@ -10,7 +10,8 @@ function Post(props){
   const [postComment, setPostComment] = useState([]);
   const [input,setinput]=useState('');
   const [showComments, setShowComments] = useState(false);
-  
+  const [readMore, setReadMore] = useState();
+
   useEffect(() => {
     console.log("USEEFFECT == profii" ) ;
     fetch(props.info._links["the post owner"].href, {
@@ -25,32 +26,32 @@ function Post(props){
     })
     .catch(error => console.error('Error fetching data:', error));
   }, []);
-
-  
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(props.info._links["the post's comment"].href, {
-          headers: {
-            Authorization: 'Bearer ' + props.token
-          }
-        });
-  
-        if (!response.ok) {
-          throw new Error(`Error fetching post comments: ${response.statusText}`);
+// alert(props.info._links["the post's comment"].href);
+useEffect(() => {
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(props.info._links["the post's comment"].href, {
+        headers: {
+          Authorization: 'Bearer ' + props.token
         }
-  
-        const data = await response.json();
-        const comments = data._embedded ? data._embedded.comments : [];
-        setPostComment(()=>comments);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
+      }); 
+
+      if (!response.ok) {
+        throw new Error(`Error fetching post comments: ${response.statusText}`);
       }
-    };
-  
+
+      const data = await response.json();
     
-    fetchComments();
-  }, [props.token, props.info._links["the post's comment"].href,postComment]);
+      setPostComment(data._embedded ? data._embedded.comments : []);
+      console.log("READ MORE COMMENT", data._embedded ? data._embedded.comments : []);
+      setReadMore(data);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+  
+  fetchComments();
+}, [props.token, props.info._links["the post's comment"].href]);
 
  
   useEffect(() => {
@@ -116,7 +117,30 @@ function Post(props){
   const toggleComments = () => {
     setShowComments(!showComments);
   };
-  
+  const handReadMore = async () => {
+    try {
+      const response = await fetch(readMore._links["Read more"].href, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + props.token,
+          'Content-Type': 'application/json'
+        }
+      });
+      const responseData = await response.json();
+      console.log(responseData._embedded.commments, "READ MORE");
+      if (response.ok) {
+        const newPosts = responseData._embedded.comments.filter(newPost => {
+          return !postComment.some(oldPost => oldPost.id === newPost.id);
+        });
+        setPostComment([...postComment, ...newPosts]);
+        console.log("READ MORE");
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   return (
     <div className="post">
       <div className="userNameImage">
@@ -132,18 +156,18 @@ function Post(props){
 
       <div className="numberLikeComment">
         <div > {postLike.length} Likes </div>
-        <div > {postComment.length} Comment </div>
+        <div onClick={toggleComments}> {postComment.length} Comment </div>
       </div>
 
       <div className="actions">
       <div> {handleLike()}</div>
-      <div onClick={toggleComments}> Comment</div>
+      <div  className="innn" >  <a href={`#${props.id}`}>Comment</a></div>
         <div onClick={handleComment}> Share</div>
       </div>
 
       <div className="addComment">
         {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
-        <input type="text" placeholder="    enter your comment" onChange={e => setinput(e.target.value)}></input>
+        <input id={props.id} type="text" placeholder="    enter your comment" onChange={e => setinput(e.target.value)}></input>
         <button onClick={handleSend}>
           <span className="material-symbols-outlined">
             send
@@ -153,7 +177,8 @@ function Post(props){
       </div>
 
       <div id="comments" >
-        {showComments && handleComment()}
+        {showComments && handleComment() }
+        {showComments &&   <a onClick={handReadMore}>Read More</a>}
       </div>
     </div>
   );
