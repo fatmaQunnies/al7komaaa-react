@@ -11,6 +11,10 @@ function Post(props){
   const [input,setinput]=useState('');
   const [showComments, setShowComments] = useState(false);
   const [readMore, setReadMore] = useState();
+  const [allCommint, setAllCommint] = useState();
+  const [reload, setReload] = useState(false);
+  const [reloadLike, setReloadLike] = useState(false);
+  const [numberComment, setNumberComment] = useState(0);
 
   useEffect(() => {
     console.log("USEEFFECT == profii" ) ;
@@ -49,10 +53,35 @@ useEffect(() => {
       console.error('Error fetching comments:', error);
     }
   };
-  
+   
   fetchComments();
-}, [props.token]);
+}, [reload]);
+useEffect(() => {
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(props.info._links["number of comment"].href, {
+        headers: {
+          Authorization: 'Bearer ' + props.token
+        }
+      }); 
 
+      if (!response.ok) {
+        throw new Error(`Error fetching post comments: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+    
+      setNumberComment(data)
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  }; 
+   
+  fetchComments();
+}, [reload]);
+const fun=(()=>{
+setReloadLike(!reload);
+});
  
   useEffect(() => {
     fetch(props.info._links["the post's like"].href, {
@@ -64,18 +93,19 @@ useEffect(() => {
     .then(data => {
       if (data.length > 0) {
         setPostLike(()=>data); 
+       
         console.log(postLike); 
       } else {
         setPostLike([]);
       }
     })
     .catch(error => console.error('Error fetching data:', error));
-  },[props.token,postLike]);
+  },[reloadLike]);
   
 
   const handleLike = () => {
     return (
-      <Like  createLike={props.info._links["create like"].href} isLikee={props.info._links["the post's like"].href} token={props.token } postId={props.id}  userName={props.userName}></Like>
+      <Like  createLike={props.info._links["create like"].href} isLikee={props.info._links["the post's like"].href} token={props.token } postId={props.id}  userName={props.userName} reload={ fun}></Like>
     );
   };
 
@@ -91,7 +121,7 @@ useEffect(() => {
       });
   
       if (response.ok) {
-        
+        setReload(!reload);
         console.log( "celina");
       } else {
         console.error('Error:', response.statusText);
@@ -144,14 +174,14 @@ useEffect(() => {
   return (
     <div className="post">
       <div className="userNameImage">
-        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
+        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${userInfo.image}`)} alt="" />}
         <div><a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
           <p className="postDate"> {props.info.timestamp}</p></div>
       </div>
 
       <div className="postContent">
         {props.info.content}
-        {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
+        {props.info.image == null ? <></> : <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${props.info.image}`)} alt="" />}
       </div>
 
       <div className="numberLikeComment">
@@ -166,7 +196,7 @@ useEffect(() => {
       </div>
 
       <div className="addComment">
-        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
+        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${props.userImage}`)} alt="" />}
         <input id={props.id} type="text" placeholder="    enter your comment" onChange={e => setinput(e.target.value)}></input>
         <button onClick={handleSend}>
           <span className="material-symbols-outlined">

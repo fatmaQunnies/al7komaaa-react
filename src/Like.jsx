@@ -48,6 +48,7 @@ useEffect(() => {
         setIsLiked(true); 
         setLikeIdFromPost(data.likeId);
         console.log(data);
+        props.reload();
       } else {
         console.error('Error posting reaction:', response.statusText);
       }
@@ -73,7 +74,7 @@ useEffect(() => {
     .catch(error => console.error('Error fetching data:', error));
   }    
   return (
-    <>
+    <div style={{width:"100%"}}>
       <button
         onClick={() => {
           isLiked ? handleUnReaction() : setReactionVisible(!reactionVisible);
@@ -93,7 +94,7 @@ useEffect(() => {
           <button onClick={() => handleReaction('ANGRY')}>ANGRY</button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
