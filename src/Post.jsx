@@ -51,7 +51,7 @@ useEffect(() => {
   };
   
   fetchComments();
-}, [props.token, props.info._links["the post's comment"].href]);
+}, [props.token]);
 
  
   useEffect(() => {
@@ -70,7 +70,7 @@ useEffect(() => {
       }
     })
     .catch(error => console.error('Error fetching data:', error));
-  },[props.token]);
+  },[props.token,postLike]);
   
 
   const handleLike = () => {
