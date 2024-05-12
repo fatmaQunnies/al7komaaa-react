@@ -1,17 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
 import Post from './Post.jsx';
+import LeftList from './LeftList.jsx';
+import RightList from './RightList.jsx';
+
 
 import { useEffect, useState } from "react";
 
 function App() {
   const [user, setUser] = useState([{username:'',image:''}]);
-  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTUxNTg2NjEsImV4cCI6MTcxNTI0NTA2MX0.cLBRVgJ8ENF2YPjEzWDTHNL-vsAGdrgZcBWX3KpnFAM');
+  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU1MjcxMTgsImV4cCI6MTcxNTYxMzUxOH0.CxALTknpaHj8LbAL916NbOC7yULU1UVrLAuKW8Bt9QM');
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
+  var count=0;
+ const [userName,setUserName]=useState('');//
+  const [userImage,setUserImage]=useState('');//////
+  const [numfeiend,setNumfeiend]=useState();//
 
-          const [userName,setUserName]=useState('');
-          const [userImage,setUserImage]=useState('');
+  const [userInfo,setUserinfo]=useState([]);
+
 
   useEffect(() => {
     console.log("USEEFFECT == " ) ;
@@ -20,13 +27,38 @@ function App() {
         'Authorization': 'Bearer ' + token
     }
 })
-.then(response => response.text())
+.then(response => response.json())
 .then(data => {
-    console.log(data);
-    setUserName(data);
+   
+    setUserinfo(data);
 })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
+
+
+
+
+
+  // alert(`http://localhost:8080/count/userFriend/${userInfo.id}`);
+
+  useEffect(() => {
+    console.log("USEEFFECT == " ) ;
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+    }
+})
+.then(response => response.text())
+
+.then(data => {
+   setNumfeiend(data)
+
+})
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+
 
 
   useEffect(() => {
@@ -86,27 +118,61 @@ function App() {
     }
   };
   
-  
+  // alert(userId+"ddddddd");
 
+
+
+
+
+
+
+
+  const [userfriend,setUserFriend]=useState([]);
+  useEffect(() => {
+    console.log("USEEFFECT == " ) ;
+    fetch('http://localhost:8080/friendSuggestion', {
+    headers: {
+        'Authorization': 'Bearer ' + token
+    }
+})
+.then(response => response.json())
+.then(data => {
+   
+    setUserFriend(data);
+    // console.log("maiiii"+data);
+})
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
   return (
     <div className="App">
       <nav className="navbar">
       {/* <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
       <h1>{userName}</h1>  */}
       </nav>
+     
       {postContent.map(post => (
-  <Post className="post"
-    key={post.id}
-    id={post.id}
-    token={token}
-    info={post}
-    userName={userName}
-    userImage={userImage}
+  // <Post className="post"
+  //   key={post.id}
+  //   id={post.id}
+  //   token={token}
+  //   info={post}
+  //   userName={userName}
+  //   userImage={userImage}
 
-  />
+  // />
+ <></>
 
 ))}
-   <a onClick={handReadMore}>Read More</a>
+{userfriend.map(fr => (
+  <RightList
+    key={fr.id}
+    token={token}
+    userName={fr.username || 'Unknown User'}
+    link={fr.links}
+  />
+))}
+ {/* <LeftList key={userInfo.id} data={userInfo} numfeiend={numfeiend}></LeftList> */}
+   {/* <a onClick={handReadMore}>Read More</a> */}
  </div>
   );
 }
