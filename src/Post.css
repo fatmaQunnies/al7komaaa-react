@@ -52,7 +52,7 @@
     .actions div {
       display: flex;
       align-items: center;
-      padding: 5px 10px;
+     
       border: none;
       width: 100rem;
       background-color: #6c757d;
@@ -107,4 +107,7 @@
     .innn a{
       color: white;
       text-decoration: none;
+    }
+    .post{
+      margin: 0%;
     }

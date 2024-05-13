@@ -5,6 +5,8 @@ import LeftList from "./LeftList.jsx";
 import Notfound from "./Notfound.jsx";
 import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
+import Friends from "./Friends.jsx";
+
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
   const [userName, setUserName] = useState(""); //
   const [userImage, setUserImage] = useState(""); ////
   const [userInfo, setUserinfo] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -61,7 +64,7 @@ function App() {
         console.log(data._embedded.posts + "pooooood");
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  }, [reload]);
 
   const handReadMore = async () => {
     try {
@@ -105,7 +108,25 @@ function App() {
 
   return (
     <Router>
+      
+      
+      <div className="nav"> 
+  <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
+  <div className="search-container">
+    <input type="text" className="search-box" placeholder="Search" />
+  </div>
+  <div style={{display:"flex"}}>
+    <h1>{userInfo.username}</h1> 
+    <img src={`http://localhost:8080/getImage/${userInfo.id}`} alt="User" />
+  </div>
+</div>
+
+
       <div className="App">
+
+
+
+
         <LeftList className="left" key={userInfo.id} data={userInfo} token={token}></LeftList>
         <nav className="left-down">
           <Navbar />
@@ -122,21 +143,30 @@ function App() {
               />
             ))}</div>
         <Routes>
-         <Route
-            path="/feed"
-            element={postContent.map((post) => (
-              <Post
-                className="post"
-                key={post.id}
-                id={post.id}
-                token={token}
-                info={post}
-                userName={userName}
-                userImage={userImage}
-              />
-            ))}
-          />
-          <Route path="/Friends" element={<Notfound />} />
+        <Route
+  path="/feed"
+  element={
+    <div className="middle">
+{/* { setReload(!reload)}  */}
+            {postContent.map((post) => (
+        <Post
+          className="post"
+          key={post.id}
+          id={post.id}
+          token={token}
+          info={post}
+          userName={userName}
+          userImage={userImage}
+        />
+      ))}
+    </div>
+  }
+/>
+
+          <Route path="/Friends" element={<div className="middle">
+            
+            
+            <Friends /></div>} />
           <Route path="/profile" element={<Notfound />} />
           <Route path="/Notification" element={<Notfound />} />
           <Route path="/Reel" element={<Notfound />} />
