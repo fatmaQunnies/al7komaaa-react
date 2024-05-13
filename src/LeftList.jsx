@@ -31,6 +31,7 @@ function LeftList(props) {
       <h1>{props.data.username}</h1>
       <p>{props.data.bio}</p>
       <p>{numfeiend}</p>
+      
     </div>
   );
 }
