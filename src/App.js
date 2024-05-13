@@ -3,6 +3,7 @@ import "./App.css";
 import Post from "./Post.jsx";
 import LeftList from "./LeftList.jsx";
 import Notfound from "./Notfound.jsx";
+import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
@@ -105,12 +106,23 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <LeftList key={userInfo.id} data={userInfo} token={token}></LeftList>
-        <nav className="navbar">
+        <LeftList className="left" key={userInfo.id} data={userInfo} token={token}></LeftList>
+        <nav className="left-down">
           <Navbar />
         </nav>
+      <div className="middle"> {postContent.map((post) => (
+              <Post
+                className="post"
+                key={post.id}
+                id={post.id}
+                token={token}
+                info={post}
+                userName={userName}
+                userImage={userImage}
+              />
+            ))}</div>
         <Routes>
-          <Route
+         <Route
             path="/feed"
             element={postContent.map((post) => (
               <Post
@@ -132,6 +144,18 @@ function App() {
           <Route path="/Messages" element={<Notfound />} />
           <Route path="/Likes" element={<Notfound />} />
         </Routes>
+     
+      <div className="right">
+      
+      {userfriend.map(fr => (
+  <RightList
+    key={fr.id}
+    token={token}
+    userName={fr.username || 'Unknown User'}
+    link={fr.links}
+  />
+))}
+</div>
       </div>
     </Router>
   );
