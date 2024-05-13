@@ -1,0 +1,28 @@
+/* RightList.css */
+
+.right-list {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+  }
+  
+  .username {
+    margin-right: 10px;
+    text-align: left;
+  }
+  
+  .add-button {
+    background-color: #152fd4; /* Green */
+    text-align: right;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  
