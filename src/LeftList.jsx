@@ -1,6 +1,10 @@
 import React from 'react';
 import './LeftList.css'; 
 import { useEffect, useState } from "react";
+import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom'; // Import Router from react-router-dom
+import Notfound from './Notfound.jsx';
+import Navbar from './Navbar.jsx';
+
 
 function LeftList(props) {
    
@@ -31,7 +35,20 @@ function LeftList(props) {
       <h1>{props.data.username}</h1>
       <p>{props.data.bio}</p>
       <p>{numfeiend}</p>
-      
+
+      {/* <Router>
+        <Navbar />
+        <Routes>
+          <Route index element={<Notfound />} />
+          <Route path="Friends" element={<Notfound />} />
+          <Route path="profile" element={<Notfound />} />
+          <Route path="Notification" element={<Notfound />} />
+          <Route path="Reel" element={<Notfound />} />
+          <Route path="Setting" element={<Notfound />} />
+          <Route path="Messages" element={<Notfound />} />
+          <Route path="Likes" element={<Notfound />} />
+        </Routes>
+      </Router> */}
     </div>
   );
 }

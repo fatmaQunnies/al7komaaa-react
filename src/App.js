@@ -3,8 +3,9 @@ import './App.css';
 import Post from './Post.jsx';
 import LeftList from './LeftList.jsx';
 import RightList from './RightList.jsx';
-
-
+import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom'; 
+import Notfound from './Notfound.jsx';
+import Navbar from './Navbar.jsx';
 import { useEffect, useState } from "react";
 
 function App() {
@@ -13,58 +14,44 @@ function App() {
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
   var count=0;
- const [userName,setUserName]=useState('');//
+  const [userName,setUserName]=useState('');//
   const [userImage,setUserImage]=useState('');//////
-
   const [userInfo,setUserinfo]=useState([]);
-
 
   useEffect(() => {
     console.log("USEEFFECT == " ) ;
     fetch('http://localhost:8080/myUserName', {
-    headers: {
+      headers: {
         'Authorization': 'Bearer ' + token
-    }
-})
-.then(response => response.json())
-.then(data => {
-   
-    setUserinfo(data);
-})
-      .catch(error => console.error('Error fetching data:', error));
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setUserinfo(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
   }, []);
-
-
-
-
-
-
-  // alert(`http://localhost:8080/count/userFriend/${userInfo.id}`);
-
- 
-
 
   useEffect(() => {
     console.log("USEEFFECT == " ) ;
     fetch('http://localhost:8080/getImage', {
-    headers: {
+      headers: {
         'Authorization': 'Bearer ' + token
-    }
-})
-.then(response => response.text())
-.then(data => {
-    console.log(data);
-    setUserImage(data);
-})
-      .catch(error => console.error('Error fetching data:', error));
+      }
+    })
+    .then(response => response.text())
+    .then(data => {
+      console.log(data);
+      setUserImage(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
   }, []);
-
 
   useEffect(() => {
     console.log("USEEFFECT == posts" ) ;
     fetch('http://localhost:8080/post/posts/random', {
       headers: {
-          'Authorization': 'Bearer ' + token 
+        'Authorization': 'Bearer ' + token 
       }
     })
     .then(response => response.json())
@@ -74,7 +61,7 @@ function App() {
       console.log(data._embedded.posts +"pooooood");
     })
     .catch(error => console.error('Error fetching data:', error));
-  }, []);// لازم نغير الديبيندنسي 
+  }, []);
 
   const handReadMore = async () => {
     try {
@@ -100,63 +87,52 @@ function App() {
       console.error('Error fetching data:', error);
     }
   };
-  
-  // alert(userId+"ddddddd");
-
-
-
-
-
-
-
 
   const [userfriend,setUserFriend]=useState([]);
   useEffect(() => {
     console.log("USEEFFECT == " ) ;
     fetch('http://localhost:8080/friendSuggestion', {
-    headers: {
+      headers: {
         'Authorization': 'Bearer ' + token
-    }
-})
-.then(response => response.json())
-.then(data => {
-   
-    setUserFriend(data);
-    // console.log("maiiii"+data);
-})
-      .catch(error => console.error('Error fetching data:', error));
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setUserFriend(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
   }, []);
+
   return (
-    <div className="App">      <LeftList key={userInfo.id} data={userInfo}  token={token}></LeftList>
-
+    <div className="App">
+      <LeftList key={userInfo.id} data={userInfo} token={token}></LeftList>
       <nav className="navbar">
-      {/* <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
-      <h1>{userName}</h1>  */}
+        <Navbar />
       </nav>
-
-      {postContent.map(post => (
-  // <Post className="post"
-  //   key={post.id}
-  //   id={post.id}
-  //   token={token}
-  //   info={post}
-  //   userName={userName}
-  //   userImage={userImage}
-
-  // />
- <></>
-
-))}
-{/* {userfriend.map(fr => (
-  <RightList
-    key={fr.id}
-    token={token}
-    userName={fr.username || 'Unknown User'}
-    link={fr.links}
-  />
-))} */}
-   {/* <a onClick={handReadMore}>Read More</a> */}
- </div>
+      <Router>
+        <Routes>
+          <Route path="/feed" element={
+            postContent.map(post => (
+              <Post className="post"
+                key={post.id}
+                id={post.id}
+                token={token}
+                info={post}
+                userName={userName}
+                userImage={userImage}
+              />
+            ))
+          } />
+          <Route path="Friends" element={<Notfound />} />
+          <Route path="profile" element={<Notfound />} />
+          <Route path="Notification" element={<Notfound />} />
+          <Route path="Reel" element={<Notfound />} />
+          <Route path="Setting" element={<Notfound />} />
+          <Route path="Messages" element={<Notfound />} />
+          <Route path="Likes" element={<Notfound />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
