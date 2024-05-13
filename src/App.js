@@ -15,7 +15,6 @@ function App() {
   var count=0;
  const [userName,setUserName]=useState('');//
   const [userImage,setUserImage]=useState('');//////
-  const [numfeiend,setNumfeiend]=useState();//
 
   const [userInfo,setUserinfo]=useState([]);
 
@@ -42,23 +41,7 @@ function App() {
 
   // alert(`http://localhost:8080/count/userFriend/${userInfo.id}`);
 
-  useEffect(() => {
-    console.log("USEEFFECT == " ) ;
-    fetch(`http://localhost:8080/count/userFriend/${userInfo.id}`, {
-      headers: {
-        'Authorization': 'Bearer ' + token
-    }
-})
-.then(response => response.text())
-
-.then(data => {
-   setNumfeiend(data)
-
-})
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
-
+ 
 
 
   useEffect(() => {
@@ -144,12 +127,13 @@ function App() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
   return (
-    <div className="App">
+    <div className="App">      <LeftList key={userInfo.id} data={userInfo}  token={token}></LeftList>
+
       <nav className="navbar">
       {/* <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
       <h1>{userName}</h1>  */}
       </nav>
-     
+
       {postContent.map(post => (
   // <Post className="post"
   //   key={post.id}
@@ -163,15 +147,14 @@ function App() {
  <></>
 
 ))}
-{userfriend.map(fr => (
+{/* {userfriend.map(fr => (
   <RightList
     key={fr.id}
     token={token}
     userName={fr.username || 'Unknown User'}
     link={fr.links}
   />
-))}
- {/* <LeftList key={userInfo.id} data={userInfo} numfeiend={numfeiend}></LeftList> */}
+))} */}
    {/* <a onClick={handReadMore}>Read More</a> */}
  </div>
   );
