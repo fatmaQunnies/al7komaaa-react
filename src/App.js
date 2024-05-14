@@ -3,7 +3,10 @@ import "./App.css";
 import Post from "./Post.jsx";
 import LeftList from "./LeftList.jsx";
 import Notfound from "./Notfound.jsx";
+import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
+import Friends from "./Friends.jsx";
+
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
@@ -16,6 +19,9 @@ function App() {
   const [userName, setUserName] = useState(""); //
   const [userImage, setUserImage] = useState(""); ////
   const [userInfo, setUserinfo] = useState([]);
+  const [reload, setReload] = useState(false);
+  const [show, setShow] = useState(false);
+  const [componentsReady, setComponentsReady] = useState(false);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -27,6 +33,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setUserinfo(data);
+        setComponentsReady(true);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -60,7 +67,7 @@ function App() {
         console.log(data._embedded.posts + "pooooood");
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  }, [reload]);
 
   const handReadMore = async () => {
     try {
@@ -102,30 +109,73 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  useEffect(() => {
+    if (componentsReady) { // Only call hideAllComponents once components are ready
+      hideAllComponents("Feed");
+    }
+  }, [componentsReady]);
+
+  const hideAllComponents = (commName) => {
+    const element = document.getElementById(commName);
+    if (element) {
+      element.classList.add("middle");
+      if (commName !== "Feed") {
+        const feedElement = document.getElementById("Feed");
+        if (feedElement) feedElement.classList.remove("middle");
+      } else if (commName !== "Friends") {
+        const friendsElement = document.getElementById("Friends");
+        if (friendsElement) friendsElement.classList.remove("middle");
+      }
+    }
+  };
+
   return (
-    // <Router>
+    <Router>
+      <div className="nav">
+        <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
+        <div className="search-container">
+          <input type="text" className="search-box" placeholder="Search" />
+        </div>
+        <div style={{ display: "flex" }}>
+          <h1>{userInfo.username}</h1>
+          <img src={http://localhost:8080/getImage/${userInfo.id}} alt="User" />
+        </div>
+      </div>
+
       <div className="App">
-        <LeftList key={userInfo.id} data={userInfo} token={token}></LeftList>
-        {/* <nav className="navbar">
+        <LeftList className="left" key={userInfo.id} data={userInfo} token={token}></LeftList>
+        <nav className="left-down">
           <Navbar />
         </nav>
         <Routes>
           <Route
-            path="/feed" */}
-        {/* element= */}
-        {postContent.map((post) => (
-          <Post
-            className="post"
-            key={post.id}
-            id={post.id}
-            token={token}
-            info={post}
-            userName={userName}
-            userImage={userImage}
+            path="/feed"
+            element={
+              <div id="Feed">
+                {postContent.map((post) => (
+                  <Post
+                    className="post"
+                    key={post.id}
+                    id={post.id}
+                    token={token}
+                    info={post}
+                    userName={userName}
+                    userImage={userImage}
+                  />
+                ))}
+              </div>
+            }
           />
-        ))}
-        {/* />
-          <Route path="/Friends" element={<Notfound />} />
+
+          <Route
+            path="/Friends"
+            element={
+              <div id="Friends">
+                <Friends />
+              </div>
+            }
+          />
+
           <Route path="/profile" element={<Notfound />} />
           <Route path="/Notification" element={<Notfound />} />
           <Route path="/Reel" element={<Notfound />} />
@@ -133,10 +183,15 @@ function App() {
           <Route path="/Messages" element={<Notfound />} />
           <Route path="/Likes" element={<Notfound />} />
         </Routes>
-     
-    </Router> */}
-    
-        </div> );
+
+        <div className="right">
+          {userfriend.map((fr) => (
+            <RightList key={fr.id} token={token} userName={fr.username || 'Unknown User'} link={fr.links} />
+          ))}
+        </div>
+      </div>
+    </Router>
+  );
 }
 
-        export default App;
+export default App;

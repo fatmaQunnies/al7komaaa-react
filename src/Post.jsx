@@ -15,6 +15,7 @@ function Post(props){
   const [reload, setReload] = useState(false);
   const [reloadLike, setReloadLike] = useState(false);
   const [numberComment, setNumberComment] = useState(0);
+  const [myLiked,setMyLiked]=useState([]);
 
   useEffect(() => {
     console.log("USEEFFECT == profii" ) ;
@@ -102,10 +103,25 @@ setReloadLike(!reload);
     .catch(error => console.error('Error fetching data:', error));
   },[reloadLike]);
   
+ 
+    useEffect(() => {
+    fetch(props.info._links["If User Liked Post"].href, {
+      headers: {
+          'Authorization': 'Bearer ' +  props.token
+      }
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        setMyLiked(data[0]==undefined ? null :data[0]); 
+     
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  },[reloadLike]);
+
 
   const handleLike = () => {
     return (
-      <Like  createLike={props.info._links["create like"].href} isLikee={props.info._links["the post's likes"].href} token={props.token } postId={props.id}  userName={props.userName} reload={ fun}></Like>
+      <Like  createLike={props.info._links["create like"].href} isLikee={myLiked} token={props.token } postId={props.id}  userName={props.userName} reload={ fun}></Like>
     );
   };
 
