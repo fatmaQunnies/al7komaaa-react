@@ -7,13 +7,15 @@ import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
 
+
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState([{ username: "", image: "" }]);
   const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU2MTUyOTIsImV4cCI6MTcxNTcwMTY5Mn0.RpXcb-X2CDTaYN7A5WKHw_pzntrosH41pDB8_DHjLlY"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU2OTE5ODIsImV4cCI6MTcxNTc3ODM4Mn0.ZzYg80ZinbsX0cu390g0Ew96uL3edtvzTyDnKr7ujVY"
   );
+  const [numfeiend,setNumfeiend]=useState();
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
   const [userName, setUserName] = useState(""); //
@@ -22,6 +24,7 @@ function App() {
   const [reload, setReload] = useState(false);
   const [show, setShow] = useState(false);
   const [componentsReady, setComponentsReady] = useState(false);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -109,6 +112,26 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+////imprtanttttt
+  useEffect(() => {
+    console.log("USEEFFECT == " + userInfo.userid);
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(response => response.text())
+    .then(data => {
+      setNumfeiend(data);
+      console.log("number friend" + numfeiend)
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+
+
+
+
   useEffect(() => {
     if (componentsReady) { // Only call hideAllComponents once components are ready
       hideAllComponents("Feed");
@@ -171,7 +194,7 @@ function App() {
             path="/Friends"
             element={
               <div id="Friends">
-                <Friends />
+                <Friends numbersfriend={numfeiend}  iduser={userInfo.userid} token={token} />
               </div>
             }
           />
