@@ -4,29 +4,10 @@ import './Like.css';
 function Like(props) {
   const [reaction, setReaction] = useState(null); 
   const [reactionVisible, setReactionVisible] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeId, setLikeId] = useState(props.likeIdFromPost);
-  const [likeIdFromPost,setLikeIdFromPost]= useState(0);
+  const [isLiked, setIsLiked] = useState();
+  const [likeIdFromPost,setLikeIdFromPost]= useState();
+// alert(props.isLikee[0].likeId);
 
-useEffect(() => {
-  console.log("USEEFFECTjjjj");
-  fetch(props.isLikee, {
-    headers: {
-      'Authorization': 'Bearer ' + props.token
-    }
-  })
-  .then(response => response.json()) 
-  .then(data => {
-    const likeByUser = data.find(like => like.user === props.userName && like.postId === props.postId);
-    console.log("likeByUser:", likeByUser); 
-    setIsLiked(likeByUser !== undefined); 
-    if (likeByUser) {
-      setLikeIdFromPost(likeByUser.likeId);
-      console.log("ككككك" + likeIdFromPost);
-    }
-  })
-  .catch(error => console.error('Error fetching data:', error));
-}, [props.isLikee, props.token, props.userName, props.postId]); 
 
   const handleReaction = async (reactionType) => {
     setReaction(reactionType);
@@ -44,7 +25,7 @@ useEffect(() => {
 
       if (response.ok) {
         const data = await response.json();
-        setLikeId(data.likeId);
+       
         setIsLiked(true); 
         setLikeIdFromPost(data.likeId);
         console.log(data);
