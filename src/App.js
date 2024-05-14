@@ -6,14 +6,33 @@ import Notfound from "./Notfound.jsx";
 import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
+import Profile from "./Profile.jsx";
 
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
+
   const [user, setUser] = useState([{ username: "", image: "" }]);
   const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU2MTUyOTIsImV4cCI6MTcxNTcwMTY5Mn0.RpXcb-X2CDTaYN7A5WKHw_pzntrosH41pDB8_DHjLlY"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU3MDYwNjUsImV4cCI6MTcxNTc5MjQ2NX0.cQ_450JNtUsOVUN3MMzPwJYaGg961jrr_B5h7QmpZSU"
   );
+  useEffect(() => {
+    console.log("USEEFFECT == " + userInfo.userid);
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(response => response.text())
+    .then(data => {
+      setNumfeiend(data);
+      console.log("number friend" + numfeiend)
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  }, []);
+const [numfeiend,setNumfeiend]=useState();
+
+
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
   const [userName, setUserName] = useState(""); //
@@ -95,6 +114,38 @@ function App() {
   };
 
   const [userfriend, setUserFriend] = useState([]);
+  
+  // alert(userInfo.userid);
+  useEffect(() => {
+
+    console.log("USEEFFECT == " + userInfo.userid);
+
+
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+
+      headers: {
+
+        'Authorization': 'Bearer ' + token
+
+      }
+
+    })
+
+    .then(response => response.text())
+
+    .then(data => {
+
+      setNumfeiend(data);
+// alert(numfeiend);
+      console.log("number friend" + numfeiend)
+
+    })
+
+    .catch(error => console.error('Error fetching data:', error));
+
+  }, []);
+
+  
   useEffect(() => {
     console.log("USEEFFECT == ");
     fetch("http://localhost:8080/friendSuggestion", {
@@ -176,7 +227,7 @@ function App() {
             }
           />
 
-          <Route path="/profile" element={<Notfound />} />
+          <Route path="/profile" element={<Profile usernamee={userName} key={userInfo.id} userinfo={userInfo} numoffriend={numfeiend}  />} />
           <Route path="/Notification" element={<Notfound />} />
           <Route path="/Reel" element={<Notfound />} />
           <Route path="/Setting" element={<Notfound />} />
