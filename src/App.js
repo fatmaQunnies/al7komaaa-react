@@ -103,27 +103,28 @@ function App() {
   }, []);
 
   return (
-    <Router>
+    // <Router>
       <div className="App">
         <LeftList key={userInfo.id} data={userInfo} token={token}></LeftList>
-        <nav className="navbar">
+        {/* <nav className="navbar">
           <Navbar />
         </nav>
         <Routes>
           <Route
-            path="/feed"
-            element={postContent.map((post) => (
-              <Post
-                className="post"
-                key={post.id}
-                id={post.id}
-                token={token}
-                info={post}
-                userName={userName}
-                userImage={userImage}
-              />
-            ))}
+            path="/feed" */}
+        {/* element= */}
+        {postContent.map((post) => (
+          <Post
+            className="post"
+            key={post.id}
+            id={post.id}
+            token={token}
+            info={post}
+            userName={userName}
+            userImage={userImage}
           />
+        ))}
+        {/* />
           <Route path="/Friends" element={<Notfound />} />
           <Route path="/profile" element={<Notfound />} />
           <Route path="/Notification" element={<Notfound />} />
@@ -132,9 +133,10 @@ function App() {
           <Route path="/Messages" element={<Notfound />} />
           <Route path="/Likes" element={<Notfound />} />
         </Routes>
-      </div>
-    </Router>
-  );
+     
+    </Router> */}
+    
+        </div> );
 }
 
-export default App;
+        export default App;
