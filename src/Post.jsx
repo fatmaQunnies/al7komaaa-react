@@ -18,7 +18,7 @@ function Post(props){
   const [myLiked,setMyLiked]=useState([]);
 
   useEffect(() => {
-    console.log("USEEFFECT == profii" ) ;
+    console.log("USEEFFECT == the post owner"  ) ;
     fetch(props.info._links["the post owner"].href, {
       headers: {
           'Authorization': 'Bearer ' +  props.token
@@ -186,7 +186,8 @@ setReloadLike(!reload);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+   
+  }; 
   return (
     <div className="post">
       <div className="userNameImage">
@@ -196,9 +197,25 @@ setReloadLike(!reload);
       </div>
 
       <div className="postContent">
-        {props.info.content}
-        {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
-      </div>
+  {props.info.content}
+  
+  {props.type === "post" ? (
+  props.info.image == null ? (
+    <div></div>
+  ) : (
+    <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />
+  )
+) : props.type === "real" ? (
+  
+
+  <video src={`http://localhost:8080/post/getVideo/${props.info.id}`} alt="" ></video>
+  //   <source src={"http://localhost:8080/post/getVideo/"+props.info.id } type="video/mp4" />
+  //   Your browser does not support the video tag.
+   
+) : null}
+
+</div>
+
 
       <div className="numberLikeComment">
         <div > {postLike.length} Likes </div>
