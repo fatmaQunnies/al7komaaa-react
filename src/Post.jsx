@@ -15,9 +15,10 @@ function Post(props){
   const [reload, setReload] = useState(false);
   const [reloadLike, setReloadLike] = useState(false);
   const [numberComment, setNumberComment] = useState(0);
+  const [myLiked,setMyLiked]=useState([]);
 
   useEffect(() => {
-    console.log("USEEFFECT == profii" ) ;
+    console.log("USEEFFECT == the post owner"  ) ;
     fetch(props.info._links["the post owner"].href, {
       headers: {
           'Authorization': 'Bearer ' +  props.token
@@ -102,11 +103,25 @@ setReloadLike(!reload);
     .catch(error => console.error('Error fetching data:', error));
   },[reloadLike]);
   
+ 
+    useEffect(() => {
+    fetch(props.info._links["If User Liked Post"].href, {
+      headers: {
+          'Authorization': 'Bearer ' +  props.token
+      }
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        setMyLiked(data[0]==undefined ? null :data[0]); 
+     
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  },[reloadLike]);
+
 
   const handleLike = () => {
     return (
-
-      <Like  createLike={props.info._links["create like"].href} isLikee={props.info._links["the post's likes"].href} token={props.token } postId={props.id}  userName={props.userName} reload={ fun}></Like>
+      <Like  createLike={props.info._links["create like"].href} isLikee={myLiked} token={props.token } postId={props.id}  userName={props.userName} reload={ fun}></Like>
     );
   };
 
@@ -171,7 +186,8 @@ setReloadLike(!reload);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+   
+  }; 
   return (
     <div className="post">
       <div className="userNameImage">
@@ -181,9 +197,25 @@ setReloadLike(!reload);
       </div>
 
       <div className="postContent">
-        {props.info.content}
-        {props.info.image == null ? <></> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />}
-      </div>
+  {props.info.content}
+  
+  {props.type === "post" ? (
+  props.info.image == null ? (
+    <div></div>
+  ) : (
+    <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />
+  )
+) : props.type === "real" ? (
+  
+
+  <video src={`http://localhost:8080/post/getVideo/${props.info.id}`} alt="" ></video>
+  //   <source src={"http://localhost:8080/post/getVideo/"+props.info.id } type="video/mp4" />
+  //   Your browser does not support the video tag.
+   
+) : null}
+
+</div>
+
 
       <div className="numberLikeComment">
         <div > {postLike.length} Likes </div>

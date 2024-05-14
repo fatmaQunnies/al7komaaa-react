@@ -6,21 +6,29 @@ import Notfound from "./Notfound.jsx";
 import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
+import Profile from "./Profile.jsx";
+
 
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
+
   const [user, setUser] = useState([{ username: "", image: "" }]);
   const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU2MTUyOTIsImV4cCI6MTcxNTcwMTY5Mn0.RpXcb-X2CDTaYN7A5WKHw_pzntrosH41pDB8_DHjLlY"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU3MDY5ODksImV4cCI6MTcxNTc5MzM4OX0.55XneA7Hc7XEK4HULiPR_ZKo5N8N4VCl_11WupWLxRk"
   );
+  const [numfeiend,setNumfeiend]=useState();
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
+  const [realContent, setRealContent] = useState([]);
+  const [readMoreReal, setReadMoreReal] = useState();
   const [userName, setUserName] = useState(""); //
   const [userImage, setUserImage] = useState(""); ////
   const [userInfo, setUserinfo] = useState([]);
   const [reload, setReload] = useState(false);
-  const [showFriends, setShowFriends] = useState(false);
+  const [show, setShow] = useState(false);
+  const [componentsReady, setComponentsReady] = useState(false);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -32,6 +40,7 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setUserinfo(data);
+        setComponentsReady(true);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -92,7 +101,102 @@ function App() {
     }
   };
 
+
+
+
+
+
+
+
+  useEffect(() => {
+    console.log("USEEFFECT == Reals");
+    fetch("http://localhost:8080/post/reels", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setRealContent(data._embedded.posts);
+        setReadMoreReal(data);
+        console.log(data._embedded.posts + "pooooood");
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [reload]);
+
+  const handReadMoreReal = async () => {
+    try {
+      const response = await fetch(readMore._links["read more"].href, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = await response.json();
+      console.log(responseData._embedded.posts, "READ MORE Reals");
+      if (response.ok) {
+        const newPosts = responseData._embedded.posts.filter((newPost) => {
+          return !realContent.some((oldPost) => oldPost.id === newPost.id);
+        });
+        setRealContent([...realContent, ...newPosts]);
+        console.log("READ MORE REAL");
+      } else {
+        console.error("Error:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [userfriend, setUserFriend] = useState([]);
+  
+  // alert(userInfo.userid);
+  useEffect(() => {
+
+    console.log("USEEFFECT == " + userInfo.userid);
+
+
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+
+      headers: {
+
+        'Authorization': 'Bearer ' + token
+
+      }
+
+    })
+
+    .then(response => response.text())
+
+    .then(data => {
+
+      setNumfeiend(data);
+// alert(numfeiend);
+      console.log("number friend" + numfeiend)
+
+    })
+
+    .catch(error => console.error('Error fetching data:', error));
+
+  }, []);
+
+  
   useEffect(() => {
     console.log("USEEFFECT == ");
     fetch("http://localhost:8080/friendSuggestion", {
@@ -107,6 +211,46 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+////imprtanttttt
+  useEffect(() => {
+    console.log("USEEFFECT == " + userInfo.userid);
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(response => response.text())
+    .then(data => {
+      setNumfeiend(data);
+      console.log("number friend" + numfeiend)
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+
+
+
+
+  useEffect(() => {
+    if (componentsReady) { // Only call hideAllComponents once components are ready
+      hideAllComponents("Feed");
+    }
+  }, [componentsReady]);
+
+  const hideAllComponents = (commName) => {
+    const element = document.getElementById(commName);
+    if (element) {
+      element.classList.add("middle");
+      if (commName !== "Feed") {
+        const feedElement = document.getElementById("Feed");
+        if (feedElement) feedElement.classList.remove("middle");
+      } else if (commName !== "Friends") {
+        const friendsElement = document.getElementById("Friends");
+        if (friendsElement) friendsElement.classList.remove("middle");
+      }
+    }
+  };
+
   return (
     <Router>
       <div className="nav">
@@ -116,75 +260,69 @@ function App() {
         </div>
         <div style={{ display: "flex" }}>
           <h1>{userInfo.username}</h1>
-          <img
-            src={`http://localhost:8080/getImage/${userInfo.id}`}
-            alt="User"
-          />
+          <img src={`http://localhost:8080/getImage/${userInfo.id}`} alt="User" />
         </div>
       </div>
 
       <div className="App">
-        <LeftList
-          className="left"
-          key={userInfo.id}
-          data={userInfo}
-          token={token}
-        ></LeftList>
+        <LeftList className="left" key={userInfo.id} data={userInfo} token={token}></LeftList>
         <nav className="left-down">
           <Navbar />
         </nav>
-        <div className="middle">
-          <Routes>
-            <Route
-              path="/feed"
-              element={
-                <>
-                  {/* { setReload(!reload)}  */}
-                  {postContent.map((post) => (
-                    <Post
-                      className="post"
-                      key={post.id}
-                      id={post.id}
-                      token={token}
-                      info={post}
-                      userName={userName}
-                      userImage={userImage}
-                    />
-                  ))}
-                </>
-              }
-            />
+        <Routes>
+          <Route
+            path="/feed"
+            element={
+              <div id="Feed">
+                {postContent.map((post) => (
+                  <Post
+                    className="post"
+                    key={post.id}
+                    id={post.id}
+                    token={token}
+                    info={post}
+                    userName={userName}
+                    userImage={userImage}
+                    type={"post"}
+                  />
+                ))}
+              </div>
+            }
+          />
 
-            <Route
-              path="/Friends"
-              element={
-                <div className="middle">
-                  <Friends setShowFriends={setShowFriends} />
-                </div>
-              }
-            />
-            <Route path="/profile" element={<Notfound />} />
-            <Route path="/Notification" element={<Notfound />} />
-            <Route path="/Reel" element={<Notfound />} />
-            <Route path="/Setting" element={<Notfound />} />
-            <Route path="/Messages" element={<Notfound />} />
-            <Route path="/Likes" element={<Notfound />} />
-          </Routes>
-        </div>
+          <Route
+            path="/Friends"
+            element={
+              <div id="Friends">
+                <Friends numbersfriend={numfeiend}  iduser={userInfo.userid} token={token} />
+              </div>
+            }
+          />
+
+          <Route path="/profile" element={<Profile usernamee={userName} key={userInfo.id} userinfo={userInfo} numoffriend={numfeiend}  />} />
+          <Route path="/Notification" element={<Notfound />} />
+          <Route path="/Reel" element={<div id="Real">
+                {realContent.map((post) => (
+                  <Post
+                    className="post"
+                    key={post.id}
+                    id={post.id}
+                    token={token}
+                    info={post}
+                    userName={userName}
+                    userImage={userImage}
+                  />
+                ))}
+              </div>} />
+          <Route path="/Setting" element={<Notfound />} />
+          <Route path="/Messages" element={<Notfound />} />
+          <Route path="/Likes" element={<Notfound />} />
+        </Routes>
 
         <div className="right">
-          {showFriends ? (
-            userfriend.map((fr) => (
-              <RightList
-                key={fr.id}
-                token={token}
-                userName={fr.username || "Unknown User"}
-                link={fr.links}
-              />
-            ))
-          ) : (
-            <div></div>
-          )}
+          {userfriend.map((fr) => (
+            <RightList key={fr.id} token={token} userName={fr.username || 'Unknown User'} link={fr.links} />
+          ))}
         </div>
       </div>
     </Router>
