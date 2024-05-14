@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState ,useEffect} from "react";
 import "./App.css";
 import Post from "./Post.jsx";
 import LeftList from "./LeftList.jsx";
@@ -20,6 +20,7 @@ function App() {
   const [userImage, setUserImage] = useState(""); ////
   const [userInfo, setUserinfo] = useState([]);
   const [reload, setReload] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -108,84 +109,83 @@ function App() {
 
   return (
     <Router>
-      
-      
-      <div className="nav"> 
-  <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
-  <div className="search-container">
-    <input type="text" className="search-box" placeholder="Search" />
-  </div>
-  <div style={{display:"flex"}}>
-    <h1>{userInfo.username}</h1> 
-    <img src={`http://localhost:8080/getImage/${userInfo.id}`} alt="User" />
-  </div>
-</div>
-
+      <div className="nav">
+        <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
+        <div className="search-container">
+          <input type="text" className="search-box" placeholder="Search" />
+        </div>
+        <div style={{ display: "flex" }}>
+          <h1>{userInfo.username}</h1>
+          <img
+            src={`http://localhost:8080/getImage/${userInfo.id}`}
+            alt="User"
+          />
+        </div>
+      </div>
 
       <div className="App">
-
-
-
-
-        <LeftList className="left" key={userInfo.id} data={userInfo} token={token}></LeftList>
+        <LeftList
+          className="left"
+          key={userInfo.id}
+          data={userInfo}
+          token={token}
+        ></LeftList>
         <nav className="left-down">
           <Navbar />
         </nav>
-      <div className="middle"> {postContent.map((post) => (
-              <Post
-                className="post"
-                key={post.id}
-                id={post.id}
-                token={token}
-                info={post}
-                userName={userName}
-                userImage={userImage}
-              />
-            ))}</div>
-        <Routes>
-        <Route
-  path="/feed"
-  element={
-    <div className="middle">
-{/* { setReload(!reload)}  */}
-            {postContent.map((post) => (
-        <Post
-          className="post"
-          key={post.id}
-          id={post.id}
-          token={token}
-          info={post}
-          userName={userName}
-          userImage={userImage}
-        />
-      ))}
-    </div>
-  }
-/>
+        <div className="middle">
+          <Routes>
+            <Route
+              path="/feed"
+              element={
+                <>
+                  {/* { setReload(!reload)}  */}
+                  {postContent.map((post) => (
+                    <Post
+                      className="post"
+                      key={post.id}
+                      id={post.id}
+                      token={token}
+                      info={post}
+                      userName={userName}
+                      userImage={userImage}
+                    />
+                  ))}
+                </>
+              }
+            />
 
-          <Route path="/Friends" element={<div className="middle">
-            
-            
-            <Friends /></div>} />
-          <Route path="/profile" element={<Notfound />} />
-          <Route path="/Notification" element={<Notfound />} />
-          <Route path="/Reel" element={<Notfound />} />
-          <Route path="/Setting" element={<Notfound />} />
-          <Route path="/Messages" element={<Notfound />} />
-          <Route path="/Likes" element={<Notfound />} />
-        </Routes>
-     
-      <div className="right">
-      
-      {userfriend.map(fr => (
-  <RightList
-    key={fr.id}
-    token={token}
-    userName={fr.username || 'Unknown User'}
-    link={fr.links}
-  />
-))}
-</div>
+            <Route
+              path="/Friends"
+              element={
+                <div className="middle">
+                  <Friends setShowFriends={setShowFriends} />
+                </div>
+              }
+            />
+            <Route path="/profile" element={<Notfound />} />
+            <Route path="/Notification" element={<Notfound />} />
+            <Route path="/Reel" element={<Notfound />} />
+            <Route path="/Setting" element={<Notfound />} />
+            <Route path="/Messages" element={<Notfound />} />
+            <Route path="/Likes" element={<Notfound />} />
+          </Routes>
+        </div>
+
+        <div className="right">
+          {showFriends ? (
+            userfriend.map((fr) => (
+              <RightList
+                key={fr.id}
+                token={token}
+                userName={fr.username || "Unknown User"}
+                link={fr.links}
+              />
+            ))
+          ) : (
+            <div></div>
+          )}
+        </div>
       </div>
     </Router>
   );

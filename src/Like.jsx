@@ -7,7 +7,7 @@ function Like(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [likeId, setLikeId] = useState(props.likeIdFromPost);
   const [likeIdFromPost,setLikeIdFromPost]= useState(0);
-
+ alert(props.likeIdFromPost);
 useEffect(() => {
   console.log("USEEFFECTjjjj");
   fetch(props.isLikee, {
@@ -69,6 +69,7 @@ useEffect(() => {
     })
     .then(response => response.json()) 
     .then(data => {
+      
       console.log(data +"ssssssssssddsdssssssssssss");
     })
     .catch(error => console.error('Error fetching data:', error));
