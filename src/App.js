@@ -189,7 +189,7 @@ const [numfeiend,setNumfeiend]=useState();
         </div>
         <div style={{ display: "flex" }}>
           <h1>{userInfo.username}</h1>
-          <img src={`http://localhost:8080/getImage/${userInfo.id}`} alt="User" />
+          <img src={http://localhost:8080/getImage/${userInfo.id}} alt="User" />
         </div>
       </div>
 
@@ -245,4 +245,4 @@ const [numfeiend,setNumfeiend]=useState();
   );
 }
 
-export default App;
+export default App;
