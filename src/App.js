@@ -15,7 +15,7 @@ function App() {
 
   const [user, setUser] = useState([{ username: "", image: "" }]);
   const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU3MDY5ODksImV4cCI6MTcxNTc5MzM4OX0.55XneA7Hc7XEK4HULiPR_ZKo5N8N4VCl_11WupWLxRk"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU3NTcxMDYsImV4cCI6MTcxNTg0MzUwNn0.1jAO2ojR2oVRiiI1ICQ3sOJLFHwjLY5a5Yn0VbECZAU"
   );
   const [numfeiend,setNumfeiend]=useState();
   const [postContent, setPostContent] = useState([]);
@@ -213,8 +213,8 @@ function App() {
 
 ////imprtanttttt
   useEffect(() => {
-    console.log("USEEFFECT == " + userInfo.userid);
-    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+    console.log("USEEFFECT == " + userInfo.id);
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.id}`, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
