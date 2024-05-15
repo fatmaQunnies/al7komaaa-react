@@ -42,7 +42,7 @@ function Profile(props){
         fetchFriends();
     }, []);
 
-
+alert(props.userinfo.userid);
     return(
         <>
        
@@ -54,6 +54,8 @@ function Profile(props){
         <p>{props.numoffriend}</p>
         <p>{props.userinfo.fullname}</p>
         <p>{props.userinfo.bio}</p>
+
+        <img src={`http://localhost:8080/getImage/   ${props.info.id}`} alt="" />
         </div>
        
         
