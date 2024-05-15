@@ -1,0 +1,93 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.images .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.images .centered-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    z-index: 2;
+    border: 5px solid white;
+}
+
+.user-info {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.user-info h1 {
+    margin: 0;
+    font-size: 2em;
+    color: #333;
+}
+
+.user-info p {
+    margin: 10px 0;
+    color: #777;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.stat {
+    margin: 0 20px;
+    text-align: center;
+}
+
+.stat p {
+    margin: 5px 0;
+}
+
+.stat p:first-child {
+    font-weight: bold;
+    color: #555;
+}
+
+.stat p:last-child {
+    font-size: 1.5em;
+    color: #333;
+}
+/* //////////////////// */
