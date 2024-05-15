@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"; 
 import './Profile.css';
+import Post from "./Post.jsx";
+
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
@@ -20,7 +22,7 @@ function Profile(props){
 
     const fetchFriends = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/post/friendPosts/${props.userinfo.userid}`, {
+            const response = await fetch(`http://localhost:8080/post/${props.userinfo.id}/user`, {
                 headers: {
                     'Authorization': 'Bearer ' + props.token
                 }
@@ -30,7 +32,7 @@ function Profile(props){
             }
             const data = await response.json();
             setUserPosts(data._embedded.posts);
-            console.log('datamai', data._embedded.posts);
+            console.log('datamaimami miam mia mia mia mia mia mia ', data._embedded.posts);
         } catch (error) {
             console.error('Error fetching friends:', error);
         }
@@ -63,6 +65,28 @@ function Profile(props){
                     </div>
                 </div>
             </div>
+
+
+<div className="post">
+
+{userPosts.map((post) => (
+    <Post
+  className="post"
+  key={post.id}
+  id={post.id}
+  token={props.token}
+  info={post}
+  userName={props.userinfo.userName}
+  userImage={props.userinfo.image}
+  type={post.video != null ? "Real" : "post"}
+/>
+
+                 
+                ))}
+</div>
+
+
+
         </div>
     );
 }

@@ -7,7 +7,8 @@ import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
 import Profile from "./Profile.jsx";
-
+import Notification from "./Notification.jsx";
+import Likes from "./Likes.jsx";
 
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
@@ -232,7 +233,7 @@ function App() {
 
 
   useEffect(() => {
-    if (componentsReady) { // Only call hideAllComponents once components are ready
+    if (componentsReady) { 
       hideAllComponents("Feed");
     }
   }, [componentsReady]);
@@ -246,11 +247,39 @@ function App() {
         if (feedElement) feedElement.classList.remove("middle");
       } else if (commName !== "Friends") {
         const friendsElement = document.getElementById("Friends");
-        if (friendsElement) friendsElement.classList.remove("middle");
+        if (friendsElement)
+           friendsElement.classList.remove("middle");
       }
+    } else if (commName !== "Profile") {
+      const friendsElement = document.getElementById("Profile");
+      if (friendsElement)
+         friendsElement.classList.remove("middle");
+    }else if (commName !== "Reel") {
+      const friendsElement = document.getElementById("Reel");
+      if (friendsElement)
+         friendsElement.classList.remove("middle");
+    }else if (commName !== "Setting") {
+      const friendsElement = document.getElementById("Setting");
+      if (friendsElement)
+         friendsElement.classList.remove("middle");
+    }else if (commName !== "Likes") {
+      const friendsElement = document.getElementById("Likes");
+      if (friendsElement)
+         friendsElement.classList.remove("middle");
+    }else if (commName !== "Messages") {
+      const friendsElement = document.getElementById("Messages");
+      if (friendsElement)
+         friendsElement.classList.remove("middle");
     }
+    
+    
   };
-
+  
+  
+  
+  
+  
+  
   return (
     <Router>
       <div className="nav">
@@ -299,8 +328,8 @@ function App() {
             }
           />
 
-          <Route path="/profile" element={<Profile usernamee={userName} key={userInfo.id} userinfo={userInfo} numoffriend={numfeiend}  />} />
-          <Route path="/Notification" element={<Notfound />} />
+          <Route path="/profile" element={<Profile usernamee={userName} key={userInfo.id} userinfo={userInfo} numoffriend={numfeiend} token={token} />} />
+          <Route path="/Notification" element={<Notification className="notification" token={token}  />} />
           <Route path="/Reel" element={<div id="Real">
                 {realContent.map((post) => (
                   <Post
@@ -316,7 +345,7 @@ function App() {
               </div>} />
           <Route path="/Setting" element={<Notfound />} />
           <Route path="/Messages" element={<Notfound />} />
-          <Route path="/Likes" element={<Notfound />} />
+          <Route path="/Likes" element={<Likes token={token}  userImage={userImage}/>} />
         </Routes>
 
         <div className="right">
