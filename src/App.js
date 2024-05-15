@@ -311,6 +311,7 @@ function App() {
                     info={post}
                     userName={userName}
                     userImage={userImage}
+                    type={"Real"}
                   />
                 ))}
               </div>} />
