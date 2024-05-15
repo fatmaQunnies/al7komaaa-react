@@ -8,45 +8,27 @@ import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
 import Profile from "./Profile.jsx";
 
+
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
 
   const [user, setUser] = useState([{ username: "", image: "" }]);
   const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU3MDYwNjUsImV4cCI6MTcxNTc5MjQ2NX0.cQ_450JNtUsOVUN3MMzPwJYaGg961jrr_B5h7QmpZSU"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU3MDY5ODksImV4cCI6MTcxNTc5MzM4OX0.55XneA7Hc7XEK4HULiPR_ZKo5N8N4VCl_11WupWLxRk"
   );
-  useEffect(() => {
-    console.log("USEEFFECT == " + userInfo.userid);
-    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    })
-    .then(response => response.text())
-    .then(data => {
-      setNumfeiend(data);
-      console.log("number friend" + numfeiend)
-    })
-    .catch(error => console.error('Error fetching data:', error));
-  }, []);
-const [numfeiend,setNumfeiend]=useState();
-
-
-
-
-
-
-
-
+  const [numfeiend,setNumfeiend]=useState();
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
+  const [realContent, setRealContent] = useState([]);
+  const [readMoreReal, setReadMoreReal] = useState();
   const [userName, setUserName] = useState(""); //
   const [userImage, setUserImage] = useState(""); ////
   const [userInfo, setUserinfo] = useState([]);
   const [reload, setReload] = useState(false);
   const [show, setShow] = useState(false);
   const [componentsReady, setComponentsReady] = useState(false);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -119,6 +101,69 @@ const [numfeiend,setNumfeiend]=useState();
     }
   };
 
+
+
+
+
+
+
+
+  useEffect(() => {
+    console.log("USEEFFECT == Reals");
+    fetch("http://localhost:8080/post/reels", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setRealContent(data._embedded.posts);
+        setReadMoreReal(data);
+        console.log(data._embedded.posts + "pooooood");
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [reload]);
+
+  const handReadMoreReal = async () => {
+    try {
+      const response = await fetch(readMore._links["read more"].href, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      const responseData = await response.json();
+      console.log(responseData._embedded.posts, "READ MORE Reals");
+      if (response.ok) {
+        const newPosts = responseData._embedded.posts.filter((newPost) => {
+          return !realContent.some((oldPost) => oldPost.id === newPost.id);
+        });
+        setRealContent([...realContent, ...newPosts]);
+        console.log("READ MORE REAL");
+      } else {
+        console.error("Error:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const [userfriend, setUserFriend] = useState([]);
   
   // alert(userInfo.userid);
@@ -165,6 +210,26 @@ const [numfeiend,setNumfeiend]=useState();
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+////imprtanttttt
+  useEffect(() => {
+    console.log("USEEFFECT == " + userInfo.userid);
+    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    .then(response => response.text())
+    .then(data => {
+      setNumfeiend(data);
+      console.log("number friend" + numfeiend)
+    })
+    .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+
+
+
 
   useEffect(() => {
     if (componentsReady) { // Only call hideAllComponents once components are ready
@@ -218,6 +283,7 @@ const [numfeiend,setNumfeiend]=useState();
                     info={post}
                     userName={userName}
                     userImage={userImage}
+                    type={"post"}
                   />
                 ))}
               </div>
@@ -228,14 +294,26 @@ const [numfeiend,setNumfeiend]=useState();
             path="/Friends"
             element={
               <div id="Friends">
-                <Friends />
+                <Friends numbersfriend={numfeiend}  iduser={userInfo.userid} token={token} />
               </div>
             }
           />
 
           <Route path="/profile" element={<Profile usernamee={userName} key={userInfo.id} userinfo={userInfo} numoffriend={numfeiend}  />} />
           <Route path="/Notification" element={<Notfound />} />
-          <Route path="/Reel" element={<Notfound />} />
+          <Route path="/Reel" element={<div id="Real">
+                {realContent.map((post) => (
+                  <Post
+                    className="post"
+                    key={post.id}
+                    id={post.id}
+                    token={token}
+                    info={post}
+                    userName={userName}
+                    userImage={userImage}
+                  />
+                ))}
+              </div>} />
           <Route path="/Setting" element={<Notfound />} />
           <Route path="/Messages" element={<Notfound />} />
           <Route path="/Likes" element={<Notfound />} />

@@ -18,7 +18,7 @@ function Post(props){
   const [myLiked,setMyLiked]=useState([]);
 
   useEffect(() => {
-    console.log("USEEFFECT == profii" ) ;
+    console.log("USEEFFECT == the post owner"  ) ;
     fetch(props.info._links["the post owner"].href, {
       headers: {
           'Authorization': 'Bearer ' +  props.token
@@ -186,19 +186,36 @@ setReloadLike(!reload);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+   
+  }; 
   return (
     <div className="post">
       <div className="userNameImage">
-        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${userInfo.image}`)} alt="" />}
+        {userInfo.image == '' || userInfo.image == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${userInfo.image}`)} alt="" />}
         <div><a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
           <p className="postDate"> {props.info.timestamp}</p></div>
       </div>
 
       <div className="postContent">
-        {props.info.content}
-        {props.info.image == null ? <></> : <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${props.info.image}`)} alt="" />}
-      </div>
+  {props.info.content}
+  
+  {props.type === "post" ? (
+  props.info.image == null ? (
+    <div></div>
+  ) : (
+    <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.info.image}`)} alt="" />
+  )
+) : props.type === "real" ? (
+  
+
+  <video src={`http://localhost:8080/post/getVideo/${props.info.id}`} alt="" ></video>
+  //   <source src={"http://localhost:8080/post/getVideo/"+props.info.id } type="video/mp4" />
+  //   Your browser does not support the video tag.
+   
+) : null}
+
+</div>
+
 
       <div className="numberLikeComment">
         <div > {postLike.length} Likes </div>
@@ -212,7 +229,7 @@ setReloadLike(!reload);
       </div>
 
       <div className="addComment">
-        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/user/Documents/ProjectSoa/project-al7komaaa/${props.userImage}`)} alt="" />}
+        {props.userImage == '' || props.userImage == null ? <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${dufImage}`)} alt="" /> : <img src={require(`C:/Users/fatim/Desktop/SOA-AdvWEB/project-al7komaaa/${props.userImage}`)} alt="" />}
         <input id={props.id} type="text" placeholder="    enter your comment" onChange={e => setinput(e.target.value)}></input>
         <button onClick={handleSend}>
           <span className="material-symbols-outlined">
