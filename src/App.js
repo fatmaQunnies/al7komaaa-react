@@ -33,6 +33,12 @@ function App() {
 const [numfeiend,setNumfeiend]=useState();
 
 
+
+
+
+
+
+
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
   const [userName, setUserName] = useState(""); //
