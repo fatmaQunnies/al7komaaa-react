@@ -205,12 +205,13 @@ setReloadLike(!reload);
   ) : (
     <img src={`http://localhost:8080/post/postImage/${props.info.id}`} alt="" />
   )
-) : props.type === "real" ? (
+) : props.type === "Real" ? (
   
-
-  <video src={`http://localhost:8080/post/getVideo/${props.info.id}`} alt="" ></video>
-  //   <source src={"http://localhost:8080/post/getVideo/"+props.info.id } type="video/mp4" />
-  //   Your browser does not support the video tag.
+  <video controls width="600">
+  <source src={`http://localhost:8080/post/getVideo/${props.info.userid}`} type="video/mp4">
+    </source>
+  </video>
+ 
    
 ) : null}
 

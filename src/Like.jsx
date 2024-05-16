@@ -50,6 +50,7 @@ function Like(props) {
     })
     .then(response => response.json()) 
     .then(data => {
+      
       console.log(data +"ssssssssssddsdssssssssssss");
     })
     .catch(error => console.error('Error fetching data:', error));
