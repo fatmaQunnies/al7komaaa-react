@@ -47,8 +47,9 @@ useEffect(() => {
 
       const data = await response.json();
     
-      setPostComment(data._embedded ? data._embedded.comments : []);
-      console.log("READ MORE COMMENT", data._embedded ? data._embedded.comments : []);
+      const comments = data._embedded && data._embedded.comments ? data._embedded.comments : [];
+      setPostComment(comments);
+            // console.log("READ MORE COMMENT", data._embedded ? data._embedded.comments : []);
       setReadMore(data);
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -205,13 +206,12 @@ setReloadLike(!reload);
   ) : (
     <img src={`http://localhost:8080/post/postImage/${props.info.id}`} alt="" />
   )
-) : props.type === "Real" ? (
+) : props.type === "real" ? (
   
-  <video controls width="600">
-  <source src={`http://localhost:8080/post/getVideo/${props.info.userid}`} type="video/mp4">
-    </source>
-  </video>
- 
+
+  <video src={`http://localhost:8080/post/getVideo/${props.info.id}`} alt="" ></video>
+  //   <source src={"http://localhost:8080/post/getVideo/"+props.info.id } type="video/mp4" />
+  //   Your browser does not support the video tag.
    
 ) : null}
 

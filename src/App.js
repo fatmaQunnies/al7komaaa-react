@@ -21,9 +21,9 @@ function App() {
 
   const [user, setUser] = useState([{ username: "", image: "" }]);
   const [token, setToken] = useState(
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjZWxpbmE5IiwiaWF0IjoxNzE1ODU1MDU0LCJleHAiOjE3MTU5NDE0NTR9.CyFLFwqp3a5e4QwnRa9In_SqWXsPChQKxtiEnDsK3oI"
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXRtYTIiLCJpYXQiOjE3MTU4Njg2NzAsImV4cCI6MTcxNTk1NTA3MH0.XRJFR1Vx1kNfA4bWc7ykNa3N1ldKTrVm2dGuHa1Fu7o"
   );
-  const [numfeiend,setNumfeiend]=useState();
+  const [numfeiend,setNumFriend]=useState();
   const [postContent, setPostContent] = useState([]);
   const [readMore, setReadMore] = useState();
   const [realContent, setRealContent] = useState([]);
@@ -35,21 +35,71 @@ function App() {
   const [show, setShow] = useState(false);
   const [componentsReady, setComponentsReady] = useState(false);
   const [friends, setFriends] = useState([]);
+  const [userId, setUserId] = useState(0);
+  const [userfriend, setUserFriend] = useState([]);
+
 
   useEffect(() => {
-    console.log("USEEFFECT == ");
-    fetch("http://localhost:8080/myUserName", {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setUserinfo(data);
+    const fetchUserData = async () => {
+      try {
+        // Fetch the user info first
+        const userInfoResponse = await fetch("http://localhost:8080/myUserName", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (!userInfoResponse.ok) {
+          throw new Error('Error fetching user info');
+        }
+
+        const userInfoData = await userInfoResponse.json();
+        setUserinfo(userInfoData);
+        setUserId(userInfoData.userid);
+        // alert(userInfoData.userid);
         setComponentsReady(true);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+
+        // Now fetch the user friend count
+        console.log("USEEFFECT ==3333333333333 " + userInfoData.userid);
+
+        const userFriendResponse = await fetch("http://localhost:8080/count/userFriend/" + userInfoData.userid, {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        });
+
+        if (!userFriendResponse.ok) {
+          throw new Error('Error fetching user friend count');
+        }
+
+        const userFriendData = await userFriendResponse.text();
+        setNumFriend(userFriendData);
+        console.log("number friend " + userFriendData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchUserData();
   }, []);
+  
+  // useEffect(() => {
+  //   console.log("USEEFFECT == ");
+  //   fetch("http://localhost:8080/myUserName", {
+  //     headers: {
+  //       Authorization: "Bearer " + token,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setUserinfo(data);
+  //       setuserId(data.userid);
+  //       // console.log("fatmaaaa"+data.userid);
+  //       setComponentsReady(true);
+  //     })
+  //     .catch((error) => console.error("Error fetching data:", error));
+  // }, []);
 
   useEffect(() => {
     console.log("USEEFFECT == ");
@@ -170,37 +220,37 @@ function App() {
 
 
 
-  const [userfriend, setUserFriend] = useState([]);
+
   
-  // alert(userInfo.userid);
-  useEffect(() => {
+//   // alert(userInfo.userid);
+//   useEffect(() => {
 
-    console.log("USEEFFECT == " + userInfo.userid);
+//     console.log("USEEFFECT ==3333333333333 " + userId);
 
 
-    fetch(`http://localhost:8080/count/userFriend/${userInfo.userid}`, {
+//     fetch("http://localhost:8080/count/userFriend/"+userId, {
 
-      headers: {
+//       headers: {
 
-        'Authorization': 'Bearer ' + token
+//         'Authorization': 'Bearer ' + token
 
-      }
+//       }
 
-    })
+//     })
 
-    .then(response => response.text())
+//     .then(response => response.text())
 
-    .then(data => {
+//     .then(data => {
 
-      setNumfeiend(data);
-// alert(numfeiend);
-      console.log("number friend" + numfeiend)
+//       setNumfeiend(data);
+// // alert(numfeiend);
+//       console.log("number friend" + numfeiend)
 
-    })
+//     })
 
-    .catch(error => console.error('Error fetching data:', error));
+//     .catch(error => console.error('Error fetching data:', error));
 
-  }, []);
+//   }, []);
 
   
   useEffect(() => {
@@ -220,14 +270,14 @@ function App() {
 ////imprtanttttt
   useEffect(() => {
     console.log("USEEFFECT == " + userInfo.id);
-    fetch(`http://localhost:8080/count/userFriend/${userInfo.id}`, {
+    fetch("http://localhost:8080/count/userFriend/"+userId, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
     })
     .then(response => response.text())
     .then(data => {
-      setNumfeiend(data);
+      setNumFriend(data);
       console.log("number friend" + numfeiend)
     })
     .catch(error => console.error('Error fetching data:', error));
@@ -299,7 +349,7 @@ function App() {
       </div>
 
       <div className="App">
-        <LeftList className="left" key={userInfo.id} data={userInfo} token={token}></LeftList>
+        <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
         <nav className="left-down">
           <Navbar />
         </nav>
@@ -318,6 +368,7 @@ function App() {
                     userName={userName}
                     userImage={userImage}
                     type={"post"}
+                    
                   />
                 ))}
               </div>

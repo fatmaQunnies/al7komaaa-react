@@ -76,7 +76,7 @@ function Profile(props){
   id={post.id}
   token={props.token}
   info={post}
-  userName={props.userinfo.userName}
+  userName={props.userinfo.username}
   userImage={props.userinfo.image}
   type={post.video != null ? "Real" : "post"}
 />

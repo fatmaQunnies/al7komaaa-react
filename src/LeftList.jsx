@@ -14,7 +14,7 @@ function LeftList(props) {
   
 
   useEffect(() => {
-    console.log("USEEFFECT == " + props.data.id);
+    // console.log("USEEFFECT ==keeyyyy " + props.key);
     fetch(`http://localhost:8080/count/userFriend/${props.data.id}`, {
       headers: {
         'Authorization': 'Bearer ' + props.token
