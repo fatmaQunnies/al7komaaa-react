@@ -350,7 +350,7 @@ function App() {
                 ))}
               </div>} />
           <Route path="/Setting" element={<Setting  token={token} />} />
-          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/changePassword" element={<ChangePassword  token={token}/>} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/editImage" element={<EditProfileImage />} />
           <Route path="/editProfile" element={<EditProfile />} />

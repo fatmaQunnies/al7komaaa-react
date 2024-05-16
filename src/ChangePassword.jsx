@@ -3,18 +3,19 @@ import React, { useState } from 'react';
 import './ChangePassword.css';
 
 
-function ChangePassword() {
+function ChangePassword(props) {
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleChangePassword = async () => {
         try {
-            const response = await fetch('/changePassword', {
+            const response = await fetch('http://localhost:8080/api/auth/changePassword', {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                                  headers: {
+                        Authorization: 'Bearer ' + props.token,
+                        'Content-Type': 'application/json'
+                      },
                 body: JSON.stringify({
                     oldPassword: oldPassword,
                     newPassword: newPassword
@@ -28,7 +29,7 @@ function ChangePassword() {
                 throw new Error(responseData.message || 'Failed to change password');
             }
 
-            console.log(responseData);
+            alert(responseData.message);
          
             setOldPassword('');
             setNewPassword('');
