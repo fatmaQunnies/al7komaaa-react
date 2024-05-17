@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"; 
 import './Profile.css';
 import Post from "./Post.jsx";
+import ImageWithToken from "./ImageWithToken.jsx";
 
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
@@ -41,13 +42,15 @@ function Profile(props){
     useEffect(() => {
         fetchFriends();
     }, []);
-
+    // alert(props.userinfo.userid);
     return(
         <div className="profile-container">
             <div className="header">
                 <div className="images">
-                    <img className="background" src={`http://localhost:8080/backgroundImage/${props.userinfo.userid}`} alt="background" />
-                    <img className="centered-image" src={`http://localhost:8080/getImage/${props.userinfo.userid}`} alt="centered" />
+                    
+                    {/* <img className="background" src={`http://localhost:8080/backgroundImage/${props.userinfo.userid}`} alt="background" /> */}
+                    <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
+                    <ImageWithToken CName={"background"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
                 </div>
             </div>
             <div className="user-info">

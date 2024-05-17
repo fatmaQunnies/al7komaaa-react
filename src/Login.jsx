@@ -12,6 +12,12 @@ function Login(props) {
     const [token, setToken] = useState(localStorage.getItem('token') || '');
     const [errorMessage, setErrorMessage] = useState('');
 
+    useEffect(() => {
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, [token]);
+
     const handleLogin = async (event) => {
         event.preventDefault();
 
@@ -31,12 +37,15 @@ function Login(props) {
                 const userInfoData = await response.json();
                 setIsLoggedIn(true);
                 setToken(userInfoData.accessToken);
-                setErrorMessage(response.message || 'Register Done');
-
+                localStorage.setItem('token', userInfoData.accessToken); // Store token in localStorage
+                setErrorMessage(''); // Clear any previous error messages
             } else {
                 const errorData = await response.json();
-                if (errorData.message=="Bad credentials")
-                setErrorMessage("Username Or Passwors is incorrect");
+                if (errorData.message === "Bad credentials") {
+                    setErrorMessage("Username or Password is incorrect");
+                } else {
+                    setErrorMessage(errorData.message || 'Error during login');
+                }
             }
         } catch (error) {
             setErrorMessage('Error: ' + error.message);
@@ -45,11 +54,12 @@ function Login(props) {
 
     if (isLoggedIn || token) {
         return <App token={token} />;
-
     }
+
     if (isRegister) {
         return <Registerr />;
     }
+
     return (
         <div className='bodyLogin'>
             <div className="wrapper">
@@ -84,7 +94,7 @@ function Login(props) {
                         <div id='dd'>{errorMessage && <p>{errorMessage}</p>}</div>
                         <button type="submit" className="btn">Login</button>
                         <div className="login-register">
-                            <div style={{ display: "flex"}} >Don't have an account?  <div className='register' onClick={()=>{setIsRegister(true)}} > Register </div> </div>
+                            <div style={{ display: "flex"}}>Don't have an account? <div className='register' onClick={() => setIsRegister(true)}> Register </div></div>
                         </div>
                     </form>
                 </div>
@@ -92,4 +102,5 @@ function Login(props) {
         </div>
     );
 }
+
 export default memo(Login);
