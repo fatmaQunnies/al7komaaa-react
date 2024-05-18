@@ -1,0 +1,30 @@
+/* EditProfileImage.css */
+
+.edit-profile-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.edit-profile-image-container h2 {
+    margin-bottom: 20px;
+}
+
+.edit-profile-image-container input[type="file"] {
+    margin-bottom: 20px;
+}
+
+.edit-profile-image-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-profile-image-container button:hover {
+    background-color: #0056b3;
+}

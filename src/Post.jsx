@@ -6,7 +6,7 @@ import ImageWithToken from "./ImageWithToken.jsx";
 import EditDelBtn from "./EditDelBtn";
 
 function Post(props){
-  const [userInfo, setUserInfo] = useState({username:'',id:0});
+  const [userInfo, setUserInfo] = useState({username:'',userid:0});
   const [dufImage, setDufImage] = useState('49e40f05-46ad-42b6-a2f3-6270d67cb6df_download.jpeg');
   const [postLike, setPostLike] = useState([]);
   const [postComment, setPostComment] = useState([]);
@@ -28,7 +28,7 @@ function Post(props){
     })
     .then(response => response.json()) 
     .then(data => {
-      setUserInfo(data);
+      setUserInfo({username: data.username, userid: data.userid});
       console.log(userInfo .image +"ddd");
     })
     .catch(error => console.error('Error fetching data:', error));
@@ -157,6 +157,7 @@ setReloadLike(!reload);
       <>
        
         {postComment.map(comment => (
+          //userInfo => the post owner
           <Comment key={comment.id} comment={comment} info={userInfo} input={input}  />
         ))}
       </>
@@ -191,7 +192,7 @@ setReloadLike(!reload);
     }
    
   }; 
-  // alert(userInfo.id);
+  // alert(userInfo.userid);
   return (
     <div className="post">
       <div className="userNameImage">
@@ -201,7 +202,7 @@ setReloadLike(!reload);
         <div><a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
           <p className="postDate"> {props.info.timestamp}</p></div>
           <div className="edit-del-btn" >
-        <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction}/>
+        <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost ={userInfo.userid} userId={props.userId}/>
       </div>
       </div>
 

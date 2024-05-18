@@ -45,7 +45,7 @@ const renderFunction=()=>{
     useEffect(() => {
         fetchFriends();
     }, [render]);
-    // alert(props.userinfo.userid);
+    // alert(props.userId);
     return(
         <div className="profile-container">
             <div className="header">
@@ -82,7 +82,7 @@ const renderFunction=()=>{
   id={post.id}
   token={props.token}
   info={post}
-  userName={props.userinfo.username}
+  userId={props.userId}
   userImage={props.userinfo.image}
   renderFunction={renderFunction} 
   type={post.video != null ? "Real" : "post"}

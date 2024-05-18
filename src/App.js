@@ -16,6 +16,7 @@ import Logout from "./Logout.jsx";
 import EditProfileImage from './EditProfileImage.jsx'; 
 import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
+import CreatePost from "./CreatePost.jsx";
 
 import { memo } from "react";
 
@@ -240,7 +241,11 @@ function App(props) {
                     <h1>{userInfo.username}</h1>
                 </div>
             </div>
+<div className="middle">
 
+
+    <CreatePost token={token}></CreatePost>
+</div>
             <div className="App">
                 <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
                 <nav className="left-down">
@@ -258,7 +263,7 @@ function App(props) {
                                         id={post.id}
                                         token={token}
                                         info={post}
-                                        userName={userName}
+                                        userId={userId}
                                         userImage={userImage}
                                         type={"post"}
                                     />
@@ -274,7 +279,7 @@ function App(props) {
                             </div>
                         }
                     />
-                    <Route path="/profile" element={<Profile usernamee={userName} key={userInfo.id} userinfo={userInfo} numoffriend={numfeiend} token={token} />} />
+                    <Route path="/profile" element={<Profile usernamee={userName} key={userId} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} />} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
                     <Route path="/Reel" element={<div id="Real">
                         {realContent.map((post) => (
@@ -284,7 +289,7 @@ function App(props) {
                                 id={post.id}
                                 token={token}
                                 info={post}
-                                userName={userName}
+                                userId={userId}
                                 userImage={userImage}
                                 type={"Real"}
                             />
