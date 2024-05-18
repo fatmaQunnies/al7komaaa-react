@@ -119,3 +119,6 @@
     .post{
       margin: 0%;
     }
+    .edit-del-btn {
+      margin-left: auto; /* Push the EditDelBtn to the right */
+    }

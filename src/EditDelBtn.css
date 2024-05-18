@@ -1,0 +1,30 @@
+.edit-container {
+    position: relative;
+  }
+  
+  .edit {
+    cursor: pointer;
+  }
+  
+  .edit-options {
+    position: absolute;
+    top: -40px; /* Adjust as needed to position above the post */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-options div {
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .edit-options div:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .material-icons-outlined {
+    font-family: 'Material Symbols Outlined', sans-serif;
+  }

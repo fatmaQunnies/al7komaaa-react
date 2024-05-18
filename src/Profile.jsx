@@ -6,7 +6,10 @@ import ImageWithToken from "./ImageWithToken.jsx";
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
-// alert( props.userinfo.userid);
+    const [render, setRender] = useState([]);
+const renderFunction=()=>{
+    setRender(!render);
+}
     useEffect(() => {
         console.log("USEEFFECT == " );
         fetch(`http://localhost:8080/post/number/post/${props.userinfo.userid}`, {
@@ -19,7 +22,7 @@ function Profile(props){
             setNumberOfPosts(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    }, [ render]);
 
     const fetchFriends = async () => {
         try {
@@ -41,7 +44,7 @@ function Profile(props){
 
     useEffect(() => {
         fetchFriends();
-    }, []);
+    }, [render]);
     // alert(props.userinfo.userid);
     return(
         <div className="profile-container">
@@ -81,6 +84,7 @@ function Profile(props){
   info={post}
   userName={props.userinfo.username}
   userImage={props.userinfo.image}
+  renderFunction={renderFunction} 
   type={post.video != null ? "Real" : "post"}
 />
 
