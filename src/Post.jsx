@@ -192,7 +192,11 @@ setReloadLike(!reload);
     <div className="post">
       <div className="userNameImage">
        <img  src={`http://localhost:8080/getImage/${userInfo.userid}`}alt="" /> 
-        <div><a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
+        <div>
+        <div className="userEdit">
+        <a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
+        <button className="buttonRight">ghgh</button>
+      </div>
           <p className="postDate"> {props.info.timestamp}</p></div>
       </div>
 

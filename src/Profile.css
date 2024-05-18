@@ -90,4 +90,9 @@ body, html {
     font-size: 1.5em;
     color: #333;
 }
-/* //////////////////// */
+ .userEdit{
+ 
+    display: flex;
+    justify-content: space-between; 
+  }
+ 
