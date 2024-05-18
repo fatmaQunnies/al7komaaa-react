@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import './Post.css';
 import Comment from './Comment.jsx';
 import Like from './Like.jsx';
+import ImageWithToken from "./ImageWithToken.jsx";
+import EditDelBtn from "./EditDelBtn";
 
 function Post(props){
   const [userInfo, setUserInfo] = useState({username:'',id:0});
@@ -189,12 +191,18 @@ setReloadLike(!reload);
     }
    
   }; 
+  // alert(userInfo.id);
   return (
     <div className="post">
       <div className="userNameImage">
-       <img  src={`http://localhost:8080/getImage/${userInfo.userid}`}alt="" /> 
+      {/* <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.id} token={props.token}></ImageWithToken> */}
+
+       {/* <img  src={`http://localhost:8080/getImage/${userInfo.userid}`}alt="" />  */}
         <div><a className="userNameAnchor" href="/Profile">{userInfo.username}</a>
           <p className="postDate"> {props.info.timestamp}</p></div>
+          <div className="edit-del-btn" >
+        <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction}/>
+      </div>
       </div>
 
       <div className="postContent">
@@ -230,7 +238,9 @@ setReloadLike(!reload);
       </div>
 
       <div className="addComment">
-      <img  src={`http://localhost:8080/getImage/${userInfo.userid}`}alt="" /> 
+      {/* <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.userid} token={props.token}></ImageWithToken> */}
+
+      {/* <img  src={`http://localhost:8080/getImage/${userInfo.userid}`}alt="" />  */}
         <input id={props.id} type="text" placeholder="    enter your comment" onChange={e => setinput(e.target.value)}></input>
         <button onClick={handleSend}>
           <span className="material-symbols-outlined">

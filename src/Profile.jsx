@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react"; 
 import './Profile.css';
 import Post from "./Post.jsx";
+import ImageWithToken from "./ImageWithToken.jsx";
 
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
-// alert( props.userinfo.userid);
+    const [render, setRender] = useState([]);
+const renderFunction=()=>{
+    setRender(!render);
+}
     useEffect(() => {
         console.log("USEEFFECT == " );
         fetch(`http://localhost:8080/post/number/post/${props.userinfo.userid}`, {
@@ -18,7 +22,7 @@ function Profile(props){
             setNumberOfPosts(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    }, [ render]);
 
     const fetchFriends = async () => {
         try {
@@ -40,14 +44,16 @@ function Profile(props){
 
     useEffect(() => {
         fetchFriends();
-    }, []);
-
+    }, [render]);
+    // alert(props.userinfo.userid);
     return(
         <div className="profile-container">
             <div className="header">
                 <div className="images">
-                    <img className="background" src={`http://localhost:8080/backgroundImage/${props.userinfo.userid}`} alt="background" />
-                    <img className="centered-image" src={`http://localhost:8080/getImage/${props.userinfo.userid}`} alt="centered" />
+                    
+                    {/* <img className="background" src={`http://localhost:8080/backgroundImage/${props.userinfo.userid}`} alt="background" /> */}
+                    <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
+                    <ImageWithToken CName={"background"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
                 </div>
             </div>
             <div className="user-info">
@@ -78,6 +84,7 @@ function Profile(props){
   info={post}
   userName={props.userinfo.username}
   userImage={props.userinfo.image}
+  renderFunction={renderFunction} 
   type={post.video != null ? "Real" : "post"}
 />
 
