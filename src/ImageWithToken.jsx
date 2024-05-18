@@ -26,7 +26,7 @@ function ImageWithToken(props) {
         };
 
         fetchImage();
-    }, [props.userinfo.userid, props.token]);
+    }, []);
 
     return (
         <img className={props.CName} src={imageSrc} alt="centered" />

@@ -53,7 +53,7 @@ const renderFunction=()=>{
                     
                     {/* <img className="background" src={`http://localhost:8080/backgroundImage/${props.userinfo.userid}`} alt="background" /> */}
                     <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
-                    <ImageWithToken CName={"background"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
+                    <ImageWithToken CName={"background"} type={"backgroundImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
                 </div>
             </div>
             <div className="user-info">

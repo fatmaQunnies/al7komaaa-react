@@ -28,7 +28,7 @@ function App(props) {
     const [readMore, setReadMore] = useState();
     const [realContent, setRealContent] = useState([]);
     const [readMoreReal, setReadMoreReal] = useState();
-    const [userName, setUserName] = useState("");
+    // const [userName, setUserName] = useState("");
     const [userImage, setUserImage] = useState("");
     const [userInfo, setUserinfo] = useState([]);
     const [reload, setReload] = useState(false);
@@ -176,18 +176,18 @@ function App(props) {
         .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
-    useEffect(() => {
-        fetch("http://localhost:8080/count/userFriend/" + userId, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-        .then(response => response.text())
-        .then(data => {
-            setNumFriend(data);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }, [userId]);
+    // useEffect(() => {
+    //     fetch("http://localhost:8080/count/userFriend/" + userId, {
+    //         headers: {
+    //             'Authorization': 'Bearer ' + token
+    //         }
+    //     })
+    //     .then(response => response.text())
+    //     .then(data => {
+    //         setNumFriend(data);
+    //     })
+    //     .catch(error => console.error('Error fetching data:', error));
+    // }, [userId]);
 
     useEffect(() => {
         if (componentsReady) {
@@ -244,7 +244,6 @@ function App(props) {
 <div className="middle">
 
 
-    <CreatePost token={token}></CreatePost>
 </div>
             <div className="App">
                 <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
@@ -256,6 +255,9 @@ function App(props) {
                         path="/feed"
                         element={
                             <div id="Feed">
+                                
+                                    <CreatePost token={token} userInfo={userInfo}></CreatePost>
+
                                 {postContent.map((post) => (
                                     <Post
                                         className="post"
@@ -275,13 +277,18 @@ function App(props) {
                         path="/Friends"
                         element={
                             <div id="Friends">
-                                <Friends numbersfriend={numfeiend} iduser={userInfo.userid} token={token} />
+                                <Friends numbersfriend={numfeiend} iduser={userId} token={token} />
                             </div>
                         }
                     />
-                    <Route path="/profile" element={<Profile usernamee={userName} key={userId} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} />} />
+                    <Route path="/profile" element={<>
+                        <CreatePost token={token} userInfo={userInfo}></CreatePost>
+
+                    <Profile key={userId} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} /></>} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
                     <Route path="/Reel" element={<div id="Real">
+                    <CreatePost token={token} userInfo={userInfo}></CreatePost>
+
                         {realContent.map((post) => (
                             <Post
                                 className="post"
