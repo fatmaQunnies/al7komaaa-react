@@ -4,6 +4,7 @@ import Comment from './Comment.jsx';
 import Like from './Like.jsx';
 import ImageWithToken from "./ImageWithToken.jsx";
 import EditDelBtn from "./EditDelBtn";
+import ShowPostLikes from "./ShowPostLikes.jsx";
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -17,6 +18,7 @@ function Post(props) {
   const [reloadLike, setReloadLike] = useState(false);
   const [numberComment, setNumberComment] = useState(0);
   const [myLiked, setMyLiked] = useState([]);
+  const [showLikesPopper, setShowLikesPopper] = useState(false); 
 
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -107,8 +109,7 @@ function Post(props) {
     })
       .then(response => response.json())
       .then(data => {
-        setMyLiked(data );
-        // alert(data);
+        setMyLiked(data);
       }) 
       .catch(error => console.error('Error fetching data:', error));
   }, [reloadLike, props.info._links, props.token]);
@@ -117,6 +118,10 @@ function Post(props) {
     return (
       <Like createLike={props.info._links["create like"].href} isLikee={myLiked} token={props.token} postId={props.id} userName={props.userName} reload={fun} />
     );
+  };
+
+  const showLike = () => {
+    setShowLikesPopper(true); 
   };
 
   const handleSend = async () => {
@@ -213,7 +218,7 @@ function Post(props) {
       </div>
 
       <div className="numberLikeComment">
-        <div>{postLike.length} Likes </div>
+        <div onClick={showLike}>{postLike.length} Likes </div>
         <div onClick={toggleComments}>{numberComment} Comments</div>
       </div>
 
@@ -240,6 +245,18 @@ function Post(props) {
         {showComments && handleComment()}
         {showComments && <a onClick={handReadMore}>Read More</a>}
       </div>
+
+      {showLikesPopper && (
+        <div className="likes-popper">
+                      <span className="close-button" onClick={() => setShowLikesPopper(false)}>&times;</span>
+
+          <div className="likes-popper-content">
+            {postLike.map((like) => (
+              <ShowPostLikes key={like.id} userName={like.user} type={like.type} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
