@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import './Post.css';
 import Comment from './Comment.jsx';
 import Like from './Like.jsx';
-import ImageWithToken from "./ImageWithToken.jsx";
-import EditDelBtn from "./EditDelBtn";
-import ShowPostLikes from "./ShowPostLikes.jsx";
+import ImageWithToken from './ImageWithToken.jsx';
+import EditDelBtn from './EditDelBtn';
+import ShowPostLikes from './ShowPostLikes.jsx';
+import Share from './Share.jsx';
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -18,7 +19,8 @@ function Post(props) {
   const [reloadLike, setReloadLike] = useState(false);
   const [numberComment, setNumberComment] = useState(0);
   const [myLiked, setMyLiked] = useState([]);
-  const [showLikesPopper, setShowLikesPopper] = useState(false); 
+  const [showLikesPopper, setShowLikesPopper] = useState(false);
+  const [showSharePopper, setShowSharePopper] = useState(false);
 
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -110,7 +112,7 @@ function Post(props) {
       .then(response => response.json())
       .then(data => {
         setMyLiked(data);
-      }) 
+      })
       .catch(error => console.error('Error fetching data:', error));
   }, [reloadLike, props.info._links, props.token]);
 
@@ -121,7 +123,7 @@ function Post(props) {
   };
 
   const showLike = () => {
-    setShowLikesPopper(true); 
+    setShowLikesPopper(true);
   };
 
   const handleSend = async () => {
@@ -154,6 +156,31 @@ function Post(props) {
         ))}
       </>
     );
+  };
+
+  const handleShareClick = () => {
+    setShowSharePopper(true);
+  };
+
+  const handleSharePost = async (shareContent) => {
+    try {
+      const response = await fetch(props.info._links["createShare"].href, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + props.token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(shareContent )
+      });
+
+      if (response.ok) {
+        console.log('Post shared successfully');
+      } else {
+        console.error('Error sharing post:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error sharing post:', error);
+    }
   };
 
   const toggleComments = () => {
@@ -209,8 +236,6 @@ function Post(props) {
             <div></div>
           ) : (
             <ImageWithToken CName={"centered-image"} type={"post/postImage"} userinfo={props.id} token={props.token}></ImageWithToken>
-
-            // <img src={`http://localhost:8080/post/postImage/${props.info.id}`} alt="" />
           )
         ) : props.type === "real" ? (
           <video src={`http://localhost:8080/post/getVideo/${props.id}`} alt=""></video>
@@ -225,7 +250,7 @@ function Post(props) {
       <div className="actions">
         <div>{handleLike()}</div>
         <div className="innn"><a href={`#${props.id}`}>Comment</a></div>
-        <div onClick={handleComment}>Share</div>
+        <div onClick={handleShareClick}>Share</div>
       </div>
 
       <div className="addComment">
@@ -248,14 +273,20 @@ function Post(props) {
 
       {showLikesPopper && (
         <div className="likes-popper">
-                      <span className="close-button" onClick={() => setShowLikesPopper(false)}>&times;</span>
-
+          <span className="close-button" onClick={() => setShowLikesPopper(false)}>&times;</span>
           <div className="likes-popper-content">
             {postLike.map((like) => (
               <ShowPostLikes key={like.id} userName={like.user} type={like.type} />
             ))}
           </div>
         </div>
+      )}
+
+      {showSharePopper && (
+        <Share 
+          onClose={() => setShowSharePopper(false)} 
+          onShare={handleSharePost} 
+        />
       )}
     </div>
   );
