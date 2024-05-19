@@ -2,27 +2,44 @@ import { useState, useEffect } from "react";
 import './Profile.css';
 import Post from "./Post.jsx";
 import ImageWithToken from "./ImageWithToken.jsx";
+import ShowShare from "./ShowShare.jsx";
 
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
+    const [userShares, setUserShares] = useState([]);
+
     const [render, setRender] = useState([]);
 const renderFunction=()=>{
     setRender(!render);
 }
-    useEffect(() => {
-        console.log("USEEFFECT == " );
-        fetch(`http://localhost:8080/post/number/post/${props.userinfo.userid}`, {
-          headers: {
-            'Authorization': 'Bearer ' + props.token
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-            setNumberOfPosts(data);
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }, [ render]);
+useEffect(() => {
+    console.log("USEEFFECT == " );
+    fetch(`http://localhost:8080/post/number/post/${props.userinfo.userid}`, {
+      headers: {
+        'Authorization': 'Bearer ' + props.token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+        setNumberOfPosts(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}, [ render]);
+
+useEffect(() => {
+    console.log("USEEFFECT == " );
+    fetch(`http://localhost:8080/post/users/${props.userinfo.userid}/shares`, {
+      headers: {
+        'Authorization': 'Bearer ' + props.token
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+        setUserShares(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}, [ render]);
 
     const fetchFriends = async () => {
         try {
@@ -91,8 +108,18 @@ const renderFunction=()=>{
                  
                 ))}
 </div>
-
-
+<div className="shares">
+                {userShares.map((share) => (
+                    <ShowShare
+                        key={share.id} 
+                        postId={share.postId}
+                        token={props.token}
+                        shareContent={share.content}
+                        userImage={props.userinfo.image}
+                        renderFunction={renderFunction}
+                    />
+                ))}
+            </div>
 
         </div>
     );
