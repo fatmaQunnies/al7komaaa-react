@@ -122,3 +122,49 @@
     .edit-del-btn {
       margin-left: auto; /* Push the EditDelBtn to the right */
     }
+
+
+
+
+
+/* Post.css */
+.likes-popper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  z-index: 1000;
+  width: 300px; /* يمكنك تعديل العرض حسب الحاجة */
+  padding: 20px;
+}
+
+.likes-popper-content {
+  position: relative;
+  gap: 10%;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* ShowPostLikes.css */
+.like {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #a8a8a8c2;
+}
+
+.like p {
+  margin: 0;
+}
+
+
+    
