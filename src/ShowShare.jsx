@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Post from "./Post.jsx";
+import ImageWithToken from './ImageWithToken.jsx';
 
 function ShowShare(props) {
     const [postContent, setPostContent] = useState(null);
@@ -14,15 +15,19 @@ function ShowShare(props) {
         .then(response => response.json())
         .then(data => {
             setPostContent(data);
-          
+      
         })
         .catch(error => console.error('Error fetching data:', error));
     }, [props.postId, props.token]);
 
     return (
         <div className='like'>
-            {props.shareContent}
-            <div className="post">
+          
+            <div className="post"> 
+            <div className='sharee' > 
+            <ImageWithToken CName={"imageShare"} type={"getImage"} userinfo={props.userId} token={props.token} />
+            {props.userName}</div>
+           <div className='content'> {props.shareContent}</div>
                 {postContent && (
                     <Post
                         className="post"

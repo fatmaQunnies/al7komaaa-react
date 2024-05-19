@@ -47,6 +47,8 @@ body, html {
     border: 5px solid white;
 }
 
+
+
 .user-info {
     text-align: center;
     background: white;
@@ -131,8 +133,48 @@ body, html {
     color: gray;
 }
 
-.posts, .shares {
-    /* Your existing styles */
+
+.sharee img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.sharee{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+.content{
+    text-align: left;
+    margin-left: 7%;
 }
 
+.toggle-buttons button:not(.active) {
+    color: rgb(0, 0, 0);
+}
+.view-switch {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
 
+.view-switch button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    background-color: #aaaaaa;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.view-switch button.active {
+    background-color: #007bff;
+    color: #000000;
+}
+
+.view-switch button:hover {
+    background-color: #0056b3;
+    color: #000000;
+}

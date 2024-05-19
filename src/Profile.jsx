@@ -4,12 +4,12 @@ import Post from "./Post.jsx";
 import ImageWithToken from "./ImageWithToken.jsx";
 import ShowShare from "./ShowShare.jsx";
 
-function Profile(props) {
+function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
     const [userShares, setUserShares] = useState([]);
     const [render, setRender] = useState(false);
-    const [showPosts, setShowPosts] = useState(true); // State to toggle between posts and shares
+    const [view, setView] = useState('posts'); // حالة جديدة للتحكم في العرض
 
     const renderFunction = () => {
         setRender(!render);
@@ -26,7 +26,7 @@ function Profile(props) {
             setNumberOfPosts(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, [render, props.token, props.userinfo.userid]);
+    }, [render]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/post/users/${props.userinfo.userid}/shares`, {
@@ -39,28 +39,28 @@ function Profile(props) {
             setUserShares(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, [render, props.token, props.userinfo.userid]);
+    }, [render]);
+
+    const fetchFriends = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/post/${props.userinfo.id}/user`, {
+                headers: {
+                    'Authorization': 'Bearer ' + props.token
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setUserPosts(data._embedded.posts);
+        } catch (error) {
+            console.error('Error fetching friends:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchFriends = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/post/${props.userinfo.id}/user`, {
-                    headers: {
-                        'Authorization': 'Bearer ' + props.token
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setUserPosts(data._embedded.posts);
-            } catch (error) {
-                console.error('Error fetching friends:', error);
-            }
-        };
-
         fetchFriends();
-    }, [render, props.token, props.userinfo.id]);
+    }, [render]);
 
     return (
         <div className="profile-container">
@@ -81,27 +81,18 @@ function Profile(props) {
                     </div>
                     <div className="stat">
                         <p>Friends</p>
+                        {/* <p>{props.numoffriend}</p> */}
                     </div>
                 </div>
             </div>
 
-            <div className="toggle-buttons">
-                <button 
-                    onClick={() => setShowPosts(true)} 
-                    className={showPosts ? 'active' : ''}
-                >
-                    Posts
-                </button>
-                <button 
-                    onClick={() => setShowPosts(false)} 
-                    className={!showPosts ? 'active' : ''}
-                >
-                    Shares
-                </button>
+            <div className="view-switch">
+                <button onClick={() => setView('posts')} className={view === 'posts' ? 'active' : ''}>Posts</button>
+                <button onClick={() => setView('shares')} className={view === 'shares' ? 'active' : ''}>Shares</button>
             </div>
 
-            {showPosts ? (
-                <div className="posts">
+            {view === 'posts' ? (
+                <div className="post">
                     {userPosts.map((post) => (
                         <Post
                             className="post"
@@ -120,11 +111,13 @@ function Profile(props) {
                 <div className="shares">
                     {userShares.map((share) => (
                         <ShowShare
-                            key={share.id} 
+                            key={share.id}
                             postId={share.postId}
                             token={props.token}
                             shareContent={share.content}
                             userImage={props.userinfo.image}
+                            userName={props.userinfo.username}
+                            userId={props.userinfo.id}
                             renderFunction={renderFunction}
                         />
                     ))}
