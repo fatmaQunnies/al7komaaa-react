@@ -37,7 +37,7 @@ function App(props) {
     const [friends, setFriends] = useState([]);
     const [userId, setUserId] = useState(0);
     const [userfriend, setUserFriend] = useState([]);
-
+    let count = 0;
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -268,6 +268,7 @@ function App(props) {
                                         userId={userId}
                                         userImage={userImage}
                                         type={"post"}
+                                        userName = {userInfo.username}
                                     />
                                 ))}
                             </div>
@@ -284,7 +285,7 @@ function App(props) {
                     <Route path="/profile" element={<>
                         <CreatePost token={token} userInfo={userInfo}></CreatePost>
 
-                    <Profile key={userId} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} /></>} />
+                    <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} /></>} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
                     <Route path="/Reel" element={<div id="Real">
                     <CreatePost token={token} userInfo={userInfo}></CreatePost>
@@ -299,6 +300,7 @@ function App(props) {
                                 userId={userId}
                                 userImage={userImage}
                                 type={"Real"}
+                                userName = {userInfo.username}
                             />
                         ))}
                     </div>} />

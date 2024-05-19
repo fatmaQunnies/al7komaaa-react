@@ -16,7 +16,7 @@ function Post(props) {
   const [reload, setReload] = useState(false);
   const [reloadLike, setReloadLike] = useState(false);
   const [numberComment, setNumberComment] = useState(0);
-  const [myLiked, setMyLiked] = useState(null);
+  const [myLiked, setMyLiked] = useState([]);
 
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -107,8 +107,9 @@ function Post(props) {
     })
       .then(response => response.json())
       .then(data => {
-        setMyLiked(data[0] === undefined ? null : data[0]);
-      })
+        setMyLiked(data );
+        // alert(data);
+      }) 
       .catch(error => console.error('Error fetching data:', error));
   }, [reloadLike, props.info._links, props.token]);
 
@@ -213,7 +214,7 @@ function Post(props) {
 
       <div className="numberLikeComment">
         <div>{postLike.length} Likes </div>
-        <div onClick={toggleComments}>{postComment.length} Comments</div>
+        <div onClick={toggleComments}>{numberComment} Comments</div>
       </div>
 
       <div className="actions">

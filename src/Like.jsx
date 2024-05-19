@@ -4,10 +4,15 @@ import './Like.css';
 function Like(props) {
   const [reaction, setReaction] = useState(null); 
   const [reactionVisible, setReactionVisible] = useState(false);
-  const [isLiked, setIsLiked] = useState();
-  const [likeIdFromPost,setLikeIdFromPost]= useState();
-// alert(props.isLikee[0].likeId);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeIdFromPost, setLikeIdFromPost] = useState(null);
 
+  useEffect(() => {
+    if (props.isLikee.length !== 0) {
+      setIsLiked(true);
+      setLikeIdFromPost(props.isLikee[0].likeId);  // Assuming isLikee contains like details
+    }
+  }, [props.isLikee]);
 
   const handleReaction = async (reactionType) => {
     setReaction(reactionType);
@@ -28,7 +33,6 @@ function Like(props) {
        
         setIsLiked(true); 
         setLikeIdFromPost(data.likeId);
-        console.log(data);
         props.reload();
       } else {
         console.error('Error posting reaction:', response.statusText);
@@ -37,24 +41,31 @@ function Like(props) {
       console.error('Error fetching data:', error);
     }
   };
+
   const handleUnReaction = async () => {
     setReaction(null);
     setReactionVisible(false);
-    setIsLiked(false)
-    const resp = await fetch("http://localhost:8080/post/"+likeIdFromPost+"/like", {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + props.token,
-        'Content-Type': 'application/json'
+    setIsLiked(false);
+    
+    try {
+      const response = await fetch("http://localhost:8080/post/" + likeIdFromPost + "/like", {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + props.token,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        props.reload();
+      } else {
+        console.error('Error deleting reaction:', response.statusText);
       }
-    })
-    .then(response => response.json()) 
-    .then(data => {
-      
-      console.log(data +"ssssssssssddsdssssssssssss");
-    })
-    .catch(error => console.error('Error fetching data:', error));
-  }    
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };    
+
   return (
     <div style={{width:"100%"}}>
       <button
