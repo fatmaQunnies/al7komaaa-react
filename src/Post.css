@@ -120,14 +120,10 @@
       margin: 0%;
     }
     .edit-del-btn {
-      margin-left: auto; /* Push the EditDelBtn to the right */
+      margin-left: auto; 
     }
 
 
-
-
-
-/* Post.css */
 .likes-popper {
   position: fixed;
   top: 50%;
@@ -137,7 +133,7 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   z-index: 1000;
-  width: 300px; /* يمكنك تعديل العرض حسب الحاجة */
+  width: 300px;
   padding: 20px;
 }
 
@@ -154,7 +150,7 @@
   cursor: pointer;
 }
 
-/* ShowPostLikes.css */
+
 .like {
   display: flex;
   justify-content: space-between;
@@ -167,4 +163,3 @@
 }
 
 
-    

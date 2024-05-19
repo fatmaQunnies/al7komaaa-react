@@ -197,7 +197,7 @@ function Post(props) {
         </div>
         <div className="edit-del-btn">
           {userInfo && (
-            <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} />
+            <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
           )}
         </div>
       </div>
