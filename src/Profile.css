@@ -90,4 +90,49 @@ body, html {
     font-size: 1.5em;
     color: #333;
 }
+/* Profile.css */
+.profile-container {
+    /* Your existing styles */
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-buttons button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.toggle-buttons button.active {
+    font-weight: bold;
+    color: black;
+}
+
+.toggle-buttons button.active::after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    height: 3px;
+    width: 100%;
+    background: black;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.toggle-buttons button:not(.active) {
+    color: gray;
+}
+
+.posts, .shares {
+    /* Your existing styles */
+}
+
 
