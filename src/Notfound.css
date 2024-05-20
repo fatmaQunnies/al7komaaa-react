@@ -1,0 +1,21 @@
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  
+  .navbar ul li {
+    margin-right: 20px;
+  }
+  
+  .navbar ul li a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .left .navbar ul {
+    display: flex;
+    flex-direction: column;
+  }
+  

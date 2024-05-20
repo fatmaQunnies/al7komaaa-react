@@ -1,44 +1,85 @@
 .App {
   text-align: center;
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+  grid-template-rows: auto auto;
+  grid-template-areas: 
+    
+    "left middle right"
+    "left-down middle right"; 
+    width: 100%;
+    margin-top: 3%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.left {
+  grid-area: left;
+height: 30%;
+  margin-left: 3%;
+  gap: 3%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.right {
+  grid-area: right;
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.left-down {
+  grid-area: left-down;
+  margin-top: 20%;
+
+  
+ margin-left: 3%;
+
+}
+
+.middle {
+  grid-area: middle;
+
+ margin-left: 5%;
+ margin-right: 5%;
+
+}
+.nav {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #333;
   color: white;
+  height: 3em;
 }
 
-.App-link {
-  color: #61dafb;
+.nav h1 {
+  font-family: "Lobster", cursive;
+  margin-right: auto;
 }
-.post {
-  border: 1px solid black;
-  margin: 20px;
-  padding: 10px;
-  background-color: rgb(255, 255, 255);
 
+.nav img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-top: 25px;
 }
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.search-container {
+  display: flex;
+  flex-grow: 1; 
+  justify-content: center; 
+}
+
+.search-box {
+  width: 200px;
+  height: 40px;
+  background-color: #555;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  color: white;
+  text-align: center;
+}
+.notification{
+  position: 100;
+text-align: center;
+
 }

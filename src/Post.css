@@ -1,11 +1,19 @@
+.post {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
 
 .userNameImage {
   display: flex;
-  
+  align-items: center;
 }
 
-
 .userNameImage img {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
@@ -52,7 +60,7 @@
     .actions div {
       display: flex;
       align-items: center;
-      padding: 5px 10px;
+     
       border: none;
       width: 100rem;
       background-color: #6c757d;
@@ -108,3 +116,50 @@
       color: white;
       text-decoration: none;
     }
+    .post{
+      margin: 0%;
+    }
+    .edit-del-btn {
+      margin-left: auto; 
+    }
+
+
+.likes-popper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  z-index: 1000;
+  width: 300px;
+  padding: 20px;
+}
+
+.likes-popper-content {
+  position: relative;
+  gap: 10%;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.like {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #a8a8a8c2;
+}
+
+.like p {
+  margin: 0;
+}
+
+

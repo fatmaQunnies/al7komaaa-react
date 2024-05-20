@@ -5,28 +5,14 @@ function Like(props) {
   const [reaction, setReaction] = useState(null); 
   const [reactionVisible, setReactionVisible] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [likeId, setLikeId] = useState(props.likeIdFromPost);
-  const [likeIdFromPost,setLikeIdFromPost]= useState(0);
+  const [likeIdFromPost, setLikeIdFromPost] = useState(null);
 
-useEffect(() => {
-  console.log("USEEFFECTjjjj");
-  fetch(props.isLikee, {
-    headers: {
-      'Authorization': 'Bearer ' + props.token
+  useEffect(() => {
+    if (props.isLikee.length !== 0) {
+      setIsLiked(true);
+      setLikeIdFromPost(props.isLikee[0].likeId);  // Assuming isLikee contains like details
     }
-  })
-  .then(response => response.json()) 
-  .then(data => {
-    const likeByUser = data.find(like => like.user === props.userName && like.postId === props.postId);
-    console.log("likeByUser:", likeByUser); 
-    setIsLiked(likeByUser !== undefined); 
-    if (likeByUser) {
-      setLikeIdFromPost(likeByUser.likeId);
-      console.log("ككككك" + likeIdFromPost);
-    }
-  })
-  .catch(error => console.error('Error fetching data:', error));
-}, [props.isLikee, props.token, props.userName, props.postId]); 
+  }, [props.isLikee]);
 
   const handleReaction = async (reactionType) => {
     setReaction(reactionType);
@@ -44,10 +30,9 @@ useEffect(() => {
 
       if (response.ok) {
         const data = await response.json();
-        setLikeId(data.likeId);
+       
         setIsLiked(true); 
         setLikeIdFromPost(data.likeId);
-        console.log(data);
         props.reload();
       } else {
         console.error('Error posting reaction:', response.statusText);
@@ -56,23 +41,31 @@ useEffect(() => {
       console.error('Error fetching data:', error);
     }
   };
+
   const handleUnReaction = async () => {
     setReaction(null);
     setReactionVisible(false);
-    setIsLiked(false)
-    const resp = await fetch("http://localhost:8080/post/"+likeIdFromPost+"/like", {
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + props.token,
-        'Content-Type': 'application/json'
+    setIsLiked(false);
+    
+    try {
+      const response = await fetch("http://localhost:8080/post/" + likeIdFromPost + "/like", {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + props.token,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        props.reload();
+      } else {
+        console.error('Error deleting reaction:', response.statusText);
       }
-    })
-    .then(response => response.json()) 
-    .then(data => {
-      console.log(data +"ssssssssssddsdssssssssssss");
-    })
-    .catch(error => console.error('Error fetching data:', error));
-  }    
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };    
+
   return (
     <div style={{width:"100%"}}>
       <button
