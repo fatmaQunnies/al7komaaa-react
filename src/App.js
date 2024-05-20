@@ -103,29 +103,56 @@ function App(props) {
         .catch((error) => console.error("Error fetching data:", error));
     }, [reload]);
 
-    const handReadMore = async () => {
-        try {
-            const response = await fetch(readMore._links["read more"].href, {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-            });
-            const responseData = await response.json();
-            if (response.ok) {
-                const newPosts = responseData._embedded.posts.filter((newPost) => {
-                    return !postContent.some((oldPost) => oldPost.id === newPost.id);
-                });
-                setPostContent([...postContent, ...newPosts]);
-            } else {
-                console.error("Error:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+    // const handReadMore = async () => {
+    //     try {
+    //         const response = await fetch(readMore._links["read more"].href, {
+    //             method: "GET",
+    //             headers: {
+    //                 Authorization: "Bearer " + token,
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
+    //         const responseData = await response.json();
+    //         if (response.ok) {
+    //             const newPosts = responseData._embedded.posts.filter((newPost) => {
+    //                 return !postContent.some((oldPost) => oldPost.id === newPost.id);
+    //             });
+    //             setPostContent([...postContent, ...newPosts]);
+    //         } else {
+    //             console.error("Error:", response.statusText);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // };
+    const [readMoreTriggered, setReadMoreTriggered] = useState(false);
 
+    // const handReadMore = async () => {
+    //     if (!readMoreTriggered) {
+    //         try {
+    //             const response = await fetch(readMore._links["read more"].href, {
+    //                 method: "GET",
+    //                 headers: {
+    //                     Authorization: "Bearer " + token,
+    //                     "Content-Type": "application/json",
+    //                 },
+    //             });
+    //             const responseData = await response.json();
+    //             if (response.ok) {
+    //                 const newPosts = responseData._embedded.posts.filter((newPost) => {
+    //                     return !realContent.some((oldPost) => oldPost.id === newPost.id);
+                       
+    //                 });
+    //                 setRealContent([...realContent, ...newPosts]);
+    //                 setReadMoreTriggered(true); // Set the flag to true after triggering
+    //             } else {
+    //                 console.error("Error:", response.statusText);
+    //             }
+    //         } catch (error) {
+    //             console.error("Error fetching data:", error);
+    //         }
+    //     }
+    // };
     useEffect(() => {
         fetch("http://localhost:8080/post/reels", {
             headers: {
@@ -153,6 +180,7 @@ function App(props) {
             if (response.ok) {
                 const newPosts = responseData._embedded.posts.filter((newPost) => {
                     return !realContent.some((oldPost) => oldPost.id === newPost.id);
+                   
                 });
                 setRealContent([...realContent, ...newPosts]);
             } else {
@@ -230,6 +258,7 @@ function App(props) {
         }
     };
 
+   
     return (
         <Router>
             <div className="nav">
@@ -270,7 +299,17 @@ function App(props) {
                                         type={"post"}
                                         userName = {userInfo.username}
                                     />
+                                   
                                 ))}
+                                { window.onscroll = function() {
+                                     
+                                        if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
+                                        
+                                        handReadMoreReal();
+                                           
+                                     
+                                      console.log("reeeeeeeeeedddddddddddddmmmmmoooooorrrreee")
+                                    }}}
                             </div>
                         }
                     />
