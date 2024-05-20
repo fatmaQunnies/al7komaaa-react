@@ -1,0 +1,180 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.images .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.images .centered-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    z-index: 2;
+    border: 5px solid white;
+}
+
+
+
+.user-info {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.user-info h1 {
+    margin: 0;
+    font-size: 2em;
+    color: #333;
+}
+
+.user-info p {
+    margin: 10px 0;
+    color: #777;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.stat {
+    margin: 0 20px;
+    text-align: center;
+}
+
+.stat p {
+    margin: 5px 0;
+}
+
+.stat p:first-child {
+    font-weight: bold;
+    color: #555;
+}
+
+.stat p:last-child {
+    font-size: 1.5em;
+    color: #333;
+}
+/* Profile.css */
+.profile-container {
+    /* Your existing styles */
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-buttons button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.toggle-buttons button.active {
+    font-weight: bold;
+    color: black;
+}
+
+.toggle-buttons button.active::after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    height: 3px;
+    width: 100%;
+    background: black;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.toggle-buttons button:not(.active) {
+    color: gray;
+}
+
+
+.sharee img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.sharee{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+.content{
+    text-align: left;
+    margin-left: 7%;
+}
+
+.toggle-buttons button:not(.active) {
+    color: rgb(0, 0, 0);
+}
+.view-switch {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.view-switch button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    background-color: #aaaaaa;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.view-switch button.active {
+    background-color: #007bff;
+    color: #000000;
+}
+
+.view-switch button:hover {
+    background-color: #0056b3;
+    color: #000000;
+}
