@@ -1,21 +1,21 @@
 /* EditProfileImage.css */
 
-.edit-profile-image-container {
+.edit-profile-image-containerr {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
 }
 
-.edit-profile-image-container h2 {
+.edit-profile-image-containerr h2 {
     margin-bottom: 20px;
 }
 
-.edit-profile-image-container input[type="file"] {
+.edit-profile-image-containerr input[type="file"] {
     margin-bottom: 20px;
 }
 
-.edit-profile-image-container button {
+.edit-profile-image-containerr button {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -25,6 +25,6 @@
     transition: background-color 0.3s;
 }
 
-.edit-profile-image-container button:hover {
+.edit-profile-image-containerr button:hover {
     background-color: #0056b3;
 }

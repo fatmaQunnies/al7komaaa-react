@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './EditProfileImage.css';
 
-function EditProfileImage() {
+function EditProfileImage(props) {
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleFileChange = (event) => {
@@ -13,14 +13,17 @@ function EditProfileImage() {
             const formData = new FormData();
             formData.append('file', selectedFile);
 
-            const response = await fetch('/editImage', {
-                method: 'PUT',
+            const response = await fetch(`http://localhost:8080/editImage`, {
+                method: 'PUT', 
+                headers: {
+                    'Authorization': 'Bearer ' + props.token
+                  },
                 body: formData,
             });
 
             if (response.ok) {
-                // Image uploaded successfully, you can redirect or show a success message
-                window.location.href = '/editProfile'; // Redirect to edit profile page
+              
+                console.log("Image uploaded:", response);
             } else {
                 console.error('Failed to upload image');
             }
@@ -30,7 +33,7 @@ function EditProfileImage() {
     };
 
     return (
-        <div className="edit-profile-image-container">
+        <div className="edit-profile-image-containerr">
             <h2>Edit Profile Image</h2>
             <input type="file" onChange={handleFileChange} />
             <button onClick={handleUpload}>Upload Image</button>

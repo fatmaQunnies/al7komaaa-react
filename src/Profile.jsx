@@ -1,24 +1,45 @@
 import { useState, useEffect } from "react"; 
 import './Profile.css';
 import Post from "./Post.jsx";
+import ImageWithToken from "./ImageWithToken.jsx";
+import ShowShare from "./ShowShare.jsx";
 
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
-// alert( props.userinfo.userid);
+    const [userShares, setUserShares] = useState([]);
+    const [render, setRender] = useState(false);
+    const [view, setView] = useState('posts'); // حالة جديدة للتحكم في العرض
+
+    const renderFunction = () => {
+        setRender(!render);
+    };
+
     useEffect(() => {
-        console.log("USEEFFECT == " );
         fetch(`http://localhost:8080/post/number/post/${props.userinfo.userid}`, {
-          headers: {
-            'Authorization': 'Bearer ' + props.token
-          }
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
         })
         .then(response => response.json())
         .then(data => {
             setNumberOfPosts(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    }, [render]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/post/users/${props.userinfo.userid}/shares`, {
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            setUserShares(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, [render]);
 
     const fetchFriends = async () => {
         try {
@@ -32,7 +53,6 @@ function Profile(props){
             }
             const data = await response.json();
             setUserPosts(data._embedded.posts);
-            console.log('datamaimami miam mia mia mia mia mia mia ', data._embedded.posts);
         } catch (error) {
             console.error('Error fetching friends:', error);
         }
@@ -40,14 +60,14 @@ function Profile(props){
 
     useEffect(() => {
         fetchFriends();
-    }, []);
+    }, [render]);
 
-    return(
+    return (
         <div className="profile-container">
             <div className="header">
                 <div className="images">
-                    <img className="background" src={`http://localhost:8080/backgroundImage/${props.userinfo.userid}`} alt="background" />
-                    <img className="centered-image" src={`http://localhost:8080/getImage/${props.userinfo.userid}`} alt="centered" />
+                    <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
+                    <ImageWithToken CName={"background"} type={"backgroundImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
                 </div>
             </div>
             <div className="user-info">
@@ -66,27 +86,43 @@ function Profile(props){
                 </div>
             </div>
 
+            <div className="view-switch">
+                <button onClick={() => setView('posts')} className={view === 'posts' ? 'active' : ''}>Posts</button>
+                <button onClick={() => setView('shares')} className={view === 'shares' ? 'active' : ''}>Shares</button>
+            </div>
 
-<div className="post">
-
-{userPosts.map((post) => (
-    <Post
-  className="post"
-  key={post.id}
-  id={post.id}
-  token={props.token}
-  info={post}
-  userName={props.userinfo.userName}
-  userImage={props.userinfo.image}
-  type={post.video != null ? "Real" : "post"}
-/>
-
-                 
-                ))}
-</div>
-
-
-
+            {view === 'posts' ? (
+                <div className="post">
+                    {userPosts.map((post) => (
+                        <Post
+                            className="post"
+                            key={post.id}
+                            id={post.id}
+                            token={props.token}
+                            info={post}
+                            userId={props.userId}
+                            userImage={props.userinfo.image}
+                            renderFunction={renderFunction} 
+                            type={post.video != null ? "Real" : "post"}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div className="shares">
+                    {userShares.map((share) => (
+                        <ShowShare
+                            key={share.id}
+                            postId={share.postId}
+                            token={props.token}
+                            shareContent={share.content}
+                            userImage={props.userinfo.image}
+                            userName={props.userinfo.username}
+                            userId={props.userinfo.id}
+                            renderFunction={renderFunction}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }

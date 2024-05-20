@@ -4,18 +4,19 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom'; // Import Router from react-router-dom
 import Notfound from './Notfound.jsx';
 import Navbar from './Navbar.jsx';
+import ImageWithToken from "./ImageWithToken.jsx";
 
 
 function LeftList(props) {
    
   const [numfeiend,setNumfeiend]=useState();
-  const [id, setId] = useState(props.data.id);
+  const [id, setId] = useState(props.data.userid);
 
-  
+  // alert(props.data.userid);
 
   useEffect(() => {
-    console.log("USEEFFECT == " + props.data.id);
-    fetch(`http://localhost:8080/count/userFriend/${props.data.id}`, {
+    // console.log("USEEFFECT ==keeyyyy " + props.key);
+    fetch(`http://localhost:8080/count/userFriend/${props.data.userid}`, {
       headers: {
         'Authorization': 'Bearer ' + props.token
       }
@@ -31,7 +32,9 @@ function LeftList(props) {
   return (
     <div className="left-list">
         
-      <img src={`http://localhost:8080/getImage/${props.data.id}`} alt="User" />
+        <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.data.userid} token={props.token}></ImageWithToken>
+
+      {/* <img src={`http://localhost:8080/getImage/${props.data.userid}`} alt="User" /> */}
       <h1>{props.data.username}</h1>
       <p>{props.data.bio}</p>
       <p>{numfeiend}</p>
