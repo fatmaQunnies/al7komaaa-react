@@ -37,6 +37,8 @@ function App(props) {
     const [friends, setFriends] = useState([]);
     const [userId, setUserId] = useState(0);
     const [userfriend, setUserFriend] = useState([]);
+        // const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
+
     let count = 0;
     useEffect(() => {
         const fetchUserData = async () => {
@@ -279,15 +281,10 @@ function App(props) {
                                 { window.onscroll = function() {
                                      
                                         if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
-                                        
-                                         setTimeout(() => {
-                                             handReadMore();  
-                                            console.log("reeeeeeeeeedddddddddddddmmmmmoooooorrrreee")
-
-                                         }, 1000);  
                                            
-                                     
-                                    }}}
+        handReadMore();
+        console.log("READ MOREEEEE")}}};
+    
                             </div>
                         }
                     />
