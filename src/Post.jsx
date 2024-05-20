@@ -235,10 +235,10 @@ function Post(props) {
           props.info.image == null ? (
             <div></div>
           ) : (
-            <ImageWithToken CName={"centered-image"} type={"post/postImage"} userinfo={props.id} token={props.token}></ImageWithToken>
+            <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.id} token={props.token}></ImageWithToken>
           )
-        ) : props.type === "real" ? (
-          <video src={`http://localhost:8080/post/getVideo/${props.id}`} alt=""></video>
+        ) : props.type === "Real" ? (
+          <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.id} token={props.token}></ImageWithToken>
         ) : null}
       </div>
 

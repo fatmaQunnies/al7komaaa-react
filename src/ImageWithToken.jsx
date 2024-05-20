@@ -29,7 +29,19 @@ function ImageWithToken(props) {
     }, []);
 
     return (
-        <img className={props.CName} src={imageSrc} alt="centered" />
+        // <img className={props.CName} src={imageSrc} alt="centered" />
+        <>
+        {props.type === 'getImage' ? (
+            <img className={props.CName} src={imageSrc} alt="centered" />
+        ) : props.type === 'post/getVideo' ? (
+            <video controls width="600">
+            <source src={imageSrc}  type="video/mp4">
+              </source>
+          </video>
+           
+        ) : null}
+    </>
+
     );
 }
 
