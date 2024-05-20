@@ -31,11 +31,11 @@ function ImageWithToken(props) {
     return (
         // <img className={props.CName} src={imageSrc} alt="centered" />
         <>
-        {props.type === 'getImage' ? (
+        {props.type === 'post/postImage' ? (
             <img className={props.CName} src={imageSrc} alt="centered" />
         ) : props.type === 'post/getVideo' ? (
             <video controls width="600">
-            <source src={imageSrc}  type="video/mp4">
+<source src={`http://localhost:8080/${props.type}/${props.userinfo}`} type="video/mp4">
               </source>
           </video>
            

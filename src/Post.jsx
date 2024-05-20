@@ -211,7 +211,7 @@ function Post(props) {
       console.error('Error fetching data:', error);
     }
   };
-
+// alert(props.info.id);
   return (
     <div className="post">
       <div className="userNameImage">
@@ -235,7 +235,7 @@ function Post(props) {
           props.info.image == null ? (
             <div></div>
           ) : (
-            <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.id} token={props.token}></ImageWithToken>
+            <ImageWithToken CName={"centered-image"} type={"post/postImage"} userinfo={props.id} token={props.token}></ImageWithToken>
           )
         ) : props.type === "Real" ? (
           <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.id} token={props.token}></ImageWithToken>
