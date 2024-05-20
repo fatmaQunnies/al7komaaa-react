@@ -12,11 +12,13 @@ function EditDelBtn(props) {
   const [enableToDelete, setEnableToDelete] = useState(false);
 
   const isOwner = () => {
+   
     if (props.ownerPost === props.userId) {
       setPostOwner(true);
     } else {
       setPostOwner(false);
     }
+   
   };
 
   useEffect(() => {
@@ -46,7 +48,11 @@ function EditDelBtn(props) {
   };
 
   const handleDelete = () => {
+    console.log ("delete buttomj");
+    if(props.type == "post"){
+      console.log ("delete post");
     fetch(`http://localhost:8080/post/${props.id}`, {
+      
       method: 'DELETE',
       headers: {
         'Authorization': 'Bearer ' + props.token
@@ -58,7 +64,27 @@ function EditDelBtn(props) {
       }
     })
     .catch(error => console.error('Error removing post:', error));
-  };
+  }
+  else if (props.type == "comment"){
+    console.log ("delete comment");
+    fetch(`http://localhost:8080/post/comment/${props.id}`, {
+    
+    method: 'DELETE',
+    headers: {
+      
+      'Authorization': 'Bearer ' + props.token
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      props.renderFunction();
+    }
+  })
+  .catch(error => console.error('Error removing post:', error));
+
+  }
+
+};
 
   const handleHide = () => {
     console.log("Hide clicked");
@@ -105,10 +131,13 @@ function EditDelBtn(props) {
   };
 
   return (
+    
     <div className="edit-container" ref={containerRef}>
+     
       <div className="edit" onClick={toggleOptions}>
         <span className="material-icons-outlined">edit</span>
       </div>
+   
       {showOptions && (
         <div className="edit-options">
           {postOwner ? (

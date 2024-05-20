@@ -152,7 +152,7 @@ function Post(props) {
     return (
       <>
         {postComment.map(comment => (
-          <Comment key={comment.id} comment={comment} info={userInfo} input={input} />
+          <Comment key={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
         ))}
       </>
     );
