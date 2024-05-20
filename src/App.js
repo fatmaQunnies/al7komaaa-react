@@ -103,56 +103,31 @@ function App(props) {
         .catch((error) => console.error("Error fetching data:", error));
     }, [reload]);
 
-    // const handReadMore = async () => {
-    //     try {
-    //         const response = await fetch(readMore._links["read more"].href, {
-    //             method: "GET",
-    //             headers: {
-    //                 Authorization: "Bearer " + token,
-    //                 "Content-Type": "application/json",
-    //             },
-    //         });
-    //         const responseData = await response.json();
-    //         if (response.ok) {
-    //             const newPosts = responseData._embedded.posts.filter((newPost) => {
-    //                 return !postContent.some((oldPost) => oldPost.id === newPost.id);
-    //             });
-    //             setPostContent([...postContent, ...newPosts]);
-    //         } else {
-    //             console.error("Error:", response.statusText);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error fetching data:", error);
-    //     }
-    // };
-    const [readMoreTriggered, setReadMoreTriggered] = useState(false);
+   
+    const handReadMore = async () => {
+            
+                const response = await fetch(readMore._links["read more"].href, {
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const responseData = await response.json();
+                if (response.ok) {
+                    const newPosts = responseData._embedded.posts.filter((newPost) => {
+                        return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                       console.log("REDEEEEMMMOOORRREEE")
+                    });
+                    setPostContent([...postContent, ...newPosts]);
+                 
 
-    // const handReadMore = async () => {
-    //     if (!readMoreTriggered) {
-    //         try {
-    //             const response = await fetch(readMore._links["read more"].href, {
-    //                 method: "GET",
-    //                 headers: {
-    //                     Authorization: "Bearer " + token,
-    //                     "Content-Type": "application/json",
-    //                 },
-    //             });
-    //             const responseData = await response.json();
-    //             if (response.ok) {
-    //                 const newPosts = responseData._embedded.posts.filter((newPost) => {
-    //                     return !realContent.some((oldPost) => oldPost.id === newPost.id);
-                       
-    //                 });
-    //                 setRealContent([...realContent, ...newPosts]);
-    //                 setReadMoreTriggered(true); // Set the flag to true after triggering
-    //             } else {
-    //                 console.error("Error:", response.statusText);
-    //             }
-    //         } catch (error) {
-    //             console.error("Error fetching data:", error);
-    //         }
-    //     }
-    // };
+                } else {
+                    console.error("Error:", response.statusText);
+                }
+           
+        
+    };
     useEffect(() => {
         fetch("http://localhost:8080/post/reels", {
             headers: {
@@ -305,10 +280,13 @@ function App(props) {
                                      
                                         if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
                                         
-                                        handReadMoreReal();
+                                         setTimeout(() => {
+                                             handReadMore();  
+                                            console.log("reeeeeeeeeedddddddddddddmmmmmoooooorrrreee")
+
+                                         }, 1000);  
                                            
                                      
-                                      console.log("reeeeeeeeeedddddddddddddmmmmmoooooorrrreee")
                                     }}}
                             </div>
                         }
