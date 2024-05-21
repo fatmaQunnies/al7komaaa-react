@@ -140,6 +140,7 @@ function Post(props) {
       if (response.ok) {
         setReload(!reload);
         console.log("Comment sent");
+       
       } else {
         console.error('Error:', response.statusText);
       }
@@ -152,7 +153,7 @@ function Post(props) {
     return (
       <>
         {postComment.map(comment => (
-          <Comment key={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
+          <Comment token={props.token} key={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
         ))}
       </>
     );
@@ -224,7 +225,7 @@ function Post(props) {
         </div>
         <div className="edit-del-btn">
           {userInfo && (
-            <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
+            <EditDelBtn  type={"post"} token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
           )}
         </div>
       </div>
