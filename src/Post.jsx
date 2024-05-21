@@ -6,7 +6,7 @@ import ImageWithToken from './ImageWithToken.jsx';
 import EditDelBtn from './EditDelBtn';
 import ShowPostLikes from './ShowPostLikes.jsx';
 import Share from './Share.jsx';
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
 import Profile from "./Profile.jsx";
 
 function Post(props) {
@@ -23,7 +23,7 @@ function Post(props) {
   const [myLiked, setMyLiked] = useState([]);
   const [showLikesPopper, setShowLikesPopper] = useState(false);
   const [showSharePopper, setShowSharePopper] = useState(false);
-
+let count =0;
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
       headers: {
@@ -214,7 +214,30 @@ function Post(props) {
       console.error('Error fetching data:', error);
     }
   };
-// alert(props.info.id);
+  // alert(props.info.userid);
+
+
+  const handleClick = () => {
+    console.log('Redirecting to profile...');
+   props.getUserId(props.info);
+props.getUserProfile(<Profile
+                        token={props.token}
+                        key={props.info.userid}
+                        userId={props.info.userid}
+                        userinfo={props.info}
+                    />);
+            // <Route path="/profile" element={
+            //     <>
+            //         {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
+                    
+
+            //     </>
+                
+            // } />
+   
+};
+
+  
   return (
     <div className="post">
       <div className="userNameImage">
@@ -222,11 +245,19 @@ function Post(props) {
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.userid} token={props.token} />
         )}
         <div>
-          {/* <a className="userNameAnchor" href="/Profile">{userInfo?.username}</a> */} key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend}
-          <Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
-  {userInfo?.username}
-  <Profile token={props.token} />
-</Link>
+          {/* <a className="userNameAnchor" href="/Profile">{userInfo?.username}</a>  */}
+          {/* <div onClick={handleClick }>
+          {userInfo?.username}
+        </div> */}
+<Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
+            {userInfo?.username}
+                  </Link>
+                  
+{/* <Router>
+      <Route path="/Setting" element={<Profile token={props.token} key={props.info.userid} userId={props.info.userid} userinfo={props.info} />} />
+    </Router> */}
+
+
           <p className="postDate">{props.info.timestamp}</p>
         </div>
         <div className="edit-del-btn">

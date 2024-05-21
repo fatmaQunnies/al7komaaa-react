@@ -108,25 +108,25 @@ function App(props) {
    
     const handReadMore = async () => {
             
-                const response = await fetch(readMore._links["read more"].href, {
-                    method: "GET",
-                    headers: {
-                        Authorization: "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                });
-                const responseData = await response.json();
-                if (response.ok) {
-                    const newPosts = responseData._embedded.posts.filter((newPost) => {
-                        return !postContent.some((oldPost) => oldPost.id === newPost.id);
-                       console.log("REDEEEEMMMOOORRREEE")
-                    });
-                    setPostContent([...postContent, ...newPosts]);
+                // const response = await fetch(readMore._links["read more"].href, {
+                //     method: "GET",
+                //     headers: {
+                //         Authorization: "Bearer " + token,
+                //         "Content-Type": "application/json",
+                //     },
+                // });
+                // const responseData = await response.json();
+                // if (response.ok) {
+                //     const newPosts = responseData._embedded.posts.filter((newPost) => {
+                //         return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                //        console.log("REDEEEEMMMOOORRREEE")
+                //     });
+                //     setPostContent([...postContent, ...newPosts]);
                  
 
-                } else {
-                    console.error("Error:", response.statusText);
-                }
+                // } else {
+                //     console.error("Error:", response.statusText);
+                // }
            
         
     };
@@ -240,7 +240,14 @@ function App(props) {
         }
     };
 
-   
+    const getUserId = (props) => {   
+        return props;
+    };
+    const getUserProfile = (props) => {   
+        return props;
+    };
+      
+
     return (
         <Router>
             <div className="nav">
@@ -280,6 +287,7 @@ function App(props) {
                                         userImage={userImage}
                                         type={"post"}
                                         userName = {userInfo.username}
+                                        getUserId={getUserId}
                                     />
                                    
                                 ))}
@@ -324,6 +332,20 @@ function App(props) {
                         ))}
                     </div>} />
                     <Route path="/Setting" element={<Setting token={token} />} />
+                    <Route path='/profile/getUserId.userid' element={
+                    <>  
+                         {/* <Profile
+                        token={token}
+                        key={getUserId.userid}
+                        userId={getUserId.userid}
+                        userinfo={getUserId}
+                    /> */}
+                    {getUserProfile}
+                    
+                    
+                    </> 
+                    } />
+
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/editImage" element={<EditProfileImage token={token} userId={userId}/>} />

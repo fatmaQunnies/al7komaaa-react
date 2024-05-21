@@ -10,7 +10,7 @@ function Profile(props){
     const [userShares, setUserShares] = useState([]);
     const [render, setRender] = useState(false);
     const [view, setView] = useState('posts'); // حالة جديدة للتحكم في العرض
-
+// alert(props.userinfo.userId);
     const renderFunction = () => {
         setRender(!render);
     };
