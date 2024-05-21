@@ -170,7 +170,7 @@ function App(props) {
             },
         })
         .then((response) => response.json())
-        .then((data) => {
+        .then((data) => {console.log(data)
             setUserFriend(data);
         })
         .catch((error) => console.error("Error fetching data:", error));
@@ -314,9 +314,17 @@ function App(props) {
                 </Routes>
 
                 <div className="right">
-                    {userfriend.map((fr) => (
-                        <RightList key={fr.id} token={token} userName={fr.username || 'Unknown User'} link={fr.links} />
-                    ))}
+                {userfriend && userfriend.length > 0 ? (
+    userfriend.map((fr) => (
+        <RightList 
+            key={fr.id} 
+            token={token} 
+            userName={fr.username || 'Unknown User'} 
+            link={fr.links} 
+        />
+    ))
+) : null}
+
                 </div>
             </div>
         </Router>
