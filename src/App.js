@@ -239,14 +239,27 @@ function App(props) {
                 friendsElement.classList.remove("middle");
         }
     };
+const[getUserIdd,setUserIdd]=useState();
+const[getUserIddd,setUserIddd]=useState();
 
-    const getUserId = (props) => {   
-        return props;
+    // const getUserId = (props) => {
+    //     // setUserIdd(props);
+       
+    //     return props;
+    // };
+    const getUserId = (props) => {
+        if (props && props !== getUserIdd) {
+            setUserIdd(props);
+          }
+      };
+    const getUserProfile = (props) => {  
+        if (props && props !== getUserIddd) {
+
+        setUserIddd(props);
+         
+       }
     };
-    const getUserProfile = (props) => {   
-        return props;
-    };
-      
+    //   alert(getUserIdd+`/profile/${getUserIdd}`);
 
     return (
         <Router>
@@ -288,6 +301,7 @@ function App(props) {
                                         type={"post"}
                                         userName = {userInfo.username}
                                         getUserId={getUserId}
+                                        getUserProfile={getUserProfile}
                                     />
                                    
                                 ))}
@@ -328,23 +342,17 @@ function App(props) {
                                 userImage={userImage}
                                 type={"Real"}
                                 userName = {userInfo.username}
+                                getUserId={getUserId()}
+                                getUserProfile={getUserProfile}
                             />
                         ))}
                     </div>} />
                     <Route path="/Setting" element={<Setting token={token} />} />
-                    <Route path='/profile/getUserId.userid' element={
-                    <>  
-                         {/* <Profile
-                        token={token}
-                        key={getUserId.userid}
-                        userId={getUserId.userid}
-                        userinfo={getUserId}
-                    /> */}
-                    {getUserProfile}
-                    
-                    
-                    </> 
-                    } />
+               
+                     <Route path={`/profile/${getUserIdd}`} element={getUserIddd} />
+                
+
+                 
 
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />

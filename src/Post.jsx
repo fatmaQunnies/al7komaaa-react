@@ -216,16 +216,22 @@ let count =0;
   };
   // alert(props.info.userid);
 
-
+// props.info
   const handleClick = () => {
     console.log('Redirecting to profile...');
-   props.getUserId(props.info);
+   props.getUserId(props.info.userName);
 props.getUserProfile(<Profile
                         token={props.token}
                         key={props.info.userid}
                         userId={props.info.userid}
                         userinfo={props.info}
+                        type={"user"}
                     />);
+                    
+
+           
+               
+                 
             // <Route path="/profile" element={
             //     <>
             //         {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
@@ -245,13 +251,24 @@ props.getUserProfile(<Profile
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.userid} token={props.token} />
         )}
         <div>
-          {/* <a className="userNameAnchor" href="/Profile">{userInfo?.username}</a>  */}
-          {/* <div onClick={handleClick }>
-          {userInfo?.username}
+        {/* <Link to={`/profile/${props.info.userName}`} className="userNameAnchor">
+    <Profile
+        token={props.token}
+        key={props.info.userid}
+        userId={props.info.userid}
+        userinfo={props.info}
+    />
+</Link> */}   
+ <div onClick={handleClick}>
+                <Link to={`/profile/${props.info.userName}`} className="userNameAnchor">
+                    {props.info.userName}
+                </Link>
+            </div>
+        {/* 
         </div> */}
-<Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
+{/* <Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
             {userInfo?.username}
-                  </Link>
+                  </Link> */}
                   
 {/* <Router>
       <Route path="/Setting" element={<Profile token={props.token} key={props.info.userid} userId={props.info.userid} userinfo={props.info} />} />

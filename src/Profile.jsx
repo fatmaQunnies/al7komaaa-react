@@ -9,8 +9,20 @@ function Profile(props){
     const [userPosts, setUserPosts] = useState([]);
     const [userShares, setUserShares] = useState([]);
     const [render, setRender] = useState(false);
-    const [view, setView] = useState('posts'); // حالة جديدة للتحكم في العرض
-// alert(props.userinfo.userId);
+    const [view, setView] = useState('posts');
+    const [id, setId] = useState(props.userinfo.id);
+    // useEffect(() => {
+    //     if (props.type === "user") {
+    //       setId(props.userinfo.userid);
+    //     } else {
+    //       setId(props.userinfo.id);
+    //     }
+    //   }, [props.type, props.userinfo.userid, props.userinfo.id]);
+    
+// alert(props.userinfo.userid+""+props.userinfo.id); 
+
+
+
     const renderFunction = () => {
         setRender(!render);
     };
@@ -43,7 +55,8 @@ function Profile(props){
 
     const fetchFriends = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/post/${props.userinfo.id}/user`, {
+           
+            const response = await fetch(`http://localhost:8080/post/${id}/user`, {
                 headers: {
                     'Authorization': 'Bearer ' + props.token
                 }
