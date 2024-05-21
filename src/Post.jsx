@@ -239,7 +239,7 @@ function Post(props) {
             <ImageWithToken CName={"centered-image"} type={"post/postImage"} userinfo={props.id} token={props.token}></ImageWithToken>
           )
         ) : props.type === "Real" ? (
-          <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.id} token={props.token}></ImageWithToken>
+          <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.info.id} token={props.token}></ImageWithToken>
         ) : null}
       </div>
 

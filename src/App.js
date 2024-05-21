@@ -176,8 +176,13 @@ function App(props) {
         })
         .then((response) => response.json())
         .then((data) => {
+            if (userfriend!=null) 
             setUserFriend(data);
-        })
+        else
+            setUserFriend([]);
+
+        }
+    )
         .catch((error) => console.error("Error fetching data:", error));
     }, []);
 

@@ -61,7 +61,6 @@ function Profile(props){
     useEffect(() => {
         fetchFriends();
     }, [render]);
-
     return (
         <div className="profile-container">
             <div className="header">
