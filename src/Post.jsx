@@ -6,6 +6,8 @@ import ImageWithToken from './ImageWithToken.jsx';
 import EditDelBtn from './EditDelBtn';
 import ShowPostLikes from './ShowPostLikes.jsx';
 import Share from './Share.jsx';
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import Profile from "./Profile.jsx";
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -220,7 +222,11 @@ function Post(props) {
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.userid} token={props.token} />
         )}
         <div>
-          <a className="userNameAnchor" href="/Profile">{userInfo?.username}</a>
+          {/* <a className="userNameAnchor" href="/Profile">{userInfo?.username}</a> */} key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend}
+          <Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
+  {userInfo?.username}
+  <Profile token={props.token} />
+</Link>
           <p className="postDate">{props.info.timestamp}</p>
         </div>
         <div className="edit-del-btn">
