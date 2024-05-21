@@ -140,6 +140,7 @@ function Post(props) {
       if (response.ok) {
         setReload(!reload);
         console.log("Comment sent");
+       
       } else {
         console.error('Error:', response.statusText);
       }
@@ -152,7 +153,7 @@ function Post(props) {
     return (
       <>
         {postComment.map(comment => (
-          <Comment key={comment.id} comment={comment} info={userInfo} input={input} />
+          <Comment token={props.token} key={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
         ))}
       </>
     );
@@ -211,7 +212,7 @@ function Post(props) {
       console.error('Error fetching data:', error);
     }
   };
-
+// alert(props.info.id);
   return (
     <div className="post">
       <div className="userNameImage">
@@ -224,7 +225,7 @@ function Post(props) {
         </div>
         <div className="edit-del-btn">
           {userInfo && (
-            <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
+            <EditDelBtn  type={"post"} token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
           )}
         </div>
       </div>
@@ -235,7 +236,7 @@ function Post(props) {
           props.info.image == null ? (
             <div></div>
           ) : (
-            <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.id} token={props.token}></ImageWithToken>
+            <ImageWithToken CName={"centered-image"} type={"post/postImage"} userinfo={props.id} token={props.token}></ImageWithToken>
           )
         ) : props.type === "Real" ? (
           <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.id} token={props.token}></ImageWithToken>

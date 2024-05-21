@@ -37,6 +37,8 @@ function App(props) {
     const [friends, setFriends] = useState([]);
     const [userId, setUserId] = useState(0);
     const [userfriend, setUserFriend] = useState([]);
+        // const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
+
     let count = 0;
     useEffect(() => {
         const fetchUserData = async () => {
@@ -103,29 +105,31 @@ function App(props) {
         .catch((error) => console.error("Error fetching data:", error));
     }, [reload]);
 
+   
     const handReadMore = async () => {
-        try {
-            const response = await fetch(readMore._links["read more"].href, {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-            });
-            const responseData = await response.json();
-            if (response.ok) {
-                const newPosts = responseData._embedded.posts.filter((newPost) => {
-                    return !postContent.some((oldPost) => oldPost.id === newPost.id);
+            
+                const response = await fetch(readMore._links["read more"].href, {
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
                 });
-                setPostContent([...postContent, ...newPosts]);
-            } else {
-                console.error("Error:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+                const responseData = await response.json();
+                if (response.ok) {
+                    const newPosts = responseData._embedded.posts.filter((newPost) => {
+                        return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                       console.log("REDEEEEMMMOOORRREEE")
+                    });
+                    setPostContent([...postContent, ...newPosts]);
+                 
 
+                } else {
+                    console.error("Error:", response.statusText);
+                }
+           
+        
+    };
     useEffect(() => {
         fetch("http://localhost:8080/post/reels", {
             headers: {
@@ -153,6 +157,7 @@ function App(props) {
             if (response.ok) {
                 const newPosts = responseData._embedded.posts.filter((newPost) => {
                     return !realContent.some((oldPost) => oldPost.id === newPost.id);
+                   
                 });
                 setRealContent([...realContent, ...newPosts]);
             } else {
@@ -230,6 +235,7 @@ function App(props) {
         }
     };
 
+   
     return (
         <Router>
             <div className="nav">
@@ -270,7 +276,15 @@ function App(props) {
                                         type={"post"}
                                         userName = {userInfo.username}
                                     />
+                                   
                                 ))}
+                                { window.onscroll = function() {
+                                     
+                                        if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
+                                           
+        handReadMore();
+        console.log("READ MOREEEEE")}}};
+    
                             </div>
                         }
                     />
