@@ -6,9 +6,13 @@ import ShowShare from "./ShowShare.jsx";
 import { memo } from "react";
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
+    const [numberOfFriends, setNumberOfFriends] = useState(0);
+
     const [userPosts, setUserPosts] = useState([]);
     const [userShares, setUserShares] = useState([]);
     const [render, setRender] = useState(false);
+    const [accountIsPrivate, setaccountIsPrivate] = useState(props.userinfo.accountIsPrivate);
+
     const [view, setView] = useState('posts');
     const [id, setId] = useState(props.userinfo.id);
     // useEffect(() => {
@@ -19,7 +23,7 @@ function Profile(props){
     //     }
     //   }, [props.type, props.userinfo.userid, props.userinfo.id]);
     
-// alert(props.userinfo.userid+""+props.userinfo.id); 
+// alert(accountIsPrivate); 
 
 
 
@@ -27,6 +31,32 @@ function Profile(props){
         setRender(!render);
     };
 
+    useEffect(() => {
+        fetch(`http://localhost:8080/accountIsPrivate/${props.userId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            setaccountIsPrivate(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, [render]);
+    useEffect(() => {
+        fetch(`http://localhost:8080/count/userFriend/${props.userId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            setNumberOfFriends(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, [render]);
+
+// alert(accountIsPrivate);
     useEffect(() => {
         fetch(`http://localhost:8080/post/number/post/${props.userId}`, {
             headers: {
@@ -94,7 +124,7 @@ function Profile(props){
                     </div>
                     <div className="stat">
                         <p>Friends</p>
-                        {/* <p>{props.numoffriend}</p> */}
+                        <p>{numberOfFriends}</p>
                     </div>
                 </div>
             </div>
@@ -103,40 +133,46 @@ function Profile(props){
                 <button onClick={() => setView('posts')} className={view === 'posts' ? 'active' : ''}>Posts</button>
                 <button onClick={() => setView('shares')} className={view === 'shares' ? 'active' : ''}>Shares</button>
             </div>
+            {accountIsPrivate === false ? ( 
+    <div>
+        {view === 'posts' ? (
+            <div className="post">
+                {userPosts.map((post) => (
+                    <Post
+                        className="post"
+                        key={post.id}
+                        id={post.id}
+                        token={props.token}
+                        info={post}
+                        userId={props.userId}
+                        userImage={props.userinfo.image}
+                        renderFunction={renderFunction} 
+                        userIdSign={props.userIdSign}
+                        type={post.video != null ? "Real" : "post"}
+                    />
+                ))}
+            </div>
+        ) : ( // If view is not 'posts', render user shares
+            <div className="shares">
+                {userShares.map((share) => (
+                    <ShowShare
+                        key={share.id}
+                        postId={share.postId}
+                        token={props.token}
+                        shareContent={share.content}
+                        userImage={props.userImage} // Should this be props.userinfo.image?
+                        userName={props.userinfo.username} // Should this be props.userinfo.username?
+                        userId={props.userId}
+                        renderFunction={renderFunction}
+                    />
+                ))}
+            </div>
+        )}
+    </div>
+) : ( 
+    <p>This account is private</p>
+)}
 
-            {view === 'posts' ? (
-                <div className="post">
-                    {userPosts.map((post) => (
-                        <Post
-                            className="post"
-                            key={post.id}
-                            id={post.id}
-                            token={props.token}
-                            info={post}
-                            userId={props.userId}
-                            userImage={props.userinfo.image}
-                            renderFunction={renderFunction} 
-                            userIdSign={props.userIdSign}
-                            type={post.video != null ? "Real" : "post"}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="shares">
-                    {userShares.map((share) => (
-                        <ShowShare
-                            key={share.id}
-                            postId={share.postId}
-                            token={props.token}
-                            shareContent={share.content}
-                            userImage={props.userImage}////
-                            userName={props.userinfo.username}
-                            userId={props.userId}
-                            renderFunction={renderFunction}
-                        />
-                    ))}
-                </div>
-            )}
         </div>
     );
 }

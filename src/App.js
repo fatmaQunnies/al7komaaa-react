@@ -37,8 +37,11 @@ function App(props) {
     const [friends, setFriends] = useState([]);
     const [userId, setUserId] = useState(0);
     const [userfriend, setUserFriend] = useState([]);
-        // const [isLoadingMoreData, setIsLoadingMoreData] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
 
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
     let count = 0;
     useEffect(() => {
         const fetchUserData = async () => {
@@ -199,46 +202,55 @@ function App(props) {
     //     .catch(error => console.error('Error fetching data:', error));
     // }, [userId]);
 
-    useEffect(() => {
-        if (componentsReady) {
-            hideAllComponents("Feed");
-        }
-    }, [componentsReady]);
 
-    const hideAllComponents = (commName) => {
-        const element = document.getElementById(commName);
-        if (element) {
-            element.classList.add("middle");
-            if (commName !== "Feed") {
-                const feedElement = document.getElementById("Feed");
-                if (feedElement) feedElement.classList.remove("middle");
-            } else if (commName !== "Friends") {
-                const friendsElement = document.getElementById("Friends");
-                if (friendsElement)
-                    friendsElement.classList.remove("middle");
-            }
-        } else if (commName !== "Profile") {
-            const friendsElement = document.getElementById("Profile");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Reel") {
-            const friendsElement = document.getElementById("Reel");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Setting") {
-            const friendsElement = document.getElementById("Setting");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Likes") {
-            const friendsElement = document.getElementById("Likes");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Messages") {
-            const friendsElement = document.getElementById("Messages");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        }
-    };
+
+
+
+
+
+
+
+    
+    // useEffect(() => {
+    //     if (componentsReady) {
+    //         hideAllComponents("Feed");
+    //     }
+    // }, []);
+
+    // const hideAllComponents = (commName) => {
+    //     const element = document.getElementById(commName);
+    //     if (element) {
+    //         element.classList.add("middle");
+    //         if (commName !== "Feed") {
+    //             const feedElement = document.getElementById("Feed");
+    //             if (feedElement) feedElement.classList.remove("middle");
+    //         } else if (commName !== "Friends") {
+    //             const friendsElement = document.getElementById("Friends");
+    //             if (friendsElement)
+    //                 friendsElement.classList.remove("middle");
+    //         }
+    //     } else if (commName !== "Profile") {
+    //         const friendsElement = document.getElementById("Profile");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Reel") {
+    //         const friendsElement = document.getElementById("Reel");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Setting") {
+    //         const friendsElement = document.getElementById("Setting");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Likes") {
+    //         const friendsElement = document.getElementById("Likes");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Messages") {
+    //         const friendsElement = document.getElementById("Messages");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     }
+    // };
 const[getUserIdd,setUserIdd]=useState();
 const[getUserIddd,setUserIddd]=useState();
 
@@ -259,6 +271,28 @@ const[getUserIddd,setUserIddd]=useState();
          
        }
     };
+    const handleInputChangesearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const searchbtn = () => {
+        fetch(`http://localhost:8080/search/${searchTerm}`, {
+            headers: {
+                Authorization: 'Bearer ' + props.token,
+                'Content-Type': 'application/json'
+              }
+            })
+       
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                // if (userfriend != null)
+                //     setUserFriend(data);
+                // else
+                //     setUserFriend([]);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+    };
     //   alert(getUserIdd+`/profile/${getUserIdd}`);
 
     return (
@@ -266,21 +300,28 @@ const[getUserIddd,setUserIddd]=useState();
             <div className="nav">
                 <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
                 <div className="search-container">
-                    <input type="text" className="search-box" placeholder="Search" />
+                <input
+                type="text"
+                className="search-box"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleInputChangesearch}
+            />
+                    <button onClick={searchbtn}></button>
                 </div>
                 <div style={{ display: "flex" }}>
                     <h1>{userInfo.username}</h1>
                 </div>
             </div>
-<div className="middle">
+{/* <div className="middle">
 
 
-</div>
+</div> */}
             <div className="App">
-                <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
+           <div  className="Allleft" >    <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
                 <nav className="left-down">
                     <Navbar />
-                </nav>
+                </nav></div> 
                 <Routes>
                     <Route
                         path="/feed"
@@ -324,7 +365,7 @@ const[getUserIddd,setUserIddd]=useState();
                         }
                     />
                     <Route path="/profile" element={<>
-                        <CreatePost token={token} userInfo={userInfo}></CreatePost>
+                        {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
 
                     <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token}  userImage={userInfo.image}  userIdSign={userId}
 /></>} />
@@ -367,10 +408,15 @@ const[getUserIddd,setUserIddd]=useState();
                 {userfriend && userfriend.length > 0 ? (
     userfriend.map((fr) => (
         <RightList 
-            key={fr.id} 
+            key={fr.userid} 
+            userId={fr.userid}
             token={token} 
+            info={fr}
             userName={fr.username || 'Unknown User'} 
             link={fr.links} 
+            userIdSign={userId}
+            getUserId={getUserId}
+            getUserProfile={getUserProfile}
         />
     ))
 ) : null}
