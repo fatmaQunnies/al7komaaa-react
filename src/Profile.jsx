@@ -3,7 +3,7 @@ import './Profile.css';
 import Post from "./Post.jsx";
 import ImageWithToken from "./ImageWithToken.jsx";
 import ShowShare from "./ShowShare.jsx";
-
+import { memo } from "react";
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
@@ -28,7 +28,7 @@ function Profile(props){
     };
 
     useEffect(() => {
-        fetch(`http://localhost:8080/post/number/post/${props.userinfo.userid}`, {
+        fetch(`http://localhost:8080/post/number/post/${props.userId}`, {
             headers: {
                 'Authorization': 'Bearer ' + props.token
             }
@@ -41,7 +41,7 @@ function Profile(props){
     }, [render]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/post/users/${props.userinfo.userid}/shares`, {
+        fetch(`http://localhost:8080/post/users/${props.userId}/shares`, {
             headers: {
                 'Authorization': 'Bearer ' + props.token
             }
@@ -56,7 +56,7 @@ function Profile(props){
     const fetchFriends = async () => {
         try {
            
-            const response = await fetch(`http://localhost:8080/post/${id}/user`, {
+            const response = await fetch(`http://localhost:8080/post/${props.userId}/user`, {
                 headers: {
                     'Authorization': 'Bearer ' + props.token
                 }
@@ -74,12 +74,13 @@ function Profile(props){
     useEffect(() => {
         fetchFriends();
     }, [render]);
+ 
     return (
         <div className="profile-container">
             <div className="header">
                 <div className="images">
-                    <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
-                    <ImageWithToken CName={"background"} type={"backgroundImage"} userinfo={props.userinfo.userid} token={props.token}></ImageWithToken>
+                    <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userId} token={props.token}></ImageWithToken>
+                    <ImageWithToken CName={"background"} type={"backgroundImage"} userinfo={props.userId} token={props.token}></ImageWithToken>
                 </div>
             </div>
             <div className="user-info">
@@ -115,6 +116,7 @@ function Profile(props){
                             userId={props.userId}
                             userImage={props.userinfo.image}
                             renderFunction={renderFunction} 
+                            userIdSign={props.userIdSign}
                             type={post.video != null ? "Real" : "post"}
                         />
                     ))}
@@ -127,9 +129,9 @@ function Profile(props){
                             postId={share.postId}
                             token={props.token}
                             shareContent={share.content}
-                            userImage={props.userinfo.image}
+                            userImage={props.userImage}////
                             userName={props.userinfo.username}
-                            userId={props.userinfo.id}
+                            userId={props.userId}
                             renderFunction={renderFunction}
                         />
                     ))}
@@ -139,4 +141,4 @@ function Profile(props){
     );
 }
 
-export default Profile;
+export default memo(Profile);

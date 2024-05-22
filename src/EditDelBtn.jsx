@@ -10,7 +10,7 @@ function EditDelBtn(props) {
   const [showModal, setShowModal] = useState(false);
   const [editContent, setEditContent] = useState(props.info.content);
   const [enableToDelete, setEnableToDelete] = useState(false);
-
+// alert(props.id);
   const isOwner = () => {
    
     if (props.ownerPost === props.userId) {

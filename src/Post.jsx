@@ -11,7 +11,6 @@ import Profile from "./Profile.jsx";
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
-  const [dufImage, setDufImage] = useState('49e40f05-46ad-42b6-a2f3-6270d67cb6df_download.jpeg');
   const [postLike, setPostLike] = useState([]);
   const [postComment, setPostComment] = useState([]);
   const [input, setInput] = useState('');
@@ -23,6 +22,7 @@ function Post(props) {
   const [myLiked, setMyLiked] = useState([]);
   const [showLikesPopper, setShowLikesPopper] = useState(false);
   const [showSharePopper, setShowSharePopper] = useState(false);
+  
 let count =0;
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -224,8 +224,11 @@ props.getUserProfile(<Profile
                         token={props.token}
                         key={props.info.userid}
                         userId={props.info.userid}
+                        userIdSign={props.userId}
+
                         userinfo={props.info}
-                        type={"user"}
+                        userImage={props.info.userimage}
+
                     />);
                     
 
@@ -279,7 +282,7 @@ props.getUserProfile(<Profile
         </div>
         <div className="edit-del-btn">
           {userInfo && (
-            <EditDelBtn  type={"post"} token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
+            <EditDelBtn  type={"post"} token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userIdSign} info={props.info}/>
           )}
         </div>
       </div>

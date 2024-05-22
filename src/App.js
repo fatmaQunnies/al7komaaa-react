@@ -55,7 +55,7 @@ function App(props) {
 
                 const userInfoData = await userInfoResponse.json();
                 setUserinfo(userInfoData);
-                setUserId(userInfoData.userid);
+                setUserId(userInfoData.id);
                 setComponentsReady(true);
 
                 const userFriendResponse = await fetch("http://localhost:8080/count/userFriend/" + userInfoData.userid, {
@@ -326,7 +326,8 @@ const[getUserIddd,setUserIddd]=useState();
                     <Route path="/profile" element={<>
                         <CreatePost token={token} userInfo={userInfo}></CreatePost>
 
-                    <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} /></>} />
+                    <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token}  userImage={userInfo.image}  userIdSign={userId}
+/></>} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
                     <Route path="/Reel" element={<div id="Real">
                     <CreatePost token={token} userInfo={userInfo}></CreatePost>
