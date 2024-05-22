@@ -10,13 +10,14 @@ import Profile from "./Profile.jsx";
 import Notification from "./Notification.jsx";
 import Likes from "./Likes.jsx";
 import Setting from "./Setting.jsx";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, BrowserRouter as Router,Link } from "react-router-dom";
 import ChangePassword from './ChangePassword';
 import Logout from "./Logout.jsx";
 import EditProfileImage from './EditProfileImage.jsx'; 
 import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
 import CreatePost from "./CreatePost.jsx";
+import Search from "./Search.jsx";
 
 import { memo } from "react";
 
@@ -38,7 +39,7 @@ function App(props) {
     const [userId, setUserId] = useState(0);
     const [userfriend, setUserFriend] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
-
+    const [searchArray, setSearchArray] = useState([]);
     const handleInputChange = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -286,6 +287,7 @@ const[getUserIddd,setUserIddd]=useState();
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                setSearchArray(data);
                 // if (userfriend != null)
                 //     setUserFriend(data);
                 // else
@@ -307,7 +309,12 @@ const[getUserIddd,setUserIddd]=useState();
                 value={searchTerm}
                 onChange={handleInputChangesearch}
             />
-                    <button onClick={searchbtn}></button>
+             
+                <Link to={`/Search`} className="userNameAnchor">
+                    <button onClick={searchbtn}>search</button>
+                </Link>
+            
+                  
                 </div>
                 <div style={{ display: "flex" }}>
                     <h1>{userInfo.username}</h1>
@@ -402,6 +409,9 @@ const[getUserIddd,setUserIddd]=useState();
                     <Route path="/editProfile" element={<EditProfile />} />
                     <Route path="/Messages" element={<Notfound />} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
+                    <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId}
+            getUserId={getUserId}
+            getUserProfile={getUserProfile}/>} />
                 </Routes>
 
                 <div className="right">
