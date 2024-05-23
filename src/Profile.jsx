@@ -29,7 +29,7 @@ useEffect(() => {
     })
     .then(response => response.json())
     .then(data => {
-       // alert(data);
+       //alert(data);
         if (typeof data === 'boolean') {
             setIsRequest(data);
         } 
@@ -132,29 +132,58 @@ useEffect(() => {
     }, [render]);
 
     const handleButtonClick = () => {
-      //  alert(isRequest);
-        const url = isFriend 
-            ? `http://localhost:8080/deleteUserFriend/${props.userId}`
-            : `http://localhost:8080/sendFriendRequest/${props.userId}`;
-        const method = isFriend ? 'DELETE' : 'POST';
-
+        let url;
+        let method;
+    
+        if (isRequest) {
+            url = `http://localhost:8080/cancelFriendRequest/${props.userId}`;
+            method = 'DELETE';
+        } else {
+            url = isFriend 
+                ? `http://localhost:8080/deleteUserFriend/${props.userId}`
+                : `http://localhost:8080/sendFriendRequest/${props.userId}`;
+            method = isFriend ? 'DELETE' : 'POST';
+        }
+    
         fetch(url, {
             method: method,
             headers: {
                 'Authorization': 'Bearer ' + props.token
             }
         })
-        // .then(response => {
-        //     // if (!response.ok) {
-        //     //     throw new Error('Network response was not ok');
-        //     // }
-        //    // return response.json();
-        // })
-        // .then(() => {
-        //     setIsFriend(!isFriend);
-        // })
-        // .catch(error => console.error('Error fetching data:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            //return response.json();
+        })
+        .then(() => {
+            if (isRequest) {
+                setIsRequest(false); // طلب الإلغاء تم بنجاح
+            } else if (isFriend) {
+                setIsFriend(false); // تم إزالة الصديق بنجاح
+            } else {
+                setIsRequest(true); // تم إرسال طلب الصداقة بنجاح
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error));
     };
+    
+    // const cancelFriendRequest=() => {
+    //     fetch(`http://localhost:8080/cancelFriendRequest/${props.userId}`, {
+    //         method: DELETE,
+    //     headers: {
+    //             'Authorization': 'Bearer ' + props.token
+    //         }
+    //     })
+    //    // .then(response => response.json())
+    //     .then(data => {
+    //     //    if(data==true||data== false) {
+    //         setIsRequest(false);}
+    //     //}
+    // )
+    //     .catch(error => console.error('Error fetching data:', error));
+    // };
 //alert(isFriend);
     return (
         <div className="profile-container">
@@ -170,7 +199,9 @@ useEffect(() => {
                     <p className="fname"> ({props.userinfo.fullname})</p>
                 </div>
                 <div className="addbtn">
-                    <button onClick={handleButtonClick}>{isFriend ? 'Remove Friend' : 'Add Friend'}</button>
+                <button onClick={handleButtonClick}>
+            {isFriend ? 'Remove Friend' : isRequest ? 'Cancel Request' : 'Add Friend'}
+        </button>
                     <button>Message</button>
                 </div>
                 <p>{props.userinfo.bio}</p>

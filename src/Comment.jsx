@@ -15,6 +15,7 @@ function Comment(props) {
        
        
       </div>
+      
       <div className="content">
         {props.comment.userName}
         <br />

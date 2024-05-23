@@ -10,7 +10,7 @@ import Profile from "./Profile.jsx";
 import Notification from "./Notification.jsx";
 import Likes from "./Likes.jsx";
 import Setting from "./Setting.jsx";
-import { Routes, Route, BrowserRouter as Router,Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import ChangePassword from './ChangePassword';
 import Logout from "./Logout.jsx";
 import EditProfileImage from './EditProfileImage.jsx'; 
@@ -330,7 +330,9 @@ const[getUserIddd,setUserIddd]=useState();
                     <Navbar />
                 </nav></div> 
                 <Routes>
+                <Route path="/" element={<Navigate to="/feed" />} />
                     <Route
+                
                         path="/feed"
                         element={
                             <div id="Feed">
@@ -355,7 +357,7 @@ const[getUserIddd,setUserIddd]=useState();
                                 ))}
                                 { window.onscroll = function() {
                                      
-                                        if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
+  if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
                                            
         handReadMore();
         console.log("READ MOREEEEE")}}};
