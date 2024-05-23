@@ -22,7 +22,7 @@ function Post(props) {
   const [myLiked, setMyLiked] = useState([]);
   const [showLikesPopper, setShowLikesPopper] = useState(false);
   const [showSharePopper, setShowSharePopper] = useState(false);
-  
+  const [selectedFile, setSelectedFile] = useState(null);
 let count =0;
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -105,6 +105,9 @@ let count =0;
       .catch(error => console.error('Error fetching data:', error));
   }, [reloadLike, props.info._links, props.token]);
 
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
   useEffect(() => {
     fetch(props.info._links["If User Liked Post"].href, {
       headers: {
@@ -128,6 +131,44 @@ let count =0;
     setShowLikesPopper(true);
   };
 
+
+  const functionCreate = async () => {
+    const id = await handleSend(input);
+    if (id) {
+      if (selectedFile) {
+        await handleAddImage(id);
+      }
+    }
+  };
+
+  const handleAddImage = async (id) => {
+    if (!selectedFile) {
+      console.error('No file selected for upload.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await fetch(`http://localhost:8080/post/comment/${id}/image`, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + props.token,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Image uploaded:", data);
+      } else {
+        console.error('Failed to upload image:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
   const handleSend = async () => {
     try {
       const response = await fetch(props.info._links["createComment"].href, {
@@ -138,10 +179,13 @@ let count =0;
         },
         body: JSON.stringify({ content: input })
       });
+      const responseData = await response.json();
 
       if (response.ok) {
         setReload(!reload);
-        console.log("Comment sent");
+        // alert(responseData.id);
+     return (responseData.id);
+     
        
       } else {
         console.error('Error:', response.statusText);
@@ -249,6 +293,8 @@ props.getUserProfile(<Profile
   
   return (
     <div className="post">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
       <div className="userNameImage">
         {userInfo && (
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.userid} token={props.token} />
@@ -315,8 +361,15 @@ props.getUserProfile(<Profile
         {userInfo && (
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.userId} token={props.token} />
         )}
-        <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
-        <button onClick={handleSend}>
+         <div className='inputandicon'>
+         <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+{/* <span className="material-icons" >attach_file</span> */}
+            <input type="file" onChange={handleFileChange}> 
+
+
+</input></div>
+     
+        <button onClick={functionCreate}>
           <span className="material-symbols-outlined">
             send
           </span>
