@@ -20,7 +20,7 @@ function Profile(props){
     const renderFunction = () => {
         setRender(!render);
     };
-//////////////////////
+
 useEffect(() => {
     fetch(`http://localhost:8080/hasSentFriendRequest/${props.userId}`, {
         headers: {
@@ -29,7 +29,7 @@ useEffect(() => {
     })
     .then(response => response.json())
     .then(data => {
-       //alert(data);
+     
         if (typeof data === 'boolean') {
             setIsRequest(data);
         } 
@@ -38,7 +38,7 @@ useEffect(() => {
 }, []);
 
    
-///////////////////////
+
     
     useEffect(() => {
         fetch(`http://localhost:8080/accountIsPrivate/${props.userId}`, {
@@ -98,7 +98,7 @@ useEffect(() => {
                 'Authorization': 'Bearer ' + props.token
             }
         })
-       // .then(response => response.json())
+      
         .then(data => {
            if(data==true||data== false) {setIsFriend(data);}
         })
@@ -155,36 +155,22 @@ useEffect(() => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            //return response.json();
+         
         })
         .then(() => {
             if (isRequest) {
-                setIsRequest(false); // طلب الإلغاء تم بنجاح
+                setIsRequest(false); 
             } else if (isFriend) {
-                setIsFriend(false); // تم إزالة الصديق بنجاح
+                setIsFriend(false); 
             } else {
-                setIsRequest(true); // تم إرسال طلب الصداقة بنجاح
+                setIsRequest(true); 
             }
         })
         .catch(error => console.error('Error fetching data:', error));
     };
     
-    // const cancelFriendRequest=() => {
-    //     fetch(`http://localhost:8080/cancelFriendRequest/${props.userId}`, {
-    //         method: DELETE,
-    //     headers: {
-    //             'Authorization': 'Bearer ' + props.token
-    //         }
-    //     })
-    //    // .then(response => response.json())
-    //     .then(data => {
-    //     //    if(data==true||data== false) {
-    //         setIsRequest(false);}
-    //     //}
-    // )
-    //     .catch(error => console.error('Error fetching data:', error));
-    // };
-//alert(isFriend);
+    
+
     return (
         <div className="profile-container">
             <div className="header">
@@ -199,11 +185,16 @@ useEffect(() => {
                     <p className="fname"> ({props.userinfo.fullname})</p>
                 </div>
                 <div className="addbtn">
-                <button onClick={handleButtonClick}>
-            {isFriend ? 'Remove Friend' : isRequest ? 'Cancel Request' : 'Add Friend'}
-        </button>
+                    
+            {props.userIdSign !== props.userId && (
+                <>
+                    <button onClick={handleButtonClick}>
+                        {isFriend ? 'Remove Friend' : isRequest ? 'Cancel Request' : 'Add Friend'}
+                    </button>
                     <button>Message</button>
-                </div>
+                </>
+            )}
+        </div>
                 <p>{props.userinfo.bio}</p>
                 <div className="stats">
                     <div className="stat">
