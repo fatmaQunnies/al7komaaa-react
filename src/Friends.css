@@ -24,3 +24,30 @@
 .button-cta.remove-friend:hover {
     background-color: #da190b;
 }
+.friends-list {
+    display: flex;
+    flex-direction: column;
+}
+.friend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+.friend-item span {
+    font-size: 16px;
+    font-weight: 500;
+}
+.add-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.add-button:hover {
+    background-color: #0056b3;
+}

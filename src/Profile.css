@@ -178,3 +178,23 @@ body, html {
     background-color: #0056b3;
     color: #000000;
 }
+
+.fname{
+    padding-top: 7px;
+    font-size: small;
+    padding-left: 10px;
+}
+.addbtn {
+    margin-top: 20px; 
+  }
+  
+  .addbtn button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    font-size: 14px; 
+  }
+  
+  .addbtn button:last-child {
+    margin-right: 0; 
+  }
+  

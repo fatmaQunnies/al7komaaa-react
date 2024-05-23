@@ -6,10 +6,11 @@ import ImageWithToken from './ImageWithToken.jsx';
 import EditDelBtn from './EditDelBtn';
 import ShowPostLikes from './ShowPostLikes.jsx';
 import Share from './Share.jsx';
+import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
+import Profile from "./Profile.jsx";
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
-  const [dufImage, setDufImage] = useState('49e40f05-46ad-42b6-a2f3-6270d67cb6df_download.jpeg');
   const [postLike, setPostLike] = useState([]);
   const [postComment, setPostComment] = useState([]);
   const [input, setInput] = useState('');
@@ -21,7 +22,8 @@ function Post(props) {
   const [myLiked, setMyLiked] = useState([]);
   const [showLikesPopper, setShowLikesPopper] = useState(false);
   const [showSharePopper, setShowSharePopper] = useState(false);
-
+  const [selectedFile, setSelectedFile] = useState(null);
+let count =0;
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
       headers: {
@@ -103,6 +105,9 @@ function Post(props) {
       .catch(error => console.error('Error fetching data:', error));
   }, [reloadLike, props.info._links, props.token]);
 
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
   useEffect(() => {
     fetch(props.info._links["If User Liked Post"].href, {
       headers: {
@@ -126,6 +131,44 @@ function Post(props) {
     setShowLikesPopper(true);
   };
 
+
+  const functionCreate = async () => {
+    const id = await handleSend(input);
+    if (id) {
+      if (selectedFile) {
+        await handleAddImage(id);
+      }
+    }
+  };
+
+  const handleAddImage = async (id) => {
+    if (!selectedFile) {
+      console.error('No file selected for upload.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await fetch(`http://localhost:8080/post/comment/${id}/image`, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + props.token,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Image uploaded:", data);
+      } else {
+        console.error('Failed to upload image:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
   const handleSend = async () => {
     try {
       const response = await fetch(props.info._links["createComment"].href, {
@@ -136,10 +179,14 @@ function Post(props) {
         },
         body: JSON.stringify({ content: input })
       });
+      const responseData = await response.json();
 
       if (response.ok) {
         setReload(!reload);
-        console.log("Comment sent");
+        // alert(responseData.id);
+     return (responseData.id);
+     
+       
       } else {
         console.error('Error:', response.statusText);
       }
@@ -152,7 +199,7 @@ function Post(props) {
     return (
       <>
         {postComment.map(comment => (
-          <Comment key={comment.id} comment={comment} info={userInfo} input={input} />
+          <Comment token={props.token} key={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
         ))}
       </>
     );
@@ -211,20 +258,77 @@ function Post(props) {
       console.error('Error fetching data:', error);
     }
   };
-// alert(props.info.id);
+  // alert(props.info.userid);
+
+// props.info
+  const handleClick = () => {
+    console.log('Redirecting to profile...');
+   props.getUserId(props.info.userName);
+props.getUserProfile(<Profile
+                        token={props.token}
+                        key={props.info.userid}
+                        userId={props.info.userid}
+                        userIdSign={props.userId}
+
+                        userinfo={props.info}
+                        userImage={props.info.userimage}
+
+                    />);
+                    
+
+           
+               
+                 
+            // <Route path="/profile" element={
+            //     <>
+            //         {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
+                    
+
+            //     </>
+                
+            // } />
+   
+};
+
+  
   return (
     <div className="post">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
       <div className="userNameImage">
         {userInfo && (
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={userInfo.userid} token={props.token} />
         )}
         <div>
-          <a className="userNameAnchor" href="/Profile">{userInfo?.username}</a>
+        {/* <Link to={`/profile/${props.info.userName}`} className="userNameAnchor">
+    <Profile
+        token={props.token}
+        key={props.info.userid}
+        userId={props.info.userid}
+        userinfo={props.info}
+    />
+</Link> */}   
+ <div onClick={handleClick}>
+                <Link to={`/profile/${props.info.userName}`} className="userNameAnchor">
+                    {props.info.userName}
+                </Link>
+            </div>
+        {/* 
+        </div> */}
+{/* <Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
+            {userInfo?.username}
+                  </Link> */}
+                  
+{/* <Router>
+      <Route path="/Setting" element={<Profile token={props.token} key={props.info.userid} userId={props.info.userid} userinfo={props.info} />} />
+    </Router> */}
+
+
           <p className="postDate">{props.info.timestamp}</p>
         </div>
         <div className="edit-del-btn">
           {userInfo && (
-            <EditDelBtn token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userId} info={props.info}/>
+            <EditDelBtn  type={"post"} token={props.token} id={props.id} renderFunction={props.renderFunction} ownerPost={userInfo.userid} userId={props.userIdSign} info={props.info}/>
           )}
         </div>
       </div>
@@ -238,7 +342,7 @@ function Post(props) {
             <ImageWithToken CName={"centered-image"} type={"post/postImage"} userinfo={props.id} token={props.token}></ImageWithToken>
           )
         ) : props.type === "Real" ? (
-          <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.id} token={props.token}></ImageWithToken>
+          <ImageWithToken CName={"centered-image"} type={"post/getVideo"} userinfo={props.info.id} token={props.token}></ImageWithToken>
         ) : null}
       </div>
 
@@ -257,8 +361,15 @@ function Post(props) {
         {userInfo && (
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.userId} token={props.token} />
         )}
-        <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
-        <button onClick={handleSend}>
+         <div className='inputandicon'>
+         <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+{/* <span className="material-icons" >attach_file</span> */}
+            <input type="file" onChange={handleFileChange}> 
+
+
+</input></div>
+     
+        <button onClick={functionCreate}>
           <span className="material-symbols-outlined">
             send
           </span>

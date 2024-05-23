@@ -10,13 +10,14 @@ import Profile from "./Profile.jsx";
 import Notification from "./Notification.jsx";
 import Likes from "./Likes.jsx";
 import Setting from "./Setting.jsx";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import ChangePassword from './ChangePassword';
 import Logout from "./Logout.jsx";
 import EditProfileImage from './EditProfileImage.jsx'; 
 import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
 import CreatePost from "./CreatePost.jsx";
+import Search from "./Search.jsx";
 
 import { memo } from "react";
 
@@ -37,6 +38,11 @@ function App(props) {
     const [friends, setFriends] = useState([]);
     const [userId, setUserId] = useState(0);
     const [userfriend, setUserFriend] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchArray, setSearchArray] = useState([]);
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
     let count = 0;
     useEffect(() => {
         const fetchUserData = async () => {
@@ -53,7 +59,7 @@ function App(props) {
 
                 const userInfoData = await userInfoResponse.json();
                 setUserinfo(userInfoData);
-                setUserId(userInfoData.userid);
+                setUserId(userInfoData.id);
                 setComponentsReady(true);
 
                 const userFriendResponse = await fetch("http://localhost:8080/count/userFriend/" + userInfoData.userid, {
@@ -103,29 +109,31 @@ function App(props) {
         .catch((error) => console.error("Error fetching data:", error));
     }, [reload]);
 
+   
     const handReadMore = async () => {
-        try {
-            const response = await fetch(readMore._links["read more"].href, {
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                },
-            });
-            const responseData = await response.json();
-            if (response.ok) {
-                const newPosts = responseData._embedded.posts.filter((newPost) => {
-                    return !postContent.some((oldPost) => oldPost.id === newPost.id);
-                });
-                setPostContent([...postContent, ...newPosts]);
-            } else {
-                console.error("Error:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+            
+                // const response = await fetch(readMore._links["read more"].href, {
+                //     method: "GET",
+                //     headers: {
+                //         Authorization: "Bearer " + token,
+                //         "Content-Type": "application/json",
+                //     },
+                // });
+                // const responseData = await response.json();
+                // if (response.ok) {
+                //     const newPosts = responseData._embedded.posts.filter((newPost) => {
+                //         return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                //        console.log("REDEEEEMMMOOORRREEE")
+                //     });
+                //     setPostContent([...postContent, ...newPosts]);
+                 
 
+                // } else {
+                //     console.error("Error:", response.statusText);
+                // }
+           
+        
+    };
     useEffect(() => {
         fetch("http://localhost:8080/post/reels", {
             headers: {
@@ -153,6 +161,7 @@ function App(props) {
             if (response.ok) {
                 const newPosts = responseData._embedded.posts.filter((newPost) => {
                     return !realContent.some((oldPost) => oldPost.id === newPost.id);
+                   
                 });
                 setRealContent([...realContent, ...newPosts]);
             } else {
@@ -171,8 +180,13 @@ function App(props) {
         })
         .then((response) => response.json())
         .then((data) => {
+            if (userfriend!=null) 
             setUserFriend(data);
-        })
+        else
+            setUserFriend([]);
+
+        }
+    )
         .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
@@ -189,69 +203,136 @@ function App(props) {
     //     .catch(error => console.error('Error fetching data:', error));
     // }, [userId]);
 
-    useEffect(() => {
-        if (componentsReady) {
-            hideAllComponents("Feed");
-        }
-    }, [componentsReady]);
 
-    const hideAllComponents = (commName) => {
-        const element = document.getElementById(commName);
-        if (element) {
-            element.classList.add("middle");
-            if (commName !== "Feed") {
-                const feedElement = document.getElementById("Feed");
-                if (feedElement) feedElement.classList.remove("middle");
-            } else if (commName !== "Friends") {
-                const friendsElement = document.getElementById("Friends");
-                if (friendsElement)
-                    friendsElement.classList.remove("middle");
-            }
-        } else if (commName !== "Profile") {
-            const friendsElement = document.getElementById("Profile");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Reel") {
-            const friendsElement = document.getElementById("Reel");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Setting") {
-            const friendsElement = document.getElementById("Setting");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Likes") {
-            const friendsElement = document.getElementById("Likes");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        } else if (commName !== "Messages") {
-            const friendsElement = document.getElementById("Messages");
-            if (friendsElement)
-                friendsElement.classList.remove("middle");
-        }
+
+
+
+
+
+
+
+    
+    // useEffect(() => {
+    //     if (componentsReady) {
+    //         hideAllComponents("Feed");
+    //     }
+    // }, []);
+
+    // const hideAllComponents = (commName) => {
+    //     const element = document.getElementById(commName);
+    //     if (element) {
+    //         element.classList.add("middle");
+    //         if (commName !== "Feed") {
+    //             const feedElement = document.getElementById("Feed");
+    //             if (feedElement) feedElement.classList.remove("middle");
+    //         } else if (commName !== "Friends") {
+    //             const friendsElement = document.getElementById("Friends");
+    //             if (friendsElement)
+    //                 friendsElement.classList.remove("middle");
+    //         }
+    //     } else if (commName !== "Profile") {
+    //         const friendsElement = document.getElementById("Profile");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Reel") {
+    //         const friendsElement = document.getElementById("Reel");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Setting") {
+    //         const friendsElement = document.getElementById("Setting");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Likes") {
+    //         const friendsElement = document.getElementById("Likes");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     } else if (commName !== "Messages") {
+    //         const friendsElement = document.getElementById("Messages");
+    //         if (friendsElement)
+    //             friendsElement.classList.remove("middle");
+    //     }
+    // };
+const[getUserIdd,setUserIdd]=useState();
+const[getUserIddd,setUserIddd]=useState();
+
+    // const getUserId = (props) => {
+    //     // setUserIdd(props);
+       
+    //     return props;
+    // };
+    const getUserId = (props) => {
+        if (props && props !== getUserIdd) {
+            setUserIdd(props);
+          }
+      };
+    const getUserProfile = (props) => {  
+        if (props && props !== getUserIddd) {
+
+        setUserIddd(props);
+         
+       }
     };
+    const handleInputChangesearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const searchbtn = () => {
+        fetch(`http://localhost:8080/search/${searchTerm}`, {
+            headers: {
+                Authorization: 'Bearer ' + props.token,
+                'Content-Type': 'application/json'
+              }
+            })
+       
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                setSearchArray(data);
+                // if (userfriend != null)
+                //     setUserFriend(data);
+                // else
+                //     setUserFriend([]);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+    };
+    //   alert(getUserIdd+`/profile/${getUserIdd}`);
 
     return (
         <Router>
             <div className="nav">
                 <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
                 <div className="search-container">
-                    <input type="text" className="search-box" placeholder="Search" />
+                <input
+                type="text"
+                className="search-box"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleInputChangesearch}
+            />
+             
+                <Link to={`/Search`} className="userNameAnchor">
+                    <button onClick={searchbtn}>search</button>
+                </Link>
+            
+                  
                 </div>
                 <div style={{ display: "flex" }}>
                     <h1>{userInfo.username}</h1>
                 </div>
             </div>
-<div className="middle">
+{/* <div className="middle">
 
 
-</div>
+</div> */}
             <div className="App">
-                <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
+           <div  className="Allleft" >    <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
                 <nav className="left-down">
                     <Navbar />
-                </nav>
+                </nav></div> 
                 <Routes>
+                <Route path="/" element={<Navigate to="/feed" />} />
                     <Route
+                
                         path="/feed"
                         element={
                             <div id="Feed">
@@ -269,8 +350,18 @@ function App(props) {
                                         userImage={userImage}
                                         type={"post"}
                                         userName = {userInfo.username}
+                                        getUserId={getUserId}
+                                        getUserProfile={getUserProfile}
                                     />
+                                   
                                 ))}
+                                { window.onscroll = function() {
+                                     
+  if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
+                                           
+        handReadMore();
+        console.log("READ MOREEEEE")}}};
+    
                             </div>
                         }
                     />
@@ -283,9 +374,10 @@ function App(props) {
                         }
                     />
                     <Route path="/profile" element={<>
-                        <CreatePost token={token} userInfo={userInfo}></CreatePost>
+                        {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
 
-                    <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} /></>} />
+                    <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token}  userImage={userInfo.image}  userIdSign={userId}
+/></>} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
                     <Route path="/Reel" element={<div id="Real">
                     <CreatePost token={token} userInfo={userInfo}></CreatePost>
@@ -301,22 +393,46 @@ function App(props) {
                                 userImage={userImage}
                                 type={"Real"}
                                 userName = {userInfo.username}
+                                getUserId={getUserId()}
+                                getUserProfile={getUserProfile}
                             />
                         ))}
                     </div>} />
                     <Route path="/Setting" element={<Setting token={token} />} />
+               
+                     <Route path={`/profile/${getUserIdd}`} element={getUserIddd} />
+                
+
+                 
+
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/editImage" element={<EditProfileImage token={token} userId={userId}/>} />
                     <Route path="/editProfile" element={<EditProfile />} />
                     <Route path="/Messages" element={<Notfound />} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
+                    <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId}
+            getUserId={getUserId}
+            getUserProfile={getUserProfile}/>} />
                 </Routes>
 
                 <div className="right">
-                    {userfriend.map((fr) => (
-                        <RightList key={fr.id} token={token} userName={fr.username || 'Unknown User'} link={fr.links} />
-                    ))}
+                {userfriend && userfriend.length > 0 ? (
+    userfriend.map((fr) => (
+        <RightList 
+            key={fr.userid} 
+            userId={fr.userid}
+            token={token} 
+            info={fr}
+            userName={fr.username || 'Unknown User'} 
+            link={fr.links} 
+            userIdSign={userId}
+            getUserId={getUserId}
+            getUserProfile={getUserProfile}
+        />
+    ))
+) : null}
+
                 </div>
             </div>
         </Router>
