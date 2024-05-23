@@ -4,33 +4,42 @@ import Post from "./Post.jsx";
 import ImageWithToken from "./ImageWithToken.jsx";
 import ShowShare from "./ShowShare.jsx";
 import { memo } from "react";
+
 function Profile(props){
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [numberOfFriends, setNumberOfFriends] = useState(0);
-
     const [userPosts, setUserPosts] = useState([]);
     const [userShares, setUserShares] = useState([]);
     const [render, setRender] = useState(false);
     const [accountIsPrivate, setaccountIsPrivate] = useState(props.userinfo.accountIsPrivate);
-
     const [view, setView] = useState('posts');
     const [id, setId] = useState(props.userinfo.id);
-    // useEffect(() => {
-    //     if (props.type === "user") {
-    //       setId(props.userinfo.userid);
-    //     } else {
-    //       setId(props.userinfo.id);
-    //     }
-    //   }, [props.type, props.userinfo.userid, props.userinfo.id]);
-    
-// alert(accountIsPrivate); 
-
-
+    const [isFriend, setIsFriend] = useState(false);
+    const [isRequest, setIsRequest] = useState();
 
     const renderFunction = () => {
         setRender(!render);
     };
+//////////////////////
+useEffect(() => {
+    fetch(`http://localhost:8080/hasSentFriendRequest/${props.userId}`, {
+        headers: {
+            'Authorization': 'Bearer ' + props.token
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+       // alert(data);
+        if (typeof data === 'boolean') {
+            setIsRequest(data);
+        } 
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}, []);
 
+   
+///////////////////////
+    
     useEffect(() => {
         fetch(`http://localhost:8080/accountIsPrivate/${props.userId}`, {
             headers: {
@@ -43,6 +52,7 @@ function Profile(props){
         })
         .catch(error => console.error('Error fetching data:', error));
     }, [render]);
+
     useEffect(() => {
         fetch(`http://localhost:8080/count/userFriend/${props.userId}`, {
             headers: {
@@ -56,7 +66,6 @@ function Profile(props){
         .catch(error => console.error('Error fetching data:', error));
     }, [render]);
 
-// alert(accountIsPrivate);
     useEffect(() => {
         fetch(`http://localhost:8080/post/number/post/${props.userId}`, {
             headers: {
@@ -83,9 +92,21 @@ function Profile(props){
         .catch(error => console.error('Error fetching data:', error));
     }, [render]);
 
+    useEffect(() => {
+        fetch(`http://localhost:8080/isFriend/${props.userId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
+        })
+       // .then(response => response.json())
+        .then(data => {
+           if(data==true||data== false) {setIsFriend(data);}
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
     const fetchFriends = async () => {
         try {
-           
             const response = await fetch(`http://localhost:8080/post/${props.userId}/user`, {
                 headers: {
                     'Authorization': 'Bearer ' + props.token
@@ -95,16 +116,46 @@ function Profile(props){
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setUserPosts(data._embedded.posts);
+            if (data._embedded && data._embedded.posts) {
+                setUserPosts(data._embedded.posts);
+            } else {
+                setUserPosts([]);
+            }
         } catch (error) {
             console.error('Error fetching friends:', error);
+            setUserPosts([]);
         }
     };
 
     useEffect(() => {
         fetchFriends();
     }, [render]);
- 
+
+    const handleButtonClick = () => {
+      //  alert(isRequest);
+        const url = isFriend 
+            ? `http://localhost:8080/deleteUserFriend/${props.userId}`
+            : `http://localhost:8080/sendFriendRequest/${props.userId}`;
+        const method = isFriend ? 'DELETE' : 'POST';
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
+        })
+        // .then(response => {
+        //     // if (!response.ok) {
+        //     //     throw new Error('Network response was not ok');
+        //     // }
+        //    // return response.json();
+        // })
+        // .then(() => {
+        //     setIsFriend(!isFriend);
+        // })
+        // .catch(error => console.error('Error fetching data:', error));
+    };
+//alert(isFriend);
     return (
         <div className="profile-container">
             <div className="header">
@@ -114,8 +165,14 @@ function Profile(props){
                 </div>
             </div>
             <div className="user-info">
-                <h1>{props.userinfo.username}</h1>
-                <p>{props.userinfo.fullname}</p>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <h1>{props.userinfo.username}</h1>
+                    <p className="fname"> ({props.userinfo.fullname})</p>
+                </div>
+                <div className="addbtn">
+                    <button onClick={handleButtonClick}>{isFriend ? 'Remove Friend' : 'Add Friend'}</button>
+                    <button>Message</button>
+                </div>
                 <p>{props.userinfo.bio}</p>
                 <div className="stats">
                     <div className="stat">
@@ -128,51 +185,49 @@ function Profile(props){
                     </div>
                 </div>
             </div>
-
             <div className="view-switch">
                 <button onClick={() => setView('posts')} className={view === 'posts' ? 'active' : ''}>Posts</button>
                 <button onClick={() => setView('shares')} className={view === 'shares' ? 'active' : ''}>Shares</button>
             </div>
-            {accountIsPrivate === false ? ( 
-    <div>
-        {view === 'posts' ? (
-            <div className="post">
-                {userPosts.map((post) => (
-                    <Post
-                        className="post"
-                        key={post.id}
-                        id={post.id}
-                        token={props.token}
-                        info={post}
-                        userId={props.userId}
-                        userImage={props.userinfo.image}
-                        renderFunction={renderFunction} 
-                        userIdSign={props.userIdSign}
-                        type={post.video != null ? "Real" : "post"}
-                    />
-                ))}
-            </div>
-        ) : ( // If view is not 'posts', render user shares
-            <div className="shares">
-                {userShares.map((share) => (
-                    <ShowShare
-                        key={share.id}
-                        postId={share.postId}
-                        token={props.token}
-                        shareContent={share.content}
-                        userImage={props.userImage} // Should this be props.userinfo.image?
-                        userName={props.userinfo.username} // Should this be props.userinfo.username?
-                        userId={props.userId}
-                        renderFunction={renderFunction}
-                    />
-                ))}
-            </div>
-        )}
-    </div>
-) : ( 
-    <p>This account is private</p>
-)}
-
+            {accountIsPrivate === false ? (
+                <div>
+                    {view === 'posts' ? (
+                        <div className="post">
+                            {userPosts.map((post) => (
+                                <Post
+                                    className="post"
+                                    key={post.id}
+                                    id={post.id}
+                                    token={props.token}
+                                    info={post}
+                                    userId={props.userId}
+                                    userImage={props.userinfo.image}
+                                    renderFunction={renderFunction}
+                                    userIdSign={props.userIdSign}
+                                    type={post.video != null ? "Real" : "post"}
+                                />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="shares">
+                            {userShares.map((share) => (
+                                <ShowShare
+                                    key={share.id}
+                                    postId={share.postId}
+                                    token={props.token}
+                                    shareContent={share.content}
+                                    userImage={props.userImage}
+                                    userName={props.userinfo.username}
+                                    userId={props.userId}
+                                    renderFunction={renderFunction}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <p>This account is private</p>
+            )}
         </div>
     );
 }
