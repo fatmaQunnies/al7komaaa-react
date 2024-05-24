@@ -97,7 +97,7 @@ useEffect(() => {
             headers: {
                 'Authorization': 'Bearer ' + props.token
             }
-        })
+        }) 
       
         .then(data => {
            if(data==true||data== false) {setIsFriend(data);}

@@ -9,6 +9,7 @@ function Friends(props) {
     const[request , setRequest]=useState([]);
     const [isRequest, setIsRequest] = useState();
 
+    
 
     useEffect(() => {
         fetchFriends();
@@ -137,8 +138,8 @@ const handleAcceptFriend = (userid) => {
 
   ////not compplete yet
   const handleRejectFriend = (userid) => {
-    fetch(`http://localhost:8080/acceptFriendRequest/${userid}`, {
-       method:'POST',
+    fetch(`http://localhost:8080/cancelFriendRequest/res/${userid}`, {
+       method:'DELETE',
         headers: {
             'Authorization': 'Bearer ' + props.token
         }
