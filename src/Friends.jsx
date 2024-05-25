@@ -41,7 +41,6 @@ function Friends(props) {
                 setFriends(updatedFriends);
                 setNumFriends(updatedFriends.length);
 
-                // Update friend statuses
                 const statuses = {};
                 updatedFriends.forEach(friend => {
                     statuses[friend.userid] = 'friend';

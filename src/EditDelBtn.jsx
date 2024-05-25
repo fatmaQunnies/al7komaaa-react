@@ -154,7 +154,7 @@ function EditDelBtn(props) {
         console.error('Error updating content:', error);
       }
       if(enableToDelete==true){
-        const response = await fetch(`http://localhost:8080/post/comment/${props.id}/image`, {
+        const response = await fetch(`http://localhost:8080/post/commentImage/${props.id}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + props.token,
@@ -206,7 +206,22 @@ function EditDelBtn(props) {
           cols="50"
         />
         <div style={{ position: 'relative' }}>
-          <ImageWithToken CName={"editeimage"} type={"post/postImage"} userinfo={props.info.id} token={props.token} />
+        {props.type === "comment" ? (
+  <ImageWithToken
+    CName="editeimage"
+    type="post/commentImage"
+    userinfo={props.id}
+    token={props.token}
+  />
+) : (
+  <ImageWithToken
+    CName="editeimage"
+    type="post/postImage"
+    userinfo={props.info.id}
+    token={props.token}
+  />
+)}
+
           <button className="close-btn" onClick={handleEnableToDelete}>X</button>
         </div>
         <div className="modal-actions">
