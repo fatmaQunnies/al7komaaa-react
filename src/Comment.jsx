@@ -1,25 +1,35 @@
 import { useEffect, useState } from "react";
 import './Comment.css';
 import ImageWithToken from "./ImageWithToken.jsx";
-import EditDelBtn from "./EditDelBtn.jsx"
+import EditDelBtn from "./EditDelBtn.jsx";
+import './EditDelBtn.css';
 
 function Comment(props) {
-  
-//alert( props.info.userid);
   return (
     <div className="comment">
-      <div>
-      <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.info.id} token={props.token}></ImageWithToken>
-      <EditDelBtn token={props.token} type={"comment"} id={props.comment.id} renderFunction={props.renderFunction} ownerPost={props.comment.userId} userId={props.userId} info={props.info}/>
-
-       
-       
+      <div className="comment-header">
+        <div className="comment-info">
+          <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.comment.userId} token={props.token} />
+          <span className="comment-username">{props.comment.userName}</span>
+        </div>
+        <div className="edit-del-btn">
+          <EditDelBtn 
+            token={props.token} 
+            type={"comment"} 
+            id={props.id} 
+            renderFunction={props.renderFunction} 
+            ownerPost={props.comment.userId} 
+            userId={props.userId} 
+            info={props.info} 
+          />
+        </div>
       </div>
       
       <div className="content">
-        {props.comment.userName}
-        <br />
         {props.comment.content}
+        {props.comment.image != null ? (
+          <ImageWithToken CName={"commentImage"} type={"post/commentImage"} userinfo={props.id} token={props.token} />
+        ) : null}
       </div>
     </div>
   );

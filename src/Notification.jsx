@@ -1,45 +1,61 @@
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import "./Notification.css";
 
 function Notification(props) {
     const [listNotification, setlistNotification] = useState([]);
-    const [isRead, setisRead] = useState(0);
 
     useEffect(() => {
-        console.log("USEEFFECT == notification" );
+        console.log("USEEFFECT == notification");
         fetch("http://localhost:8080/notifications", {
-          headers: {
-            'Authorization': 'Bearer ' + props.token
-          }
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
         })
-        .then(response => response.json())
-        .then(data => {
-            setlistNotification(data);
-            console.log([...data]+"yyyyyyyyyyy");
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }, []);
+            .then(response => response.json())
+            .then(data => {
+                setlistNotification(data);
+                console.log([...data] + "yyyyyyyyyyy");
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }, [props.token]);
 
-    const makeIsRead = () => {
-        setisRead(1);
-        const className = "notificationDiv " + (isRead ? "isread" : "");
-        console.log("notification Is Read ");
-        console.log(className);
+    const markAsRead = (notificationId) => {
+        fetch(`http://localhost:8080/notifications/${notificationId}/mark-as-read`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + props.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    setlistNotification(prevNotifications =>
+                        prevNotifications.map(notification =>
+                            notification.id === notificationId
+                                ? { ...notification, read: true }
+                                : notification
+                        )
+                    );
+                    console.log("Notification marked as read");
+                } else {
+                    console.error('Failed to mark notification as read');
+                }
+            })
+            .catch(error => console.error('Error updating notification:', error));
     };
-    
- const indix=0;
+
     return (
         <div className="notification">
-           
             {listNotification.map((no) => (
-                <div  id={indix} className={"notificationDiv" + (isRead==1 ? "1" : "")} onClick={makeIsRead}>
+                <div
+                    key={no.id}
+                    className={`notificationDiv ${no.read ? 'isRead' : ''}`}
+                    onClick={() => markAsRead(no.id)}
+                >
                     <p>{no.senderUserName}</p>
                     <p>{no.message}</p>
                     <p>{no.timestamp}</p>
-                    <p>{no.read}</p>
-
-                    {isRead ==1 ? 'Read' : 'UnRead'}
-
+                    <p>{no.read ? 'Read' : 'Unread'}</p>
                 </div>
             ))}
         </div>
