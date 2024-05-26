@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './EditProfile.css';
+import { json } from 'react-router-dom';
 
 function EditProfile(props) {
     const [newEmail, setNewEmail] = useState('');
@@ -12,40 +13,103 @@ function EditProfile(props) {
     const [newLastname, setNewLastname] = useState('');
     const [message, setMessage] = useState('');
 
+    const token = props.token;
+
     const handleEditProfile = async () => {
-        const data = {
-            firstname: newFirstname,
-            lastname: newLastname,
-            email: newEmail,
-            location: newLocation,
-            bio: newBio,
-            mobile: newMobile,
-            gender: newGender,
-            dateofbirth: newDateOfBirth // Ensure this matches the Java field name
-        };
-
-        console.log('Sending data:', data);
-
         try {
-            const response = await fetch('http://localhost:8080/editProfile', {
-                method: 'PUT',
-                headers: {
-                    Authorization: 'Bearer ' + props.token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({data})
-            });
-        
-            if (response.ok) {
-                setMessage("تم حفظ المعلومات");
-            } else {
-                const errorData = await response.json();
-                console.error('Failed to update profile:', errorData);
-                setMessage("Failed to update profile");
+            if (newFirstname) {
+                await fetch('http://localhost:8080/editFirstName', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body:newFirstname
+                });
             }
+
+            if (newLastname) {
+                await fetch('http://localhost:8080/editLastName', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body:newLastname
+                });
+            }
+
+            if (newEmail) {
+                await fetch('http://localhost:8080/editEmail', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: newEmail
+                });
+            }
+
+            if (newLocation) {
+                await fetch('http://localhost:8080/editLocation', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: newLocation
+                });
+            }
+
+            if (newBio) {
+                await fetch('http://localhost:8080/editBio', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: newBio
+                });
+            }
+
+            if (newMobile) {
+                await fetch('http://localhost:8080/editMobile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: newMobile
+                });
+            }
+
+            if (newGender) {
+                await fetch('http://localhost:8080/editGender', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body:newGender
+                });
+            }
+
+            if (newDateOfBirth) {
+                await fetch('http://localhost:8080/editDof', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(newDateOfBirth)
+                });
+            }
+
+            // تعيين رسالة النجاح
+            setMessage('Profile updated successfully');
         } catch (error) {
-            console.error('Error:', error);
-            setMessage("Error occurred while updating profile");
+            // تعيين رسالة الخطأ في حالة وجود أي خطأ أثناء تحديث الملف الشخصي
+            setMessage('Error updating profile');
         }
     };
 
@@ -66,9 +130,8 @@ function EditProfile(props) {
             <input type="text" value={newMobile} onChange={(e) => setNewMobile(e.target.value)} />
             <label>Gender:</label>
             <select value={newGender} onChange={(e) => setNewGender(e.target.value)}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value={"\"MALE\""}>MALE</option>
+                <option value={"\"FEMALE\""}>FEMALE</option>
             </select>
             <label>Date of Birth:</label>
             <input type="date" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
