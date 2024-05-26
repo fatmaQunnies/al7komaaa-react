@@ -125,6 +125,8 @@ function Friends(props) {
         }).then(() => setReload(prevReload => !prevReload));
     };
 
+
+    //////
     return (
         <div>
             <div className="view-switch">

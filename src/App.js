@@ -408,7 +408,7 @@ const[getUserIddd,setUserIddd]=useState();
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/editImage" element={<EditProfileImage token={token} userId={userId}/>} />
-                    <Route path="/editProfile" element={<EditProfile />} />
+                    <Route path="/editProfile" element={<EditProfile token={token} />} />
                     <Route path="/Messages" element={<Notfound />} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
                     <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId}
@@ -436,6 +436,7 @@ const[getUserIddd,setUserIddd]=useState();
                 </div>
             </div>
         </Router>
+        
     );
 }
 export default memo(App);
