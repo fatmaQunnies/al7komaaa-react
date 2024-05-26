@@ -99,7 +99,12 @@ function Login(props) {
                     </form>
                 </div>
             </div>
+            <div>
+            With Google: <a href="http://localhost:8080/oauth2/authorization/google">click here</a>
+            </div>
         </div>
+
+
     );
 }
 
