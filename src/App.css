@@ -16,6 +16,7 @@
 height: 30%;
   margin-left: 3%;
   gap: 3%;
+  background-color: 'theme.palette.primary.main';
 }
 
 .right {
@@ -32,13 +33,7 @@ height: 30%;
 
 }
 
-/* .middle {
-  grid-area: middle;
 
- margin-left: 5%;
- margin-right: 5%;
-
-} */
 .nav {
   display: flex;
   align-items: center;
@@ -79,7 +74,7 @@ height: 30%;
   text-align: center;
 }
 .notification{
-  position: 100;
+position: 100;
 text-align: center;
 
 }

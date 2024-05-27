@@ -18,8 +18,15 @@ import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
 import CreatePost from "./CreatePost.jsx";
 import Search from "./Search.jsx";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { red, teal } from '@mui/material/colors';
+import Switch from '@mui/material/Switch';
 
+import { deepPurple, deepOrange } from '@mui/material/colors';
+ 
 import { memo } from "react";
+import { useTheme } from "@emotion/react";
 
 function App(props) {
     const [user, setUser] = useState([{ username: "", image: "" }]);
@@ -297,9 +304,52 @@ const[getUserIddd,setUserIddd]=useState();
     };
     //   alert(getUserIdd+`/profile/${getUserIdd}`);
 
+
+
+ 
+// const darkTheme = createTheme({
+//   palette: {
+//     mode: 'dark',
+//     primary: {
+//         main: teal[500],
+//       },
+//   },
+// });
+const [darkMode, setDarkMode] = useState(false);
+const theme = useTheme()
+const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    
+}
+;
+const themee = createTheme({
+    palette: {
+        mode: darkMode ? 'dark' : 'light',
+        primary: {
+            main: teal[500],
+        },
+        secondary: {
+            main: red[500],
+        },
+        text: {
+            primary: darkMode ? '#ffffff' : '#000000', 
+        },
+        background: {
+            default: darkMode ? '#303030' : '#f5f5f5',  
+        },
+        
+    },
+});
+
+
+
     return (
+
+        <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Router>
             <div className="nav">
+                <Switch checked={darkMode} onChange={toggleDarkMode} />
                 <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
                 <div className="search-container">
                 <input
@@ -369,7 +419,7 @@ const[getUserIddd,setUserIddd]=useState();
                         path="/Friends"
                         element={
                             <div id="Friends">
-                                <Friends numbersfriend={numfeiend} iduser={userId} token={token} />
+                                <Friends numbersfriend={numfeiend} iduser={userId} token={token}  />
                             </div>
                         }
                     />
@@ -400,11 +450,7 @@ const[getUserIddd,setUserIddd]=useState();
                     </div>} />
                     <Route path="/Setting" element={<Setting token={token} />} />
                
-                     <Route path={`/profile/${getUserIdd}`} element={getUserIddd} />
-                
-
-                 
-
+                    <Route path={`/profile/${getUserIdd}`} element={getUserIddd} />
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/editImage" element={<EditProfileImage token={token} userId={userId}/>} />
@@ -436,7 +482,7 @@ const[getUserIddd,setUserIddd]=useState();
                 </div>
             </div>
         </Router>
-        
+        </ThemeProvider>
     );
 }
 export default memo(App);

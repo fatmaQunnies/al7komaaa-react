@@ -35,6 +35,13 @@ function Setting(props) {
 
     };
     
+
+
+    const [themeMode, setThemeMode] = useState('dark'); // Default theme mode is dark
+
+    const toggleThemeMode = () => {
+        setThemeMode((prevMode) => (prevMode === 'dark' ? 'light' : 'dark')); // Toggle between dark and light mode
+    };
     return (
         <div className="setting-container">
             <Link to="/changePassword">
