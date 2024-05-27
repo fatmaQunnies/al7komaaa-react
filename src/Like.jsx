@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './Like.css'; 
 
@@ -67,27 +68,28 @@ function Like(props) {
   };    
 
   return (
-    <div style={{width:"100%"}}>
-      <button
-        onClick={() => {
-          isLiked ? handleUnReaction() : setReactionVisible(!reactionVisible);
-        }}
-        className="like-button"
-      >
-        {reaction ? reaction : (isLiked ? 'Dislike' : 'Like')}
-      </button>
-
-      {reactionVisible && (
-        <div className="reaction-popup">
-          <button onClick={() => handleReaction('LIKE')}>LIKE</button>
-          <button onClick={() => handleReaction('LOVE')}>LOVE</button>
-          <button onClick={() => handleReaction('CARE')}>CARE</button>
-          <button onClick={() => handleReaction('HAHAHA')}>HAHAHA</button>
-          <button onClick={() => handleReaction('SAD')}>SAD</button>
-          <button onClick={() => handleReaction('ANGRY')}>ANGRY</button>
-        </div>
-      )}
-    </div>
+    <>
+      <div style={{ position: "relative" }}>
+        {reactionVisible && (
+          <div className="reaction-popup" style={{ position: "absolute", top: "-50px",}}>
+             <button onClick={() => handleReaction('LIKE')}><i className="material-icons">thumb_up</i></button>
+          <button onClick={() => handleReaction('LOVE')}><i className="material-icons">favorite</i></button>
+          <button onClick={() => handleReaction('CARE')}><i className="material-icons">favorite_border</i></button>
+          <button onClick={() => handleReaction('HAHAHA')}><i className="material-icons">mood</i></button>
+          <button onClick={() => handleReaction('SAD')}><i className="material-icons">sentiment_very_dissatisfied</i></button>
+          <button onClick={() => handleReaction('ANGRY')}><i className="material-icons">mood_bad</i></button>
+          </div>
+        )}
+        <button
+          onClick={() => {
+            isLiked ? handleUnReaction() : setReactionVisible(!reactionVisible);
+          }}
+          className="like-button"
+        >
+          {reaction ? reaction : (isLiked ? 'Dislike' : 'Like')}
+        </button>
+      </div>
+    </>
   );
 }
 

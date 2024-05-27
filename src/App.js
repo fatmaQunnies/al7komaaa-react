@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef} from "react";
 import "./App.css";
 import Post from "./Post.jsx";
 import LeftList from "./LeftList.jsx";
@@ -340,6 +340,14 @@ const themee = createTheme({
         
     },
 });
+const feedRef = useRef();
+const handleScroll = () => {
+    const feedElement = feedRef.current;
+    if (feedElement.scrollTop + feedElement.clientHeight >= feedElement.scrollHeight) {
+        handReadMore();
+        console.log("ree");
+    }
+};
 
 
 
@@ -385,9 +393,11 @@ const themee = createTheme({
                 
                         path="/feed"
                         element={
-                            <div id="Feed">
+                            <div id="Feed"                           
+                            ref={feedRef}
+                            onScroll={handleScroll}>
                                 
-                                    <CreatePost token={token} userInfo={userInfo}></CreatePost>
+                                    <CreatePost token={token} userInfo={userInfo} userId={userId}></CreatePost>
 
                                 {postContent.map((post) => (
                                     <Post
@@ -405,12 +415,7 @@ const themee = createTheme({
                                     />
                                    
                                 ))}
-                                { window.onscroll = function() {
-                                     
-  if ((window.innerHeight + window.scrollY) >= document.documentElement.offsetHeight) {
-                                           
-        handReadMore();
-        console.log("READ MOREEEEE")}}};
+                
     
                             </div>
                         }

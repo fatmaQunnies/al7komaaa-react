@@ -23,7 +23,8 @@ function Post(props) {
   const [showLikesPopper, setShowLikesPopper] = useState(false);
   const [showSharePopper, setShowSharePopper] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-let count =0;
+
+
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
       headers: {
@@ -361,14 +362,23 @@ props.getUserProfile(<Profile
         {userInfo && (
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.userId} token={props.token} />
         )}
-         <div className='inputandicon'>
+         {/* <div className='inputandicon'>
          <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
-{/* <span className="material-icons" >attach_file</span> */}
             <input type="file" onChange={handleFileChange}> 
 
 
-</input></div>
-     
+</input>
+</div> */}
+
+   <div className='inputandicon'>
+      <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+      <label htmlFor="file-upload" className="file-upload-label">
+        <i className="material-icons">attach_file</i> 
+        <input id="file-upload" type="file" onChange={handleFileChange} style={{ display: 'none' }} />
+      </label>
+    </div>
+     {/* <span className="material-icons" >attach_file</span> */}
+
         <button onClick={functionCreate}>
           <span className="material-symbols-outlined">
             send
