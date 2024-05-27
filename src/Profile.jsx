@@ -21,25 +21,21 @@ function Profile(props){
         setRender(!render);
     };
 
-useEffect(() => {
-    fetch(`http://localhost:8080/hasSentFriendRequest/${props.userId}`, {
-        headers: {
-            'Authorization': 'Bearer ' + props.token
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-     
-        if (typeof data === 'boolean') {
-            setIsRequest(data);
-        } 
-    })
-    .catch(error => console.error('Error fetching data:', error));
-}, []);
+    useEffect(() => {
+        fetch(`http://localhost:8080/hasSentFriendRequest/${props.userId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + props.token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (typeof data === 'boolean') {
+                setIsRequest(data);
+            } 
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }, []);
 
-   
-
-    
     useEffect(() => {
         fetch(`http://localhost:8080/accountIsPrivate/${props.userId}`, {
             headers: {
@@ -98,9 +94,11 @@ useEffect(() => {
                 'Authorization': 'Bearer ' + props.token
             }
         }) 
-      
+        .then(response => response.json())
         .then(data => {
-           if(data==true||data== false) {setIsFriend(data);}
+           if (data === true || data === false) {
+               setIsFriend(data);
+           }
         })
         .catch(error => console.error('Error fetching data:', error));
     }, []);
@@ -134,7 +132,7 @@ useEffect(() => {
     const handleButtonClick = () => {
         let url;
         let method;
-    
+
         if (isRequest) {
             url = `http://localhost:8080/cancelFriendRequest/${props.userId}`;
             method = 'DELETE';
@@ -144,7 +142,7 @@ useEffect(() => {
                 : `http://localhost:8080/sendFriendRequest/${props.userId}`;
             method = isFriend ? 'DELETE' : 'POST';
         }
-    
+
         fetch(url, {
             method: method,
             headers: {
@@ -155,7 +153,6 @@ useEffect(() => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-         
         })
         .then(() => {
             if (isRequest) {
@@ -168,8 +165,6 @@ useEffect(() => {
         })
         .catch(error => console.error('Error fetching data:', error));
     };
-    
-    
 
     return (
         <div className="profile-container">
@@ -185,16 +180,15 @@ useEffect(() => {
                     <p className="fname"> ({props.userinfo.fullname})</p>
                 </div>
                 <div className="addbtn">
-                    
-            {props.userIdSign !== props.userId && (
-                <>
-                    <button onClick={handleButtonClick}>
-                        {isFriend ? 'Remove Friend' : isRequest ? 'Cancel Request' : 'Add Friend'}
-                    </button>
-                    <button>Message</button>
-                </>
-            )}
-        </div>
+                    {props.userIdSign !== props.userId && (
+                        <>
+                            <button onClick={handleButtonClick}>
+                                {isFriend ? 'Remove Friend' : isRequest ? 'Cancel Request' : 'Add Friend'}
+                            </button>
+                            <button>Message</button>
+                        </>
+                    )}
+                </div>
                 <p>{props.userinfo.bio}</p>
                 <div className="stats">
                     <div className="stat">
@@ -210,6 +204,7 @@ useEffect(() => {
             <div className="view-switch">
                 <button onClick={() => setView('posts')} className={view === 'posts' ? 'active' : ''}>Posts</button>
                 <button onClick={() => setView('shares')} className={view === 'shares' ? 'active' : ''}>Shares</button>
+                <button onClick={() => setView('info')} className={view === 'info' ? 'active' : ''}>Info</button>
             </div>
             {accountIsPrivate === false ? (
                 <div>
@@ -230,7 +225,7 @@ useEffect(() => {
                                 />
                             ))}
                         </div>
-                    ) : (
+                    ) : view === 'shares' ? (
                         <div className="shares">
                             {userShares.map((share) => (
                                 <ShowShare
@@ -244,6 +239,19 @@ useEffect(() => {
                                     renderFunction={renderFunction}
                                 />
                             ))}
+                        </div>
+                    ) : (
+                        <div className="post">
+                            <p><strong>Username:</strong> {props.userinfo.username}</p>
+                            <p><strong>Full Name:</strong> {props.userinfo.fullname}</p>
+                            <p><strong>Bio:</strong> {props.userinfo.bio}</p>
+                            <p><strong>Email:</strong> {props.userinfo.email}</p>
+                            <p><strong>Location:</strong> {props.userinfo.location}</p>
+                            <p><strong>Birthdate:</strong> {props.userinfo.dateofbirth}</p>
+                            <p><strong>Gender:</strong> {props.userinfo.gender}</p>
+                            <p><strong>Mobile:</strong> {props.userinfo.mobile}</p>
+                            <p><strong>Age:</strong> {props.userinfo.age}</p>
+
                         </div>
                     )}
                 </div>

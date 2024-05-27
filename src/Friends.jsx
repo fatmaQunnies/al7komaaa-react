@@ -113,7 +113,7 @@ function Friends(props) {
             headers: {
                 'Authorization': 'Bearer ' + props.token
             }
-        }).then(() => setReload(prevReload => !prevReload));
+        })
     };
 
     const handleRejectFriend = (userid) => {

@@ -76,7 +76,7 @@ function CreatePost(props) {
   return (
     <div className="post">
       <div className="userNameImage">
-        <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userInfo.userid} token={props.token}></ImageWithToken>
+        <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userId} token={props.token}></ImageWithToken>
         <a className="userNameAnchor" href="/Profile">{props.userInfo.username}</a>
       </div>
 
