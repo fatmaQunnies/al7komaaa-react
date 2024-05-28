@@ -119,28 +119,60 @@ function App(props) {
    
     const handReadMore = async () => {
             
-                // const response = await fetch(readMore._links["read more"].href, {
-                //     method: "GET",
-                //     headers: {
-                //         Authorization: "Bearer " + token,
-                //         "Content-Type": "application/json",
-                //     },
-                // });
-                // const responseData = await response.json();
-                // if (response.ok) {
-                //     const newPosts = responseData._embedded.posts.filter((newPost) => {
-                //         return !postContent.some((oldPost) => oldPost.id === newPost.id);
-                //        console.log("REDEEEEMMMOOORRREEE")
-                //     });
-                //     setPostContent([...postContent, ...newPosts]);
+                const response = await fetch(readMore._links["read more"].href, {
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const responseData = await response.json();
+                if (response.ok) {
+                    const newPosts = responseData._embedded.posts.filter((newPost) => {
+                        return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                       console.log("REDEEEEMMMOOORRREEE")
+                    });
+                    setPostContent([...postContent, ...newPosts]);
                  
 
-                // } else {
-                //     console.error("Error:", response.statusText);
-                // }
+                } else {
+                    console.error("Error:", response.statusText);
+                }
            
         
     };
+
+
+
+    const handReadMore2 = async () => {
+            
+        const response = await fetch(readMoreReal._links["read more"].href, {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+        });
+        const responseData = await response.json();
+        if (response.ok) {
+            const newPosts = responseData._embedded.posts.filter((newPost) => {
+                return !realContent.some((oldPost) => oldPost.id === newPost.id);
+               console.log("REDEEEEMMMOOORRREEE")
+            });
+
+            setRealContent([...realContent, ...newPosts]);
+         
+
+        } else {
+            console.error("Error:", response.statusText);
+        }
+   
+
+};
+
+
+
+
     useEffect(() => {
         fetch("http://localhost:8080/post/reels", {
             headers: {
@@ -348,6 +380,15 @@ const handleScroll = () => {
         console.log("ree");
     }
 };
+const feedRef2 = useRef();
+
+const handleScroll2 = () => {
+    const feedElement = feedRef2.current;
+    if (feedElement.scrollTop + feedElement.clientHeight >= feedElement.scrollHeight) {
+        handReadMore2();
+        console.log("reell remoer");
+    }
+};
 
 
 
@@ -416,7 +457,9 @@ const handleScroll = () => {
                                    
                                 ))}
                 
-    
+    {/* <div>
+            With Google: <a href="http://localhost:8080/oauth2/authorization/google">click here</a>
+            </div> */}
                             </div>
                         }
                     />
@@ -434,7 +477,12 @@ const handleScroll = () => {
                     <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token}  userImage={userInfo.image}  userIdSign={userId}
 /></>} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
-                    <Route path="/Reel" element={<div id="Real">
+
+                    <Route path="/Reel" element={<div id="Real"
+                    ref={feedRef2}
+                            onScroll={handleScroll2}
+                            >
+                                
                     <CreatePost token={token} userInfo={userInfo}></CreatePost>
 
                         {realContent.map((post) => (
