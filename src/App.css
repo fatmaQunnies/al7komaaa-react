@@ -127,3 +127,37 @@ text-align: center;
 #Feed.show-scrollbar::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.1);
 }
+
+
+
+
+
+#Real {
+  height: 600px;
+  overflow-y: scroll;
+  padding: 10px;
+  scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
+}
+
+#Real::-webkit-scrollbar {
+  width: 0px; /* إخفاء شريط التمرير في Chrome, Safari, و Opera */
+}
+
+#Real.show-scrollbar {
+  scrollbar-width: thin; /* لجعل شريط التمرير أنحف في Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0.1);
+}
+
+#Real.show-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+#Real.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+#Real.show-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}

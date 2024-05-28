@@ -119,25 +119,25 @@ function App(props) {
    
     const handReadMore = async () => {
             
-                const response = await fetch(readMore._links["read more"].href, {
-                    method: "GET",
-                    headers: {
-                        Authorization: "Bearer " + token,
-                        "Content-Type": "application/json",
-                    },
-                });
-                const responseData = await response.json();
-                if (response.ok) {
-                    const newPosts = responseData._embedded.posts.filter((newPost) => {
-                        return !postContent.some((oldPost) => oldPost.id === newPost.id);
-                       console.log("REDEEEEMMMOOORRREEE")
-                    });
-                    setPostContent([...postContent, ...newPosts]);
+                // const response = await fetch(readMore._links["read more"].href, {
+                //     method: "GET",
+                //     headers: {
+                //         Authorization: "Bearer " + token,
+                //         "Content-Type": "application/json",
+                //     },
+                // });
+                // const responseData = await response.json();
+                // if (response.ok) {
+                //     const newPosts = responseData._embedded.posts.filter((newPost) => {
+                //         return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                //        console.log("REDEEEEMMMOOORRREEE")
+                //     });
+                //     setPostContent([...postContent, ...newPosts]);
                  
 
-                } else {
-                    console.error("Error:", response.statusText);
-                }
+                // } else {
+                //     console.error("Error:", response.statusText);
+                // }
            
         
     };
@@ -348,15 +348,6 @@ const handleScroll = () => {
         console.log("ree");
     }
 };
-// const feedRef2 = useRef();
-
-// const handleScroll2 = () => {
-//     const feedElement = feedRef2.current;
-//     if (feedElement.scrollTop + feedElement.clientHeight >= feedElement.scrollHeight) {
-//         handReadMore();
-//         console.log("reell remoer");
-//     }
-// };
 
 
 
@@ -443,11 +434,7 @@ const handleScroll = () => {
                     <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token}  userImage={userInfo.image}  userIdSign={userId}
 /></>} />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
-
                     <Route path="/Reel" element={<div id="Real">
-                    {/* ref={feedRef}
-                            onScroll={handleScroll2}> */}
-                                
                     <CreatePost token={token} userInfo={userInfo}></CreatePost>
 
                         {realContent.map((post) => (
