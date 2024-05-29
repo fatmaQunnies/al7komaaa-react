@@ -28,6 +28,7 @@ import { deepPurple, deepOrange } from '@mui/material/colors';
 import { memo } from "react";
 import { useTheme } from "@emotion/react";
 
+
 function App(props) {
     const [user, setUser] = useState([{ username: "", image: "" }]);
     const [token, setToken] = useState(props.token);
@@ -119,28 +120,60 @@ function App(props) {
    
     const handReadMore = async () => {
             
-                // const response = await fetch(readMore._links["read more"].href, {
-                //     method: "GET",
-                //     headers: {
-                //         Authorization: "Bearer " + token,
-                //         "Content-Type": "application/json",
-                //     },
-                // });
-                // const responseData = await response.json();
-                // if (response.ok) {
-                //     const newPosts = responseData._embedded.posts.filter((newPost) => {
-                //         return !postContent.some((oldPost) => oldPost.id === newPost.id);
-                //        console.log("REDEEEEMMMOOORRREEE")
-                //     });
-                //     setPostContent([...postContent, ...newPosts]);
+                const response = await fetch(readMore._links["read more"].href, {
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const responseData = await response.json();
+                if (response.ok) {
+                    const newPosts = responseData._embedded.posts.filter((newPost) => {
+                        return !postContent.some((oldPost) => oldPost.id === newPost.id);
+                       console.log("REDEEEEMMMOOORRREEE")
+                    });
+                    setPostContent([...postContent, ...newPosts]);
                  
 
-                // } else {
-                //     console.error("Error:", response.statusText);
-                // }
+                } else {
+                    console.error("Error:", response.statusText);
+                }
            
         
     };
+
+
+
+    const handReadMore2 = async () => {
+            
+        const response = await fetch(readMoreReal._links["read more"].href, {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+        });
+        const responseData = await response.json();
+        if (response.ok) {
+            const newPosts = responseData._embedded.posts.filter((newPost) => {
+                return !realContent.some((oldPost) => oldPost.id === newPost.id);
+               console.log("REDEEEEMMMOOORRREEE")
+            });
+
+            setRealContent([...realContent, ...newPosts]);
+         
+
+        } else {
+            console.error("Error:", response.statusText);
+        }
+   
+
+};
+
+
+
+
     useEffect(() => {
         fetch("http://localhost:8080/post/reels", {
             headers: {
@@ -315,14 +348,58 @@ const[getUserIddd,setUserIddd]=useState();
 //       },
 //   },
 // });
+// const [darkMode, setDarkMode] = useState(false);
+// const theme = useTheme()
+// const toggleDarkMode = () => {
+//     setDarkMode(!darkMode);
+    
+// }
+// ;
+// const themee = createTheme({
+//     palette: {
+//         mode: darkMode ? 'dark' : 'light',
+//         primary: {
+//             main: teal[500],
+//         },
+//         secondary: {
+//             main: red[500],
+//         },
+//         text: {
+//             primary: darkMode ? '#ffffff' : '#000000', 
+//         },
+//         background: {
+//             default: darkMode ? '#303030' : '#f5f5f5',  
+//         },
+        
+//     },
+// });
+// const feedRef = useRef();
+// const handleScroll = () => {
+//     const feedElement = feedRef.current;
+//     if (feedElement.scrollTop + feedElement.clientHeight >= feedElement.scrollHeight) {
+//         handReadMore();
+//         console.log("ree");
+//     }
+// };
+// const feedRef2 = useRef();
+
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: teal[500],
+        },
+    },
+});
+
 const [darkMode, setDarkMode] = useState(false);
-const theme = useTheme()
+
 const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    
-}
-;
-const themee = createTheme({
+};
+
+const theme = createTheme({
     palette: {
         mode: darkMode ? 'dark' : 'light',
         primary: {
@@ -337,9 +414,9 @@ const themee = createTheme({
         background: {
             default: darkMode ? '#303030' : '#f5f5f5',  
         },
-        
     },
 });
+
 const feedRef = useRef();
 const handleScroll = () => {
     const feedElement = feedRef.current;
@@ -349,56 +426,56 @@ const handleScroll = () => {
     }
 };
 
+const feedRef2 = useRef();
 
 
-    return (
+const handleScroll2 = () => {
+    const feedElement = feedRef2.current;
+    if (feedElement.scrollTop + feedElement.clientHeight >= feedElement.scrollHeight) {
+        handReadMore2();
+        console.log("reell remoer");
+    }
+};
 
-        <ThemeProvider theme={theme}>
+
+
+return (
+    <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
             <div className="nav">
                 <Switch checked={darkMode} onChange={toggleDarkMode} />
                 <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
                 <div className="search-container">
-                <input
-                type="text"
-                className="search-box"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={handleInputChangesearch}
-            />
-             
-                <Link to={`/Search`} className="userNameAnchor">
-                    <button onClick={searchbtn}>search</button>
-                </Link>
-            
-                  
+                    <input
+                        type="text"
+                        className="search-box"
+                        placeholder="Search"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                    />
+                    <Link to={`/Search`} className="userNameAnchor">
+                        <button onClick={searchbtn}>search</button>
+                    </Link>
                 </div>
                 <div style={{ display: "flex" }}>
                     <h1>{userInfo.username}</h1>
                 </div>
             </div>
-{/* <div className="middle">
-
-
-</div> */}
             <div className="App">
-           <div  className="Allleft" >    <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
-                <nav className="left-down">
-                    <Navbar />
-                </nav></div> 
+                <div className="Allleft">
+                    <LeftList className="left" key={userId} data={userInfo} token={token}></LeftList>
+                    <nav className="left-down">
+                        <Navbar />
+                    </nav>
+                </div> 
                 <Routes>
-                <Route path="/" element={<Navigate to="/feed" />} />
+                    <Route path="/" element={<Navigate to="/feed" />} />
                     <Route
-                
                         path="/feed"
                         element={
-                            <div id="Feed"                           
-                            ref={feedRef}
-                            onScroll={handleScroll}>
-                                
-                                    <CreatePost token={token} userInfo={userInfo} userId={userId}></CreatePost>
-
+                            <div id="Feed" ref={feedRef} onScroll={handleScroll}>
+                                <CreatePost token={token} userInfo={userInfo} userId={userId}></CreatePost>
                                 {postContent.map((post) => (
                                     <Post
                                         className="post"
@@ -409,14 +486,11 @@ const handleScroll = () => {
                                         userId={userId}
                                         userImage={userImage}
                                         type={"post"}
-                                        userName = {userInfo.username}
+                                        userName={userInfo.username}
                                         getUserId={getUserId}
                                         getUserProfile={getUserProfile}
                                     />
-                                   
                                 ))}
-                
-    
                             </div>
                         }
                     />
@@ -428,66 +502,61 @@ const handleScroll = () => {
                             </div>
                         }
                     />
-                    <Route path="/profile" element={<>
-                        {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
-
-                    <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token}  userImage={userInfo.image}  userIdSign={userId}
-/></>} />
+                    <Route path="/profile" element={
+                        <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} userImage={userInfo.image} userIdSign={userId} />
+                    } />
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
-                    <Route path="/Reel" element={<div id="Real">
-                    <CreatePost token={token} userInfo={userInfo}></CreatePost>
-
-                        {realContent.map((post) => (
-                            <Post
-                                className="post"
-                                key={post.id}
-                                id={post.id}
-                                token={token}
-                                info={post}
-                                userId={userId}
-                                userImage={userImage}
-                                type={"Real"}
-                                userName = {userInfo.username}
-                                getUserId={getUserId()}
-                                getUserProfile={getUserProfile}
-                            />
-                        ))}
-                    </div>} />
+                    <Route path="/Reel" element={
+                        <div id="Real" ref={feedRef2} onScroll={handleScroll2}>
+                            <CreatePost token={token} userInfo={userInfo} />
+                            {realContent.map((post) => (
+                                <Post
+                                    className="post"
+                                    key={post.id}
+                                    id={post.id}
+                                    token={token}
+                                    info={post}
+                                    userId={userId}
+                                    userImage={userImage}
+                                    type={"Real"}
+                                    userName={userInfo.username}
+                                    getUserId={getUserId()}
+                                    getUserProfile={getUserProfile}
+                                />
+                            ))}
+                        </div>
+                    } />
                     <Route path="/Setting" element={<Setting token={token} />} />
-               
                     <Route path={`/profile/${getUserIdd}`} element={getUserIddd} />
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />
-                    <Route path="/editImage" element={<EditProfileImage token={token} userId={userId}/>} />
-                    <Route path="/editProfile" element={<EditProfile token={token}  info={userInfo}/>} />
+                    <Route path="/editImage" element={<EditProfileImage token={token} userId={userId} />} />
+                    <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
                     <Route path="/Messages" element={<Notfound />} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
-                    <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId}
-            getUserId={getUserId}
-            getUserProfile={getUserProfile}/>} />
+                    <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId} getUserId={getUserId} getUserProfile={getUserProfile} />} />
                 </Routes>
-
                 <div className="right">
-                {userfriend && userfriend.length > 0 ? (
-    userfriend.map((fr) => (
-        <RightList 
-            key={fr.userid} 
-            userId={fr.userid}
-            token={token} 
-            info={fr}
-            userName={fr.username || 'Unknown User'} 
-            link={fr.links} 
-            userIdSign={userId}
-            getUserId={getUserId}
-            getUserProfile={getUserProfile}
-        />
-    ))
-) : null}
-
+                    {userfriend && userfriend.length > 0 ? (
+                        userfriend.map((fr) => (
+                            <RightList 
+                                key={fr.userid} 
+                                userId={fr.userid}
+                                token={token} 
+                                info={fr}
+                                userName={fr.username || 'Unknown User'} 
+                                link={fr.links} 
+                                userIdSign={userId}
+                                getUserId={getUserId}
+                                getUserProfile={getUserProfile}
+                            />
+                        ))
+                    ) : null}
                 </div>
             </div>
         </Router>
-        </ThemeProvider>
-    );
+    </ThemeProvider>
+);
+
 }
 export default memo(App);

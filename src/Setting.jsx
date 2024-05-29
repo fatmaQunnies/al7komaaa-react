@@ -57,7 +57,7 @@ function Setting(props) {
                 <button>Log Out</button>
             </Link>
 
-            <button onClick={toggleMode}>Toggle Mode</button>
+            
         </div>
     );
 }

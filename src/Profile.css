@@ -5,11 +5,229 @@ body, html {
     background-color: #f0f2f5;
 }
 
-.profile-container {
+/* .profile-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+} */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
+.profile-container {
+    width: 90%;
+    max-width: 1000px;
+    height: calc(100vh - 40px);
+    margin: 20px auto;
+    padding: 20px;
+    overflow-y: auto;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.profile-container::-webkit-scrollbar {
+    width: 0px; /* Hide scrollbar in Chrome, Safari, and Opera */
+}
+
+.profile-container.show-scrollbar {
+    scrollbar-width: thin; /* Make the scrollbar thinner in Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0.1);
+}
+
+.profile-container.show-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.profile-container.show-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-container.show-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.images .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.images .centered-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    z-index: 2;
+    border: 5px solid white;
+}
+
+.user-info {
+    text-align: center;
+    padding: 20px;
+}
+
+.user-info h1 {
+    margin: 0;
+    font-size: 2em;
+    color: #333;
+}
+
+.user-info p {
+    margin: 10px 0;
+    color: #777;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.stat {
+    margin: 0 20px;
+    text-align: center;
+}
+
+.stat p {
+    margin: 5px 0;
+}
+
+.stat p:first-child {
+    font-weight: bold;
+    color: #555;
+}
+
+.stat p:last-child {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.toggle-buttons button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.toggle-buttons button.active {
+    font-weight: bold;
+    color: black;
+}
+
+.toggle-buttons button.active::after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    height: 3px;
+    width: 100%;
+    background: black;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.toggle-buttons button:not(.active) {
+    color: gray;
+}
+
+.sharee img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sharee {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.content {
+    text-align: left;
+    margin-left: 7%;
+}
+
+.view-switch {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.view-switch button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    background-color: #aaaaaa;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.view-switch button.active {
+    background-color: #007bff;
+    color: #000000;
+}
+
+.view-switch button:hover {
+    background-color: #0056b3;
+    color: #000000;
+}
+
+.fname {
+    padding-top: 7px;
+    font-size: small;
+    padding-left: 10px;
+}
+
+.addbtn {
+    margin-top: 20px;
+}
+
+.addbtn button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.addbtn button:last-child {
+    margin-right: 0;
 }
 
 .header {
