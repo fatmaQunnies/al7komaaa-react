@@ -41,8 +41,7 @@ function ImageWithToken(props) {
       const url = URL.createObjectURL(blob);
       if (videoRef.current) { // التحقق من وجود الفيديو في DOM
         videoRef.current.src = url;
-      }
-    };
+      }    };
 
     fetchVideo();
   }, [props.type, props.userinfo, props.token]);
@@ -59,7 +58,7 @@ function ImageWithToken(props) {
 //               </source>
 //           </video>
            
-<video controls width="600" ref={videoRef}>
+<video controls class="video" ref={videoRef}>
 Your browser does not support the video tag.
 </video>
            
