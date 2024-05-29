@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './Post.css';
 import Comment from './Comment.jsx';
 import Like from './Like.jsx';
@@ -259,9 +259,21 @@ function Post(props) {
       console.error('Error fetching data:', error);
     }
   };
-  // alert(props.info.userid);
 
-// props.info
+
+  const feedRef2 = useRef();
+
+
+  const handleScroll2 = () => {
+      const feedElement = feedRef2.current;
+      if (feedElement.scrollTop + feedElement.clientHeight >= feedElement.scrollHeight) {
+        handReadMore();
+          console.log("reell remoer");
+      }
+  };
+
+
+
   const handleClick = () => {
     console.log('Redirecting to profile...');
    props.getUserId(props.info.userName);
@@ -387,9 +399,9 @@ props.getUserProfile(<Profile
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </div>
 
-      <div id="comments">
+      <div id="comments"  ref={feedRef2}  onScroll={handleScroll2}>
         {showComments && handleComment()}
-        {showComments && <a onClick={handReadMore}>Read More</a>}
+        {/* {showComments && <a onClick={handReadMore}>Read More</a>} */}
       </div>
 
       {showLikesPopper && (
