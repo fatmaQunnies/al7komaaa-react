@@ -48,6 +48,7 @@
   border-radius: 8px;
   margin-bottom: 20px;
   padding: 20px;
+
 }
 
 .userNameImage {
@@ -130,6 +131,10 @@
       border-radius: 5px; /* Optional: Add border radius for a rounded corner effect */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visual effect */
       margin: 20px 0; /* Optional: Add margin to space out from other elements */
+      
+  }
+  .text{
+    font-family: Arial, sans-serif;
   }
   
   #comments::-webkit-scrollbar {
@@ -156,6 +161,7 @@
      margin-top: 1rem;
      display: flex;
      gap: 2%;
+     
     }
     
     .addComment img{  border-radius: 50%;
@@ -163,18 +169,9 @@
       height: 2.5rem;
     }
     
-    /* .icon input{  
-      width: 100%;
-      text-align:left;
-      margin-top: -5px;
-      padding-top: -1px;
-      border: 0px solid #ddd;
-    background-color: #fafafa;
-
-    } */
     .inputandicon {
-      display: flex; /* جعل العناصر داخل الديف مرنة */
-      align-items: center; /* توسيط العناصر عمودياً */
+      display: flex;
+      align-items: center; 
       width: 100%;
       text-align: left;
       margin-top: -5px;
@@ -182,6 +179,7 @@
       border: 0px solid #ddd;
       background-color: #fafafa;
       justify-content: space-between;
+      font-family: Arial, sans-serif;
     }
     
     .inputandicon input {
@@ -191,6 +189,7 @@
       outline: none; /* إزالة التأثير الذي يظهر عند التحديد */
       font-size: 16px; /* تعيين حجم الخط */
       padding: 10px; /* إضافة حواف للمسافة بين النص وحواف الحقل */
+      
     }
     
     .inputandicon button {
@@ -198,11 +197,13 @@
       border: none; /* إزالة الحدود */
       cursor: pointer; /* جعل المؤشر عند التحويف فوق الزر يظهر على شكل يد */
       outline: none; /* إزالة التأثير الذي يظهر عند التحديد */
+      font-family: Arial, sans-serif;
     }
     
     .inputandicon button .material-icons {
       font-size: 24px; /* حجم الرمز */
       color: #6e6e6e; /* لون الرمز */
+      font-family: Arial, sans-serif;
     }
     .postDate{
       color: #444444;

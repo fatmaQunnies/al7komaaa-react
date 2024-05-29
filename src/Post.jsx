@@ -383,7 +383,7 @@ props.getUserProfile(<Profile
 </div> */}
 
    <div className='inputandicon'>
-      <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+      <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
       <label htmlFor="file-upload" className="file-upload-label">
         <i className="material-icons">attach_file</i> 
         <input id="file-upload" type="file" onChange={handleFileChange} style={{ display: 'none' }} />

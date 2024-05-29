@@ -25,6 +25,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { red, teal } from '@mui/material/colors';
 import Switch from '@mui/material/Switch';
 
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+
+
 import { deepPurple, deepOrange } from '@mui/material/colors';
  
 import { memo } from "react";
@@ -484,25 +489,29 @@ return (
     <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-            <div className="nav">
-                <Switch checked={darkMode} onChange={toggleDarkMode} />
-                <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
-                <div className="search-container">
-                    <input
-                        type="text"
-                        className="search-box"
-                        placeholder="Search"
-                        value={searchTerm}
-                        onChange={handleInputChange}
-                    />
-                    <Link to={`/Search`} className="userNameAnchor">
-                        {/* <button > */}
-                        <span onClick={searchbtn} className="material-symbols-outlined">
-  search
-</span>
-                        {/* </button> */}
-                    </Link>
-                </div>
+        <div className="nav">
+            <Switch checked={darkMode} onChange={toggleDarkMode} />
+            <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
+            <div className="search-container">
+                <input
+                    type="text"
+                    className="search-box"
+                    placeholder="Search"
+                    value={searchTerm}
+                    onChange={handleInputChange}
+                />
+                <Link to={`/Search`} className="userNameAnchor">
+                    <span onClick={searchbtn} className="material-symbols-outlined">
+                        search
+                    </span>
+                </Link>
+                <Link to={`/Notifications`} className="userNameAnchor">
+                    <span className="material-symbols-outlined">
+                        notifications
+                    </span>
+                </Link>
+            </div>
+       
                 <div style={{ display: "flex" }}>
                     <h1>{userInfo.username}</h1>
                 </div>

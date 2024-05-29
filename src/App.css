@@ -31,9 +31,11 @@ color: white;
     "left middle right"; 
   width: 100%;
   height: 100vh; /* Set height to full viewport height */
-  margin-top: 3%;
+  /* margin-top: 3%; */
   background-color: #f2fff3;
 }
+
+
 
 
 

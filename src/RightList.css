@@ -13,8 +13,17 @@
   flex-grow: 1; 
 }
 
+.friend-button {
+  background-color: transparent;
+  border: none;
+  color: #ACE1AF;
+  cursor: pointer;
+  font-size: 20px; /* Adjust the size as needed */
+}
+
+
 .add-button {
-  background-color: #152fd4;
+  background-color: #15d4c162;
   text-align: center;
   border: none;
   color: white;
