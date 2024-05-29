@@ -213,6 +213,7 @@ function Profile(props){
                             {userPosts.map((post) => (
                                 <Post
                                     className="post"
+                                    
                                     key={post.id}
                                     id={post.id}
                                     token={props.token}

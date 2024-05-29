@@ -7,7 +7,7 @@ body {
 
 
 .App {
-  text-align: center;
+  text-align:center;
   display: grid;
   grid-template-columns: 15% 70% 15%;
   grid-template-rows: auto auto;

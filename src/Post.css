@@ -66,11 +66,11 @@
 }
 .userNameImage a {
  padding-top: 0.5rem; 
-  margin-left: 10%;
+  /* margin-left: 10%; */
   }
   .userNameImage p {
     margin-top: -0.009rem; 
-    margin-left: 1rem; 
+    /* margin-left: 1rem;  */
    
      }
      .postContent{
