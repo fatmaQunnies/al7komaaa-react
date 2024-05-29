@@ -3,7 +3,7 @@ import './Login.css';
 import App from './App';
 import { memo } from "react";
 import Registerr from './Registerr';
-
+import Chat from '../src/chat/Chat'
 function Login(props) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
