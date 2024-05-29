@@ -18,6 +18,8 @@ import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
 import CreatePost from "./CreatePost.jsx";
 import Search from "./Search.jsx";
+import CreateReal from "./CreateReal.jsx";
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { red, teal } from '@mui/material/colors';
@@ -145,8 +147,38 @@ function App(props) {
 
 
 
-    const handReadMore2 = async () => {
+//     const handReadMore2 = async () => {
             
+//         const response = await fetch(readMoreReal._links["read more"].href, {
+//             method: "GET",
+//             headers: {
+//                 Authorization: "Bearer " + token,
+//                 "Content-Type": "application/json",
+//             },
+//         });
+//         const responseData = await response.json();
+//         if (response.ok) {
+//             const newPosts = responseData._embedded.posts.filter((newPost) => {
+//                 return !realContent.some((oldPost) => oldPost.id === newPost.id);
+//                console.log("REDEEEEMMMOOORRREEE")
+//             });
+
+//             setRealContent([...realContent, ...newPosts]);
+         
+// }
+//         //  else {
+//         //     console.error("Error:", response.statusText);
+//         // }
+   
+
+// };
+const handReadMore2 = async () => {
+    if (!readMoreReal._links || !readMoreReal._links["read more"] || !readMoreReal._links["read more"].href) {
+        console.log("No more links available to load more posts.");
+        return;
+    }
+
+    try {
         const response = await fetch(readMoreReal._links["read more"].href, {
             method: "GET",
             headers: {
@@ -154,21 +186,30 @@ function App(props) {
                 "Content-Type": "application/json",
             },
         });
-        const responseData = await response.json();
+
         if (response.ok) {
-            const newPosts = responseData._embedded.posts.filter((newPost) => {
-                return !realContent.some((oldPost) => oldPost.id === newPost.id);
-               console.log("REDEEEEMMMOOORRREEE")
-            });
+            const responseData = await response.json();
 
-            setRealContent([...realContent, ...newPosts]);
-         
+            // Check if responseData._embedded and responseData._embedded.posts exist
+            if (responseData._embedded && Array.isArray(responseData._embedded.posts)) {
+                const newPosts = responseData._embedded.posts.filter((newPost) => {
+                    return !realContent.some((oldPost) => oldPost.id === newPost.id);
+                });
 
+                if (newPosts.length > 0) {
+                    setRealContent([...realContent, ...newPosts]);
+                } else {
+                    console.log("No more new posts to load.");
+                }
+            } else {
+                console.log("No more posts available.");
+            }
         } else {
             console.error("Error:", response.statusText);
         }
-   
-
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
 };
 
 
@@ -455,7 +496,11 @@ return (
                         onChange={handleInputChange}
                     />
                     <Link to={`/Search`} className="userNameAnchor">
-                        <button onClick={searchbtn}>search</button>
+                        {/* <button > */}
+                        <span onClick={searchbtn} className="material-symbols-outlined">
+  search
+</span>
+                        {/* </button> */}
                     </Link>
                 </div>
                 <div style={{ display: "flex" }}>
@@ -508,7 +553,7 @@ return (
                     <Route path="/Notification" element={<Notification className="notification" token={token} />} />
                     <Route path="/Reel" element={
                         <div id="Real" ref={feedRef2} onScroll={handleScroll2}>
-                            <CreatePost token={token} userInfo={userInfo} />
+                            <CreateReal token={token} userInfo={userInfo} />
                             {realContent.map((post) => (
                                 <Post
                                     className="post"
