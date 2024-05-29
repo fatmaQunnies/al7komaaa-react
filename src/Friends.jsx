@@ -136,7 +136,7 @@ function Friends(props) {
 
             <div>
                 {view === 'friends' ? (
-                    <div className="post">
+                    <div className="posts">
                         <h1>Friends List</h1>
                         <p>Number of friends: {numFriends}</p>
                         <div className="friends-list">
@@ -152,7 +152,7 @@ function Friends(props) {
                         </div>
                     </div>
                 ) : (
-                    <div className="post">
+                    <div className="posts">
                         <h1>Friend Requests</h1>
                         <div className="friends-list">
                             {requests.map(request => (

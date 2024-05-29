@@ -6,6 +6,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width:90%;
 }
 
 .setting-container button {
@@ -28,7 +29,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 95%;
   margin: 10px 0;
 }
 
@@ -52,3 +53,32 @@
   background-color: #ccc;
   margin-right: 5px;
 } */
+.setting-container {
+  height: 600px; /* ارتفاع العنصر */
+  overflow-y: scroll; /* تفعيل شريط التمرير الرأسي دائمًا */
+  padding: 10px; /* تباعد داخلي */
+  scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
+}
+
+.setting-container::-webkit-scrollbar {
+  width: 0px; /* إخفاء شريط التمرير في Chrome, Safari, و Opera */
+}
+
+.setting-container.show-scrollbar {
+  scrollbar-width: thin; /* لجعل شريط التمرير أنحف في Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0.1);
+}
+
+.setting-container.show-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.setting-container.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.setting-container.show-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}

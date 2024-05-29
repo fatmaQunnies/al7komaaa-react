@@ -14,6 +14,8 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-ro
 import ChangePassword from './ChangePassword';
 import Logout from "./Logout.jsx";
 import EditProfileImage from './EditProfileImage.jsx'; 
+import EditProfileBackground from './EditProfileBackground.jsx'; 
+
 import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
 import CreatePost from "./CreatePost.jsx";
@@ -485,6 +487,32 @@ const handleScroll2 = () => {
 
 
 
+const [showNotifications, setShowNotifications] = useState(false);
+const containerRef = useRef(null);
+
+const handleToggleNotifications = () => {
+  setShowNotifications(!showNotifications);
+};
+
+const handleClickOutside = (event) => {
+  if (containerRef.current && !containerRef.current.contains(event.target)) {
+    setShowNotifications(false);
+  }
+};
+
+useEffect(() => {
+  if (showNotifications) {
+    document.addEventListener('mousedown', handleClickOutside);
+  } else {
+    document.removeEventListener('mousedown', handleClickOutside);
+  }
+  
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [showNotifications]);
+
+
 return (
     <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -505,11 +533,21 @@ return (
                         search
                     </span>
                 </Link>
-                <Link to={`/Notifications`} className="userNameAnchor">
-                    <span className="material-symbols-outlined">
+                {/* <Link to={`/Notifications`} className="userNameAnchor">
+                    <span  onChange={Notifications} className="material-symbols-outlined">
                         notifications
                     </span>
-                </Link>
+                </Link> */}
+             <div className="notifications-wrapper" ref={containerRef}>
+      <span onClick={handleToggleNotifications} className="material-symbols-outlined notifications-icon">
+        notifications
+      </span>
+      {showNotifications && (
+        <div className="notifications-container">
+         <Notification className="notification" token={token} />
+        </div>
+      )}
+    </div>
             </div>
        
                 <div style={{ display: "flex" }}>
@@ -559,7 +597,7 @@ return (
                     <Route path="/profile" element={
                         <Profile key={count} userId={userId} userinfo={userInfo} numoffriend={numfeiend} token={token} userImage={userInfo.image} userIdSign={userId} />
                     } />
-                    <Route path="/Notification" element={<Notification className="notification" token={token} />} />
+                    {/* <Route path="/Notification" element={<Notification className="notification" token={token} />} /> */}
                     <Route path="/Reel" element={
                         <div id="Real" ref={feedRef2} onScroll={handleScroll2}>
                             <CreateReal token={token} userInfo={userInfo} />
@@ -585,6 +623,8 @@ return (
                     <Route path="/changePassword" element={<ChangePassword token={token} />} />
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/editImage" element={<EditProfileImage token={token} userId={userId} />} />
+                    <Route path="/editBackground" element={<EditProfileBackground token={token} userId={userId} />} />
+
                     <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
                     <Route path="/Messages" element={<Notfound />} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
