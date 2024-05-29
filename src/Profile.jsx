@@ -1,21 +1,25 @@
-import { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from 'react';
+import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import './Profile.css';
-import Post from "./Post.jsx";
-import ImageWithToken from "./ImageWithToken.jsx";
-import ShowShare from "./ShowShare.jsx";
-import { memo } from "react";
+import Post from './Post.jsx';
+import ImageWithToken from './ImageWithToken.jsx';
+import ShowShare from './ShowShare.jsx';
+import Setting from './Setting.jsx';
 
-function Profile(props){
+function Profile(props) {
     const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [numberOfFriends, setNumberOfFriends] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
     const [userShares, setUserShares] = useState([]);
     const [render, setRender] = useState(false);
-    const [accountIsPrivate, setaccountIsPrivate] = useState(props.userinfo.accountIsPrivate);
+    const [accountIsPrivate, setAccountIsPrivate] = useState(props.userinfo.accountIsPrivate);
     const [view, setView] = useState('posts');
-    const [id, setId] = useState(props.userinfo.id);
     const [isFriend, setIsFriend] = useState(false);
-    const [isRequest, setIsRequest] = useState();
+    const [isRequest, setIsRequest] = useState(false);
+    const navigate = useNavigate();
 
     const renderFunction = () => {
         setRender(!render);
@@ -34,7 +38,7 @@ function Profile(props){
             } 
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    }, [props.userId, props.token]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/accountIsPrivate/${props.userId}`, {
@@ -44,10 +48,10 @@ function Profile(props){
         })
         .then(response => response.json())
         .then(data => {
-            setaccountIsPrivate(data);
+            setAccountIsPrivate(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, [render]);
+    }, [props.userId, props.token, render]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/count/userFriend/${props.userId}`, {
@@ -60,7 +64,7 @@ function Profile(props){
             setNumberOfFriends(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, [render]);
+    }, [props.userId, props.token, render]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/post/number/post/${props.userId}`, {
@@ -73,7 +77,7 @@ function Profile(props){
             setNumberOfPosts(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, [render]);
+    }, [props.userId, props.token, render]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/post/users/${props.userId}/shares`, {
@@ -86,7 +90,7 @@ function Profile(props){
             setUserShares(data);
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, [render]);
+    }, [props.userId, props.token, render]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/isFriend/${props.userId}`, {
@@ -101,7 +105,7 @@ function Profile(props){
            }
         })
         .catch(error => console.error('Error fetching data:', error));
-    }, []);
+    }, [props.userId, props.token]);
 
     const fetchFriends = async () => {
         try {
@@ -127,7 +131,7 @@ function Profile(props){
 
     useEffect(() => {
         fetchFriends();
-    }, [render]);
+    }, [props.userId, props.token, render]);
 
     const handleButtonClick = () => {
         let url;
@@ -177,6 +181,12 @@ function Profile(props){
             <div className="user-info">
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <h1>{props.userinfo.username}</h1>
+                    <FontAwesomeIcon
+                        icon={faCog}
+                        className="settings-icon"
+                        onClick={() => navigate('/Setting')}
+                        style={{ cursor: 'pointer', marginLeft: '10px' }}
+                    />
                     <p className="fname"> ({props.userinfo.fullname})</p>
                 </div>
                 <div className="addbtn">
@@ -213,7 +223,6 @@ function Profile(props){
                             {userPosts.map((post) => (
                                 <Post
                                     className="post"
-                                    
                                     key={post.id}
                                     id={post.id}
                                     token={props.token}
@@ -252,7 +261,6 @@ function Profile(props){
                             <p><strong>Gender:</strong> {props.userinfo.gender}</p>
                             <p><strong>Mobile:</strong> {props.userinfo.mobile}</p>
                             <p><strong>Age:</strong> {props.userinfo.age}</p>
-
                         </div>
                     )}
                 </div>
