@@ -4,6 +4,13 @@ body {
   overflow: hidden; /* Hide the scrollbar */
  
 }
+.Allleft {
+  border-right: 5px solid #3333333d; /* جعل الحدود على الجانب الأيمن فقط، سماكتها 5 بيكسل ولونها أسود */
+  padding: 10px; /* إضافة بعض الحشوة الداخلية لتوفير مساحة بين النص والحدود */
+  border-radius: 10px; /* إضافة زوايا مستديرة */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
+  transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
+}
 .material-symbols-outlined{
 margin-top: 30%;
 color: white;

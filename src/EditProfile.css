@@ -1,53 +1,57 @@
-.button-cta {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
+.edit-profile-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.post {
+    background: #fff;
+    padding: 20px;
     border-radius: 8px;
-    width: 150px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.button-cta:hover {
-    background-color: #45a049;
-}
-
-.button-cta.remove-friend {
-    background-color: #f44336;
-}
-
-.button-cta.remove-friend:hover {
-    background-color: #da190b;
-}
-.friends-list {
-    display: flex;
-    flex-direction: column;
-}
-.friend-item {
+.edit-profile-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
 }
-.friend-item span {
+
+.edit-profile-item label {
+    flex: 1;
+    font-weight: bold;
+}
+
+.edit-profile-item input,
+.edit-profile-item select,
+.edit-profile-item textarea {
+    flex: 2;
+    padding: 5px;
     font-size: 16px;
-    font-weight: 500;
 }
-.add-button {
+
+.edit-profile-item textarea {
+    resize: vertical;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
     background-color: #007bff;
-    color: white;
     border: none;
-    padding: 5px 10px;
-    cursor: pointer;
     border-radius: 4px;
+    cursor: pointer;
 }
-.add-button:hover {
+
+button:hover {
     background-color: #0056b3;
+}
+
+p {
+    margin-top: 10px;
+    color: green;
 }

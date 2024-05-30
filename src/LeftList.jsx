@@ -35,10 +35,14 @@ function LeftList(props) {
         <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.data.userid} token={props.token}></ImageWithToken>
 
       {/* <img src={`http://localhost:8080/getImage/${props.data.userid}`} alt="User" /> */}
-      <h1>{props.data.username}</h1>
+      {/* <h1>{props.data.username}</h1> */}
+      <Link to={`/profile`} className="userNameAnchor">
+        <h2> {props.data.username}</h2> 
+        </Link>
       <p>{props.data.bio}</p>
-      <p>{numfeiend}</p>
-
+      {/* <p>{numfeiend}</p> */}
+      <Link to={`/Friends`} className="userNameAnchor">
+      <p>{numfeiend}</p>        </Link>
       {/* <Router>
         <Navbar />
         <Routes>

@@ -1,6 +1,6 @@
 /* Styles for the like button */
 .like-button {
-  padding: 8px 16px;
+ margin-top: 1px;
   border: none;
   background-color: transparent;
   width: 100%;
@@ -95,6 +95,11 @@
         gap: 40%;
      }
     
+.actions div{
+  margin-right: 12px;
+}
+
+
      .actions {
    
       align-items: center;
