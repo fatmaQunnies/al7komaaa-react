@@ -1,4 +1,4 @@
-import { CSSProperties, useState } from "react";
+import { useState } from "react";
 
 import valley from "../assets/valley.jpeg";
 import SignUpForm from "./SignUpForm";
@@ -9,7 +9,7 @@ const AuthPage = () => {
 
   const backgroundImage = {
     backgroundImage: `url(${valley})`, // Here due to variable
-  } as CSSProperties;
+  };
 
   return (
     <div className="background-image" style={backgroundImage}>
@@ -33,14 +33,14 @@ const styles = {
     width: "100%",
     maxWidth: "650px",
     padding: "36px 72px",
-  } as CSSProperties,
+  },
   titleStyle: {
     fontSize: "24px",
     fontFamily: "VisbyRoundCF-Heavy",
     letterSpacing: "0.5px",
     color: "white",
     paddingBottom: "11vw",
-  } as CSSProperties,
+  },
 };
 
 export default AuthPage;

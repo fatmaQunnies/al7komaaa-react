@@ -1,37 +1,27 @@
 import { useContext, useState } from "react";
-
 import axios from "axios";
-
 import { PersonObject } from "react-chat-engine-advanced";
-
 import { useIsMobile } from "../functions/isMobile";
 import { Context } from "../functions/context";
 import { privateKey } from "../functions/constants";
-
 import TextInput from "./components/TextInput";
 import PhotoInput from "./components/PhotoInput";
 import Button from "./components/Button";
 import Link from "./components/Link";
 
-interface SignUpFormProps {
-  onHasAccount: () => void;
-}
-
-const SignUpForm = (props: SignUpFormProps) => {
-  // State
+const SignUpForm = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState<File | undefined>(undefined);
-  // Hooks
+  const [avatar, setAvatar] = useState(undefined);
   const { setUser } = useContext(Context);
-  const isMobile: boolean = useIsMobile();
+  const isMobile = useIsMobile();
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
-    const userJson: PersonObject = {
+    const userJson = {
       email: email,
       username: email,
       first_name: firstName,

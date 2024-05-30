@@ -8,20 +8,15 @@ import Link from "./components/Link";
 
 import { Context } from "../functions/context";
 import { projectId } from "../functions/constants";
-import { PersonObject } from "react-chat-engine-advanced";
 
-interface LogInFormProps {
-  onHasNoAccount: () => void;
-}
-
-const LogInForm = (props: LogInFormProps) => {
+const LogInForm = (props) => {
   // State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // Hooks
   const { setUser } = useContext(Context);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
 
     const headers = {
@@ -36,7 +31,7 @@ const LogInForm = (props: LogInFormProps) => {
       })
       .then((r) => {
         if (r.status === 200) {
-          const user: PersonObject = {
+          const user = {
             first_name: r.data.first_name,
             last_name: r.data.last_name,
             email: email,

@@ -1,10 +1,7 @@
-import { useContext, CSSProperties } from "react";
-
+import { useContext } from "react";
 import valley from "../assets/valley.jpeg";
-
 import { useIsMobile } from "../functions/isMobile";
 import { Context } from "../functions/context";
-
 import {
   MultiChatWindow,
   MultiChatSocket,
@@ -13,30 +10,25 @@ import {
   ChatCardProps,
   ChatHeaderProps,
 } from "react-chat-engine-advanced";
-
 import "../theme.css";
-
 import Sidebar from "./Sidebar";
 import MessageForm from "./MessageForm";
 import UserSearch from "./UserSearch";
 import ChatCard from "./ChatCard";
 import ChatHeader from "./ChatHeader";
-
 import { projectId } from "../functions/constants";
 
 const ChatsPage = () => {
-  // Hooks
   const { user } = useContext(Context);
-  const isMobile: boolean = useIsMobile();
+  const isMobile = useIsMobile();
 
-  // Chat Engine Hooks
-  const username: string = user ? user.username : "";
-  const secret: string = user && user.secret !== null ? user.secret : "";
+  const username = user ? user.username : "";
+  const secret = user && user.secret !== null ? user.secret : "";
   const chatProps = useMultiChatLogic(projectId, username, secret);
 
   const backgroundImage = {
-    backgroundImage: `url(${valley})`, // Here due to variable
-  } as CSSProperties;
+    backgroundImage: `url(${valley})`,
+  };
 
   return (
     <div className="background-image" style={backgroundImage}>
@@ -81,12 +73,10 @@ const ChatsPage = () => {
                 <UserSearch
                   username={chatProps.username}
                   secret={chatProps.secret}
-                  onSelect={(chatId: number) =>
-                    chatProps.onChatCardClick(chatId)
-                  }
+                  onSelect={(chatId) => chatProps.onChatCardClick(chatId)}
                 />
               )}
-              renderChatCard={(props: ChatCardProps) => (
+              renderChatCard={(props) => (
                 <ChatCard
                   {...props}
                   username={chatProps.username}
@@ -98,7 +88,7 @@ const ChatsPage = () => {
                   chat={props.chat}
                 />
               )}
-              renderChatHeader={(props: ChatHeaderProps) => (
+              renderChatHeader={(props) => (
                 <ChatHeader
                   {...props}
                   chat={chatProps.chat}
@@ -106,9 +96,7 @@ const ChatsPage = () => {
                   secret={chatProps.secret}
                 />
               )}
-              renderMessageForm={(props: MessageFormProps) => (
-                <MessageForm {...props} />
-              )}
+              renderMessageForm={(props) => <MessageForm {...props} />}
               renderChatSettings={() => <div className="ce-empty-settings" />}
               style={{ height: "100%" }}
             />

@@ -1,26 +1,16 @@
 import { AutoComplete, Input } from "antd";
-import type { SelectProps } from "antd/es/select";
 import { useState, useEffect, useRef } from "react";
-
-import { PersonObject, Avatar } from "react-chat-engine-advanced";
-
 import axios from "axios";
-
+import { Avatar } from "react-chat-engine-advanced";
 import { privateKey, projectId } from "../functions/constants";
 
-interface CustomChatFormProps {
-  username: string;
-  secret: string;
-  onSelect: (chatId: number) => void;
-}
-
-const UserSearch = (props: CustomChatFormProps) => {
+const UserSearch = (props) => {
   const didMountRef = useRef(false);
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>("");
-  const [users, setUsers] = useState<PersonObject[]>([]);
-  const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState("");
+  const [users, setUsers] = useState([]);
+  const [options, setOptions] = useState([]);
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -31,44 +21,43 @@ const UserSearch = (props: CustomChatFormProps) => {
         .then((r) => setUsers(r.data))
         .catch();
     }
-  });
+  }, []);
 
-  const searchResult = (query: string) => {
+  const searchResult = (query) => {
     const foundUsers = users.filter(
       (user) =>
         JSON.stringify(user).toLowerCase().indexOf(query.toLowerCase()) !==
           -1 && user.username !== props.username
     );
 
-    return foundUsers.map((user) => {
-      return {
-        value: user.username,
-        label: (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>
-              <Avatar avatarUrl={user.avatar} username={user.username} />
-            </span>
-            <span>
-              <div>
-                {user.first_name} {user.last_name}
-              </div>
-              <div>{user.username}</div>
-            </span>
-          </div>
-        ),
-      };
-    });
+    return foundUsers.map((user) => ({
+      value: user.username,
+      label: (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <span>
+            <Avatar avatarUrl={user.avatar} username={user.username} />
+          </span>
+          <span>
+            <div>
+              {user.first_name} {user.last_name}
+            </div>
+            <div>{user.username}</div>
+          </span>
+        </div>
+      ),
+    }));
   };
-  const handleSearch = (query: string) => {
+
+  const handleSearch = (query) => {
     setOptions(query ? searchResult(query) : []);
   };
 
-  const onSelect = (value: string) => {
+  const onSelect = (value) => {
     setLoading(true);
 
     const headers = {

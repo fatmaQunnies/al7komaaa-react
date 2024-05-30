@@ -1,44 +1,25 @@
-import {
-  ChatHeaderProps,
-  ChatObject,
-  PersonObject,
-  Avatar,
-} from "react-chat-engine-advanced";
-
+import { getOtherUser } from "../functions/getOtherUser";
+import { Avatar } from "react-chat-engine-advanced";
 import {
   PhoneFilled,
   DeleteFilled,
   PaperClipOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
-
 import axios from "axios";
-
 import { nowTimeStamp } from "../functions/dates";
-import { getOtherUser } from "../functions/getOtherUser";
 import { useIsMobile } from "../functions/isMobile";
-
 import { privateKey, projectId } from "../functions/constants";
 import { useState } from "react";
 
-interface CustomChatHeaderProps extends ChatHeaderProps {
-  chat?: ChatObject;
-  username: string;
-  secret: string;
-}
-
-const ChatHeader = (props: CustomChatHeaderProps) => {
-  // State
+const ChatHeader = (props) => {
   const [isFilePickerLoading, setFilePickerLoading] = useState(false);
   const [isDeleteLoading, setDeleteLoading] = useState(false);
-  // Hooks
-  const isMobile: boolean = useIsMobile();
+  const isMobile = useIsMobile();
 
-  // TODO: Show how TS recommends props.chat &&
-  const otherMember: PersonObject | undefined =
-    props.chat && getOtherUser(props.chat, props.username);
+  const otherMember = props.chat && getOtherUser(props.chat, props.username);
 
-  const onFilesSelect: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onFilesSelect = (e) => {
     if (!props.chat) return;
     setFilePickerLoading(true);
 
@@ -49,7 +30,7 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
     };
 
     const formdata = new FormData();
-    const filesArr = Array.from(e.target.files !== null ? e.target.files : []);
+    const filesArr = Array.from(e.target.files ? e.target.files : []);
     filesArr.forEach((file) => formdata.append("attachments", file, file.name));
     formdata.append("created", nowTimeStamp());
     formdata.append("sender_username", props.username);
@@ -80,13 +61,13 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
 
   return (
     <div className="ce-custom-chat-header">
-      {otherMember && (
+      {otherMember ? (
         <div>
           <Avatar
             className="ce-custom-header-avatar"
-            avatarUrl={otherMember?.avatar}
-            username={otherMember?.username}
-            isOnline={otherMember?.is_online}
+            avatarUrl={otherMember.avatar}
+            username={otherMember.username}
+            isOnline={otherMember.is_online}
           />
 
           <div className="ce-custom-header-text">
@@ -128,6 +109,8 @@ const ChatHeader = (props: CustomChatHeaderProps) => {
             )}
           </div>
         </div>
+      ) : (
+        <div>Loading...</div>
       )}
 
       <style>{`

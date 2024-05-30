@@ -1,14 +1,11 @@
 import { useContext } from "react";
-
 import {
   LogoutOutlined,
   HomeFilled,
   MessageFilled,
   SettingFilled,
 } from "@ant-design/icons";
-
 import { Avatar } from "react-chat-engine-advanced";
-
 import { Context } from "../functions/context";
 
 const Sidebar = () => {
