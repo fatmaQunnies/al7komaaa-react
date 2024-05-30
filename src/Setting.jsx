@@ -44,21 +44,119 @@ function Setting(props) {
     };
     return (
         <div className="setting-container">
-            <Link to="/changePassword">
-                <button>Change Password</button>
-            </Link>
-            <Link to="/editProfile">
-                <button>Edit Profile</button>
-            </Link>
-            <Link to="/editImage">
-                <button>Edit Profile Image</button>
-            </Link>
-            <Link to="/logout">
-                <button>Log Out</button>
-            </Link>
+        {/* <div className='post' style={{ display: 'flex'}}>
+      <div className='bett'>
+      <div className='post'> changePassword</div> <Link to="/changePassword">
+            <button>Change Password</button>
+        </Link></div> </div> */}
 
-            
-        </div>
+
+
+
+
+<div className="c2">
+                    <div className="c3">
+                        <div className="c4">
+                        Change Password
+                        </div>
+                        <div className="c5">
+                            <div className="c6"></div>
+                            <div className="c7"></div>
+                        </div>
+                    </div>
+                    <Link to="/changePassword">
+            <button>Change Password</button>
+        </Link>
+                </div>
+           
+
+
+
+
+
+
+                
+
+
+
+                
+
+
+<div className="c2">
+                    <div className="c3">
+                        <div className="c4">
+                        Edit Profile Image
+                        </div>
+                        <div className="c5">
+                            <div className="c6"></div>
+                            <div className="c7"></div>
+                        </div>
+                    </div>
+                    <Link to="/editImage">
+            <button>Edit Profile Image</button>
+        </Link>
+                </div>
+
+
+
+                <div className="c2">
+                    <div className="c3">
+                        <div className="c4">
+                        Edit Background Image
+                        </div>
+                        <div className="c5">
+                            <div className="c6"></div>
+                            <div className="c7"></div>
+                        </div>
+                    </div>
+                    <Link to="/editBackground">
+            <button>Edit Background Image</button>
+        </Link>
+                </div>
+
+
+                
+
+
+<div className="c2">
+                    <div className="c3">
+                        <div className="c4">
+                        Edit Profile
+                        </div>
+                        <div className="c5">
+                            <div className="c6"></div>
+                            <div className="c7"></div>
+                        </div>
+                    </div>
+                    <Link to="/editProfile">
+            <button>Edit Profile</button>
+        </Link>
+                </div>
+
+                <div className="c2">
+                    <div className="c3">
+                        <div className="c4">
+                        Log Out
+                        </div>
+                        <div className="c5">
+                            <div className="c6"></div>
+                            <div className="c7"></div>
+                        </div>
+                    </div>
+                    <Link to="/logout">
+            <button>Log Out</button>
+        </Link>
+                </div>
+        {/* <Link to="/editProfile">
+            <button>Edit Profile</button>
+        </Link>
+        <Link to="/editImage">
+            <button>Edit Profile Image</button>
+        </Link>
+        <Link to="/logout">
+            <button>Log Out</button>
+        </Link> */}
+    </div>
     );
 }
 

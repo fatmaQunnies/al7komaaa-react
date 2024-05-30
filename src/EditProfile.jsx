@@ -115,28 +115,48 @@ function EditProfile(props) {
 
     return (
         <div className="edit-profile-container">
-            <h2>Edit Profile</h2>
-            <label>Firstname:</label>
-            <input type="text" value={newFirstname} onChange={(e) => setNewFirstname(e.target.value)} />
-            <label>Lastname:</label>
-            <input type="text" value={newLastname} onChange={(e) => setNewLastname(e.target.value)} />
-            <label>Email:</label>
-            <input type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-            <label>Location:</label>
-            <input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
-            <label>Bio:</label>
-            <textarea value={newBio} onChange={(e) => setNewBio(e.target.value)}></textarea>
-            <label>Mobile:</label>
-            <input type="text" value={newMobile} onChange={(e) => setNewMobile(e.target.value)} />
-            <label>Gender:</label>
-            <select value={newGender} onChange={(e) => setNewGender(e.target.value)}>
-                <option value={"\"MALE\""}>MALE</option>
+            <div className="post">
+                <h1>Edit Profile</h1>
+                
+                <div className="edit-profile-item">
+                    <label>Firstname:</label>
+                    <input type="text" value={newFirstname} onChange={(e) => setNewFirstname(e.target.value)} />
+                </div>
+                <div className="edit-profile-item">
+                    <label>Lastname:</label>
+                    <input type="text" value={newLastname} onChange={(e) => setNewLastname(e.target.value)} />
+                </div>
+                <div className="edit-profile-item">
+                    <label>Email:</label>
+                    <input type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+                </div>
+                <div className="edit-profile-item">
+                    <label>Location:</label>
+                    <input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
+                </div>
+                <div className="edit-profile-item">
+                    <label>Bio:</label>
+                    <textarea value={newBio} onChange={(e) => setNewBio(e.target.value)}></textarea>
+                </div>
+                <div className="edit-profile-item">
+                    <label>Mobile:</label>
+                    <input type="text" value={newMobile} onChange={(e) => setNewMobile(e.target.value)} />
+                </div>
+                <div className="edit-profile-item">
+                    <label>Gender:</label>
+                    <select value={newGender} onChange={(e) => setNewGender(e.target.value)}>
+                    <option value={"\"MALE\""}>MALE</option>
                 <option value={"\"FEMALE\""}>FEMALE</option>
-            </select>
-            <label>Date of Birth:</label>
-            <input type="date" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
-            <button onClick={handleEditProfile}>Save Changes</button>
-            {message && <p>{message}</p>}
+                    </select>
+                </div>
+                <div className="edit-profile-item">
+                    <label>Date of Birth:</label>
+                    <input type="date" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
+                </div>
+
+                <button onClick={handleEditProfile}>Save Changes</button>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }

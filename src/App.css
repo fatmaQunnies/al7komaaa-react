@@ -2,9 +2,31 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden; /* Hide the scrollbar */
+ 
+}
+.Allleft {
+  border-right: 5px solid #3333333d; /* جعل الحدود على الجانب الأيمن فقط، سماكتها 5 بيكسل ولونها أسود */
+  padding: 10px; /* إضافة بعض الحشوة الداخلية لتوفير مساحة بين النص والحدود */
+  border-radius: 10px; /* إضافة زوايا مستديرة */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
+  transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
+}
+.material-symbols-outlined{
+margin-top: 30%;
+color: white;
+}
+.post, .video {
+  width: 100%; /* Adjust as necessary */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 100%; /* Adjust max-width as needed */
+  margin: 0 auto; /* Center align */
 }
 
-
+/* Specific video styling */
+.video {
+  display: block;
+  margin: 10px auto; /* Add margin for spacing */
+}
 
 .App {
   text-align:center;
@@ -16,8 +38,12 @@ body {
     "left middle right"; 
   width: 100%;
   height: 100vh; /* Set height to full viewport height */
-  margin-top: 3%;
+  /* margin-top: 3%; */
+  background-color:#F6F5F2;
+   /* #F6F5F2; */
 }
+
+
 
 
 
@@ -102,10 +128,11 @@ height: 30%;
   display: flex;
   flex-grow: 1; 
   justify-content: center; 
+  
 }
 
 .search-box {
-  width: 200px;
+  width: 30%;
   height: 40px;
   background-color: #555;
   border: none;
@@ -205,25 +232,35 @@ text-align: center;
   background: rgba(255, 255, 255, 0.1);
 }
 /* ///////// */
-@import url("https://cdnjs.cloudflare.com/ajax/libs/antd/4.21.5/antd.min.css");
 
-@font-face {
-    /* TODO: Font Family https://www.dfonts.org/assets/visby-round-font-family/ */
-    font-family: 'VisbyRoundCF-Regular';
-    src: local('VisbyRoundCF-Regular'), url(./assets/VisbyRoundCF-Regular.woff) format('woff');
-    font-weight: normal;
+.notifications-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
-@font-face {
-    /* TODO: Font Family https://www.dfonts.org/assets/visby-round-font-family/ */
-    font-family: 'VisbyRoundCF-DemiBold';
-    src: local('VisbyRoundCF-DemiBold'), url(./assets/VisbyRoundCF-DemiBold.woff) format('woff');
-    font-weight: normal;
+.notifications-icon {
+  cursor: pointer;
 }
 
-@font-face {
-    /* TODO: Font Family https://www.dfonts.org/assets/visby-round-font-family/ */
-    font-family: 'VisbyRoundCF-Heavy';
-    src: local('VisbyRoundCF-Heavy'), url(./assets/VisbyRoundCF-Heavy.woff) format('woff');
-    font-weight: normal;
+.notifications-container {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width:350px;
+  max-height: 400px; 
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.notification {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.notification:last-child {
+  border-bottom: none;
 }

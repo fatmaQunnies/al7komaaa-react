@@ -3,6 +3,8 @@ import './RightList.css';
 import Profile from "./Profile.jsx";
 
 import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserPlus, faUserMinus, faUserClock } from '@fortawesome/free-solid-svg-icons';
 
 function RightList(props) {
   const [isFriend, setIsFriend] = useState(false);
@@ -120,17 +122,22 @@ props.getUserProfile(<Profile
    
 };
 
-  return (
+return (
     <div className="right-list">
-
-      <div  className="username" onClick={handleClick}>
-                <Link to={`/profile/${props.info.username}`} className="userNameAnchor">
-                {props.userName}
-                </Link>
-            </div>
-            <button onClick={handleButtonClick}>
-            {isFriend ? 'Remove Friend' : isRequest ? 'Cancel Request' : 'Add Friend'}
-        </button>
+      <div className="username" onClick={handleClick}>
+        <Link to={`/profile/${props.info.username}`} className="userNameAnchor">
+          {props.userName}
+        </Link>
+      </div>
+      <button onClick={handleButtonClick} className="friend-button">
+        {isFriend ? (
+          <FontAwesomeIcon icon={faUserMinus} />
+        ) : isRequest ? (
+          <FontAwesomeIcon icon={faUserClock} />
+        ) : (
+          <FontAwesomeIcon icon={faUserPlus} />
+        )}
+      </button>
     </div>
   );
 }

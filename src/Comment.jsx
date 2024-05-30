@@ -22,9 +22,17 @@ function Comment(props) {
             userId={props.userId} 
             info={props.info} 
           />
+          
+   <div onClick={replyfunction}>Reply</div>
         </div>
+
+
+
+
+
+
       </div>
-      
+   
       <div className="content">
         {props.comment.content}
         {props.comment.image != null ? (

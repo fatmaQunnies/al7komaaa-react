@@ -15,9 +15,9 @@ function Navbar() {
         <li>
           <Link to="/profile">Profile</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/Notification">Notification</Link>
-        </li>
+        </li> */}
         <li>
           <Link to="/Reel">Reel</Link>
         </li>
