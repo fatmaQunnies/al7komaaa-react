@@ -115,29 +115,77 @@ function EditProfile(props) {
 
     return (
         <div className="edit-profile-container">
-            <h2>Edit Profile</h2>
-            <label>Firstname:</label>
+
+
+<div className="post">
+                        <h1>Edit Profile</h1>
+                       
+                        <div className="friends-list">
+                        <label>Firstname:</label>
             <input type="text" value={newFirstname} onChange={(e) => setNewFirstname(e.target.value)} />
-            <label>Lastname:</label>
-            <input type="text" value={newLastname} onChange={(e) => setNewLastname(e.target.value)} />
-            <label>Email:</label>
+                              
+                        </div>
+                        <div className="friends-list">
+                        <label>lastname:</label>
+                        <input type="text" value={newLastname} onChange={(e) => setNewLastname(e.target.value)} />
+                              
+                        </div>
+                        <div className="friends-list">
+                        <label>Email:</label>
             <input type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-            <label>Location:</label>
+                              
+                        </div>
+                        <div className="friends-list">
+                        <label>Location:</label>
             <input type="text" value={newLocation} onChange={(e) => setNewLocation(e.target.value)} />
-            <label>Bio:</label>
+
+                        </div>
+                        <div className="friends-list">
+                        <label>Bio:</label>
             <textarea value={newBio} onChange={(e) => setNewBio(e.target.value)}></textarea>
-            <label>Mobile:</label>
+                              
+                        </div>
+
+                        <div className="friends-list">
+                        <label>Mobile:</label>
             <input type="text" value={newMobile} onChange={(e) => setNewMobile(e.target.value)} />
-            <label>Gender:</label>
+                              
+                        </div>
+
+                        <div className="friends-list">
+                        <label>Gender:</label>
             <select value={newGender} onChange={(e) => setNewGender(e.target.value)}>
-                <option value={"\"MALE\""}>MALE</option>
+            <option value={"\"MALE\""}>MALE</option>
                 <option value={"\"FEMALE\""}>FEMALE</option>
             </select>
+
+            <div className="friends-list">
             <label>Date of Birth:</label>
             <input type="date" value={newDateOfBirth} onChange={(e) => setNewDateOfBirth(e.target.value)} />
-            <button onClick={handleEditProfile}>Save Changes</button>
+                              
+                        </div>
+
+                        <button onClick={handleEditProfile}>Save Changes</button>
             {message && <p>{message}</p>}
-        </div>
+        </div> 
+
+
+                              
+                        </div>
+
+
+                    </div>
+                  
+
+
+
+
+
+
+
+          
+       
+
     );
 }
 
