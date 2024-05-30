@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './EditProfile.css';
 import { json } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function EditProfile(props) {
     const [newEmail, setNewEmail] = useState('');

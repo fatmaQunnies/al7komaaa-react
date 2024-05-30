@@ -5,7 +5,8 @@ import { Routes, Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import Notfound from './Notfound.jsx';
 import Navbar from './Navbar.jsx';
 import ImageWithToken from "./ImageWithToken.jsx";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function LeftList(props) {
    

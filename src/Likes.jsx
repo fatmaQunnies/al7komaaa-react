@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Likes.css'; 
 import Post from "./Post.jsx";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 
 function Likes(props) {

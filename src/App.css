@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden; /* Hide the scrollbar */
+  height: 100vh; /* تعيين ارتفاع العنصر الأب ليكون 100% من ارتفاع نافذة العرض */
  
 }
 .Allleft {
@@ -10,6 +11,7 @@ body {
   border-radius: 10px; /* إضافة زوايا مستديرة */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
   transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
+  height: 100%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
 }
 .material-symbols-outlined{
 margin-top: 30%;
@@ -169,7 +171,7 @@ text-align: center;
   background: rgba(255, 255, 255, 0.1); 
 } */
 #Feed {
-  height: 600px;
+  height: 800px;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
@@ -203,7 +205,7 @@ text-align: center;
 
 
 #Real {
-  height: 600px;
+  height: 800px;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */

@@ -23,11 +23,15 @@ function Login(props) {
         // YOou should add the token in the body
         console.log(response)
         const res = await fetch('http:/localhost:8080/token', {
+            
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            }
-        })
+            } 
+            
+        }) 
+        .then((response) => console.log(response));
+
     }
 
     const handleLogin = async (event) => {

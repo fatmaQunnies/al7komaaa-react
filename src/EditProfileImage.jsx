@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './EditProfileImage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function EditProfileImage(props) {
     const [selectedFile, setSelectedFile] = useState(null);

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import './CreatePost.css';
 import ImageWithToken from "./ImageWithToken.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function CreatePost(props) {
   const [input, setInput] = useState('');

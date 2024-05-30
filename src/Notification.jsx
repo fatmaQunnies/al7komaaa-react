@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Notification.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function Notification(props) {
     const [listNotification, setlistNotification] = useState([]);

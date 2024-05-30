@@ -4,7 +4,8 @@ import Profile from "./Profile.jsx";
 
 import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faUserMinus, faUserClock } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faUserMinus, faUserClock , faBell} from '@fortawesome/free-solid-svg-icons';
+
 
 function RightList(props) {
   const [isFriend, setIsFriend] = useState(false);

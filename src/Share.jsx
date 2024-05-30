@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './Share.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function Share({ onClose, onShare }) {
   const [shareContent, setShareContent] = useState('');

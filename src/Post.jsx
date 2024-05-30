@@ -8,6 +8,8 @@ import ShowPostLikes from './ShowPostLikes.jsx';
 import Share from './Share.jsx';
 import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
 import Profile from "./Profile.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -24,6 +26,10 @@ function Post(props) {
   const [showSharePopper, setShowSharePopper] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
+
+  const handleInputChange = (event) => {
+    setInput(event.target.value); // تحديث قيمة الإدخال
+  };
 
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -184,10 +190,8 @@ function Post(props) {
 
       if (response.ok) {
         setReload(!reload);
-        // alert(responseData.id);
-     return (responseData.id);
-     
-       
+        setInput(''); // إعادة تعيين الإدخال بعد النجاح
+        return responseData.id;
       } else {
         console.error('Error:', response.statusText);
       }
@@ -371,9 +375,16 @@ props.getUserProfile(<Profile
       </div>
 
       <div className="addComment">
-        {userInfo && (
-          <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.userId} token={props.token} />
-        )}
+      {props.userInfo && (
+        <ImageWithToken
+          CName={"image"}
+          type={"getImage"}
+          userinfo={props.userId}
+          token={props.token}
+        />
+      )}
+      
+
          {/* <div className='inputandicon'>
          <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
             <input type="file" onChange={handleFileChange}> 
@@ -383,7 +394,12 @@ props.getUserProfile(<Profile
 </div> */}
 
    <div className='inputandicon'>
-      <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+      {/* <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} /> */}
+      <input
+        type="text"
+        value={input}
+        onChange={handleInputChange} // معالجة تغيير الإدخال
+      />
       <label htmlFor="file-upload" className="file-upload-label">
         <i className="material-icons">attach_file</i> 
         <input id="file-upload" type="file" onChange={handleFileChange} style={{ display: 'none' }} />
