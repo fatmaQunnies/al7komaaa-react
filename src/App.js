@@ -27,7 +27,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { red, teal } from '@mui/material/colors';
 import Switch from '@mui/material/Switch';
 
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 
@@ -36,6 +35,7 @@ import { deepPurple, deepOrange } from '@mui/material/colors';
  
 import { memo } from "react";
 import { useTheme } from "@emotion/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
 function App(props) {
@@ -561,7 +561,7 @@ return (
                         <Navbar />
                     </nav>
                 </div> 
-                <Routes>
+                    <Routes>
                     <Route path="/" element={<Navigate to="/feed" />} />
                     <Route
                         path="/feed"

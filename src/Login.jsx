@@ -3,6 +3,7 @@ import './Login.css';
 import App from './App';
 import { memo } from "react";
 import Registerr from './Registerr';
+import {GoogleLogin} from '@react-oauth/google'
 // import Chat from '../src/chat/Chat'
 function Login(props) {
     const [userName, setUserName] = useState('');
@@ -17,6 +18,17 @@ function Login(props) {
             setIsLoggedIn(true);
         }
     }, [token]);
+
+    async function handleGoogle(response) {
+        // YOou should add the token in the body
+        console.log(response)
+        const res = await fetch('http:/localhost:8080/token', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -100,7 +112,11 @@ function Login(props) {
                 </div>
             </div>
             <div>
-            With Google: <a href="http://localhost:8080/oauth2/authorization/google">click here</a>
+                <GoogleLogin
+                    clientId="930083034754-4m7h0a0778gqa96haqr7i3qg37bgjhf7.apps.googleusercontent.com"
+                    onSuccess={(credentialResopnse) => handleGoogle(credentialResopnse)}
+                    onError={(error) => console.log(error)}
+                />
             </div>
         </div>
 
