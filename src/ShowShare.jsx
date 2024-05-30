@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Post from "./Post.jsx";
 import ImageWithToken from './ImageWithToken.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function ShowShare(props) {
     const [postContent, setPostContent] = useState(null);

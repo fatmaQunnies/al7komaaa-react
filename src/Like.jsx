@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import './Like.css'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function Like(props) {
   const [reaction, setReaction] = useState(null); 

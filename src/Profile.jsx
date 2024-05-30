@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCog , faBell} from '@fortawesome/free-solid-svg-icons';
 import './Profile.css';
 import Post from './Post.jsx';
 import ImageWithToken from './ImageWithToken.jsx';
 import ShowShare from './ShowShare.jsx';
 import Setting from './Setting.jsx';
+
+
 
 function Profile(props) {
     const [numberOfPosts, setNumberOfPosts] = useState(0);

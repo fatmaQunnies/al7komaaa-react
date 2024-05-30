@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import "./EditDelBtn.css";
 import Modal from './Modal';
 import ImageWithToken from "./ImageWithToken";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function EditDelBtn(props) {
   const [showOptions, setShowOptions] = useState(false);

@@ -55,7 +55,7 @@
 } */
 .setting-container {
   margin: 5%;
-  height: 455px; /* ارتفاع العنصر */
+  height: 600px; /* ارتفاع العنصر */
   overflow-y: scroll; /* تفعيل شريط التمرير الرأسي دائمًا */
   padding: 10px; /* تباعد داخلي */
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */

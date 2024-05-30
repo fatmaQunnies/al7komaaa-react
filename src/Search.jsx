@@ -3,7 +3,8 @@ import ImageWithToken from "./ImageWithToken.jsx";
 import './Search.css';
 import Profile from "./Profile.jsx";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 function Search(props) {
   
     const handleClick = (data) => {
