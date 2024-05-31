@@ -17,7 +17,8 @@ const ChatHeader = (props) => {
   const [isDeleteLoading, setDeleteLoading] = useState(false);
   const isMobile = useIsMobile();
 
-  const otherMember = props.chat && getOtherUser(props.chat, props.username);
+  const otherMember =
+    props.chat && getOtherUser(props.chat, props.username);
 
   const onFilesSelect = (e) => {
     if (!props.chat) return;
@@ -58,10 +59,9 @@ const ChatHeader = (props) => {
       .then(() => setDeleteLoading(false))
       .catch(() => setDeleteLoading(false));
   };
-
   return (
     <div className="ce-custom-chat-header">
-      {otherMember ? (
+      {otherMember && props.chat && (
         <div>
           <Avatar
             className="ce-custom-header-avatar"
@@ -69,7 +69,7 @@ const ChatHeader = (props) => {
             username={otherMember.username}
             isOnline={otherMember.is_online}
           />
-
+  
           <div className="ce-custom-header-text">
             <div className="ce-custom-header-title">
               {otherMember.first_name} {otherMember.last_name}
@@ -78,7 +78,7 @@ const ChatHeader = (props) => {
               {otherMember.is_online ? "Online" : "Offline"}
             </div>
           </div>
-
+  
           <div className="ce-custom-header-icon-wrapper">
             <form style={{ display: "inline-block" }}>
               <label htmlFor="ce-files-picker">
@@ -96,9 +96,9 @@ const ChatHeader = (props) => {
                 onChange={onFilesSelect}
               />
             </form>
-
+  
             <PhoneFilled className="ce-custom-header-icon" />
-
+  
             {isDeleteLoading ? (
               <LoadingOutlined className="ce-custom-header-icon" />
             ) : (
@@ -109,23 +109,21 @@ const ChatHeader = (props) => {
             )}
           </div>
         </div>
-      ) : (
-        <div>Loading...</div>
       )}
-
+  
       <style>{`
       .ce-custom-header-avatar { display: inline-block; position: relative; top: 28px; margin-left: ${
         isMobile ? "48px" : "12px"
       }; border: 1px solid ${
-        otherMember?.is_online ? "rgb(24, 144, 255)" : "#fa541c"
+        otherMember && otherMember.is_online ? "rgb(24, 144, 255)" : "#fa541c"
       }; box-shadow: ${
-        otherMember?.is_online
+        otherMember && otherMember.is_online
           ? "rgb(24 144 255 / 35%)"
           : "rgb(245 34 45 / 35%)"
       } 0px 2px 7px; width: 38px !important; height: 38px !important; font-size: 14px !important; transition: all 0.66s ease; }
       `}</style>
     </div>
   );
-};
+};  
 
 export default ChatHeader;

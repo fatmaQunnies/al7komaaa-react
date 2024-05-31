@@ -15,6 +15,7 @@ import ChangePassword from './ChangePassword';
 import Logout from "./Logout.jsx";
 import EditProfileImage from './EditProfileImage.jsx'; 
 import EditProfileBackground from './EditProfileBackground.jsx'; 
+import ChatsPage from "./ChatsPage/index"
 
 import EditProfile from "./EditProfile.jsx"
 import Login from "./Login.jsx";
@@ -36,6 +37,10 @@ import { deepPurple, deepOrange } from '@mui/material/colors';
 import { memo } from "react";
 import { useTheme } from "@emotion/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import ReactDOM from "react-dom";
+import ChatApp from "./ChatApp"
+import "./assets/VisbyRoundCF-Regular.woff";
+import { ContextProvider } from "./functions/context";
 
 
 function App(props) {
@@ -626,7 +631,9 @@ return (
                     <Route path="/editBackground" element={<EditProfileBackground token={token} userId={userId} />} />
 
                     <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
-                    <Route path="/Messages" element={<Notfound />} />
+                    <Route path="/Messages" element={<ContextProvider>
+    <ChatApp></ChatApp>
+  </ContextProvider>} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
                     <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId} getUserId={getUserId} getUserProfile={getUserProfile} />} />
                 </Routes>
