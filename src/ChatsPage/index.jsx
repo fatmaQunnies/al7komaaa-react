@@ -31,25 +31,25 @@ const ChatsPage = () => {
   };
 
   return (
-    <div className="background-image" style={backgroundImage}>
+    <div className="background-image" >
       <div className="background-gradient-light">
         <div
           style={{
-            position: "relative",
+          margin :"30%",
             top: isMobile ? "0px" : "10vh",
             left: isMobile ? "0px" : "calc(50vw - 3vw - 1.5vw - 35vw)",
             height: isMobile ? "100vh" : "80vh",
             width: isMobile ? "100vw" : "calc(100vw - 10.5vw - 10.5vw)",
-            backgroundColor: "grey",
+    
           }}
         >
           <div
             style={{
               width: "6vw",
-              height: "100%",
+              height: "80%",
               position: "absolute",
-              top: "0px",
-              left: "0px",
+              top: "10%",
+              left: "15%",
               backgroundColor: "rgb(40,43,54)",
             }}
           >
@@ -58,11 +58,11 @@ const ChatsPage = () => {
 
           <div
             style={{
-              width: isMobile ? "100vw" : "calc(100vw - 6vw)",
+              width: isMobile ? "100vw" : "80%",
               position: "absolute",
-              top: "0px",
-              left: isMobile ? "0px" : "6vw",
-              height: "100%", // Fill parent height
+              top: "10%",
+              left: isMobile ? "0px" : "20%",
+              height: "80%",
             }}
           >
             <MultiChatSocket {...chatProps} />
