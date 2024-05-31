@@ -195,19 +195,19 @@ body, html {
     padding: 10px 20px;
     margin: 0 10px;
     border: none;
-    background-color: #A1C398;
+    background-color: #BBBBBB ;
     cursor: pointer;
     font-size: 16px;
 }
 
 .view-switch button.active {
-    background-color: #ACE1AF;
-    color: #000000;
+    background-color: #A1C398;
+    color: black;
 }
 
 .view-switch button:hover {
-    background-color: #ACE1AF;
-    color: #000000;
+    background-color: #A1C398;
+    color: black;
 }
 
 .fname {
@@ -271,14 +271,15 @@ body, html {
     text-align: center;
     background: white;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px #A1C398;
     border-radius: 10px;
+    height:31% ;
 }
 
 .user-info h1 {
     margin: 0;
     font-size: 2em;
-    color: #333;
+    color: #3e3e3e;
 }
 
 .user-info p {
@@ -382,19 +383,19 @@ body, html {
     padding: 10px 20px;
     margin: 0 10px;
     border: none;
-    background-color: #A1C398 ;
+    background-color: #BBBBBB  ;
     cursor: pointer;
     font-size: 16px;
 }
 
 .view-switch button.active {
-    background-color: #BBBBBB ;
-    color: #000000;
+    background-color: #A1C398 ;
+    color: black ;
 }
 
 .view-switch button:hover {
-    background-color: #BBBBBB;
-    color: #000000;
+    background-color: #A1C398;
+    color: black ;
 }
 
 .fname{

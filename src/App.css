@@ -11,7 +11,7 @@ body {
   border-radius: 10px; /* إضافة زوايا مستديرة */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
   transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
-  height: 100%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
+  height: 125%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
 }
 .material-symbols-outlined{
 margin-top: 30%;
@@ -113,10 +113,11 @@ height: 30%;
   height: 3.5em;
 }
 
-.nav h1 {
+.nav h1 ,h2 {
   font-family: "Lobster", cursive;
   margin-right: auto;
   color: #3e3e3e;
+ 
 }
 
 .nav img {
