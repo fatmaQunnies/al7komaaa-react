@@ -29,7 +29,7 @@ const styles = {
     width: "100%",
     height: "53px",
     color: "white",
-    backgroundColor: "#fa541c",
+    backgroundColor: "#A1C398",
     border: "none",
     outline: "none",
     borderRadius: "8px",

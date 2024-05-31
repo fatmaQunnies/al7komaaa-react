@@ -84,7 +84,7 @@ function CreatePost(props) {
 
       <textarea
         className="postContent"
-        placeholder="Write the post content"
+        placeholder="Write the Post content"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />

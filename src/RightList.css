@@ -21,7 +21,7 @@
   
 }
 .friend-button:hover {
-  color: #ACE1AF;
+  color: #A1C398;
 }
 
 
@@ -35,4 +35,8 @@
   font-size: 16px;
   cursor: pointer;
   flex-shrink: 0; 
+}
+
+a.userNameAnchor{
+  color:#3e3e3e ;
 }

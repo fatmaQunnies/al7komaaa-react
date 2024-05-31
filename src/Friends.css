@@ -27,6 +27,7 @@
 .friends-list {
     display: flex;
     flex-direction: column;
+  
 }
 .friend-item {
     display: flex;
@@ -39,6 +40,7 @@
 .friend-item span {
     font-size: 16px;
     font-weight: 500;
+    color: #3e3e3e;
 }
 .add-button {
     background-color: #A1C398;
@@ -52,15 +54,10 @@
     background-color: #ACE1AF;
 }
 .posts {
-    height: 500px; 
+    height: 560px; 
     overflow-y: scroll;
     padding: 10px;
     scrollbar-width: none; 
-
-
-
-
-
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -99,4 +96,7 @@
   .posts.show-scrollbar::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1);
   }
-  
+  h1 , p{
+color: #3e3e3e;
+  }
+ 

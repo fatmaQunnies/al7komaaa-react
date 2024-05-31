@@ -427,7 +427,7 @@ function App(props) {
                     </div>
 
                     <div style={{ display: "flex" }}>
-                        <h1>{userInfo.username}</h1>
+                        <h2>{userInfo.username}</h2>
                     </div>
                 </div>
                 <div className="App">

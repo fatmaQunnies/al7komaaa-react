@@ -40,7 +40,7 @@ function LeftList(props) {
       <Link to={`/profile`} className="userNameAnchor">
         <h2> {props.data.username}</h2> 
         </Link>
-      <p>{props.data.bio}</p>
+      <p className="bio2">{props.data.bio}</p>
       {/* <p>{numfeiend}</p> */}
       <Link to={`/Friends`} className="userNameAnchor">
       <p>{numfeiend}</p>        </Link>

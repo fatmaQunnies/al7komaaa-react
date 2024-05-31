@@ -45,7 +45,7 @@ function Privacy(props) {
 
   return (
     <div style={{ padding: '20px', borderRadius: '5px' }}>
-      <h2>Privacy Settings</h2>
+      <h1>Privacy </h1>
       <p>Current privacy status: {isPrivate ? 'Private' : 'Public'}</p>
       <button style={{ marginRight: '10px' }} onClick={() => setPrivacy(true)}>Set Private</button>
       <button onClick={() => setPrivacy(false)}>Set Public</button>

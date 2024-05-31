@@ -126,6 +126,28 @@ function Setting(props) {
             </div>
 
             <div className="c2">
+                    <div className="c3">
+                        <div className="c4">
+                         Privacy
+                        </div>
+                        <div className="c5">
+                            <div className="c6"></div>
+                            <div className="c7"></div>
+                        </div>
+                    </div>
+                    <Link to="/ Privacy">
+            <button>Change </button>
+            
+        </Link>
+                </div>
+
+
+
+
+
+
+
+            <div className="c2">
                 <div className="c3">
                     <div className="c4">
                         Log Out
@@ -151,7 +173,7 @@ function Setting(props) {
 
 
 
-        
+{/*         
 <div className="c2">
                     <div className="c3">
                         <div className="c4">
@@ -166,7 +188,7 @@ function Setting(props) {
             <button>Change </button>
             
         </Link>
-                </div>
+                </div> */}
         </div>
 
         
