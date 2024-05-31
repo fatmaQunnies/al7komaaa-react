@@ -1,6 +1,89 @@
-/* Styles for the like button */
+/* تنسيق الزر الخاص بالإرسال */
+button {
+  background-color: #A1C398; /* لون الزر */
+  color: white; /* لون النص */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* تأثير الانتقال للون */
+}
+
+button:hover {
+  background-color: #BBBBBB; /* لون الزر عند التحويم */
+}
+
+/* تنسيق زر إرسال التعليق ليصبح أيقونة */
+button.send-comment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #6e6e6e;
+  margin-top: revert-layer;
+}
+
+button.send-comment .material-icons {
+  font-size: 24px;
+}
+
+/* تصغير حجم حقل إدخال التعليق */
+.comment-input {
+  width: 70%; /* عرض حقل التعليق */
+  height: 30px; /* ارتفاع حقل التعليق */
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px; /* مسافة بين الحقل وزر الإرسال */
+}
+
+/* فصل الأزرار Like و Comment و Share */
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.post-actions button {
+  flex: 1; /* توزيع المساحة بالتساوي */
+  margin: 0 5px; /* مسافة بين الأزرار */
+}
+
+/* أيقونات الإجراءات (Like, Comment, Share) */
+.post-actions button.like,
+.post-actions button.comment,
+.post-actions button.share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #A1C398; /* لون الزر */
+  color: white; /* لون النص */
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* تأثير الانتقال للون */
+}
+
+.post-actions button.like:hover,
+.post-actions button.comment:hover,
+.post-actions button.share:hover {
+  background-color: #BBBBBB; /* لون الزر عند التحويم */
+}
+
+.post-actions button.like span,
+.post-actions button.comment span,
+.post-actions button.share span {
+  margin-left: 5px; /* مسافة بين الأيقونة والنص */
+}
+
 .like-button {
- margin-top: 1px;
+  margin-top: 1px;
   border: none;
   background-color: transparent;
   width: 100%;
@@ -11,7 +94,6 @@
   position: relative; /* Needed for absolute positioning of reaction popup */
   z-index: 1; /* Ensure the like button is above other elements */
 }
-
 
 /* Styles for the reaction popup */
 .reaction-popup {
@@ -24,8 +106,6 @@
   padding: 10px;
 }
 
-
-
 /* Styles for the like count */
 .numberLikeComment {
   display: flex;
@@ -36,19 +116,12 @@
   z-index: 1; /* Ensure the like count is above other elements */
 }
 
-
-
-
-
-
-
 .post {
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   margin-bottom: 20px;
   padding: 20px;
-
 }
 
 .userNameImage {
@@ -57,179 +130,151 @@
 }
 
 .userNameImage img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
-
-  
+  border-radius: 50%;
 }
-.userNameImage a {
- padding-top: 0.5rem; 
-  /* margin-left: 10%; */
-  }
-  .userNameImage p {
-    margin-top: -0.009rem; 
-    /* margin-left: 1rem;  */
-   
-     }
-     .postContent{
-        text-align: left;
-      
-      
-     }
-    
-     .postContent img{
-      margin: 0px;
-      padding-top: 10px;
-      width: 100%; 
-      height: auto; 
-      margin-bottom: 10px;
-      border-radius: 40px;
-   }
-     .numberLikeComment{
-        display: flex;
-        margin-left: 6%;
 
-        gap: 40%;
-     }
-    
-.actions div{
+.userNameImage a {
+  padding-top: 0.5rem;
+}
+
+.userNameImage p {
+  margin-top: -0.009rem;
+}
+
+.postContent {
+  text-align: left;
+}
+
+.postContent img {
+  margin: 0px;
+  padding-top: 10px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 40px;
+}
+
+.actions div {
   margin-right: 12px;
 }
 
+.actions {
+  align-items: center;
+  border: none;
+  background-color: #A1C398;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 10px;
+}
 
-     .actions {
-   
-      align-items: center;
-     
-      border: none;
-  
-      background-color: #6c757d;
-      color: white;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
+#comments {
+  max-height: 400px; /* Set the maximum height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  /* padding: 10px; */
+  background-color: #fff; /* Optional: Set a background color */
+  border: 1px solid #ddd; /* Optional: Add a border for visual distinction */
+  border-radius: 5px; /* Optional: Add border radius for a rounded corner effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visual effect */
+  margin: 2px 0; /* Optional: Add margin to space out from other elements */
+}
 
-      gap: 20px;
-      margin-top: 10px;
-    }
-   
-/* 
-    .comments {
-      margin-top: 10px;
-    }
-    
-    .comment {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-top: 5px;
-    } */
+#comments::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
 
-    #comments {
-      max-height: 400px; /* Set the maximum height for the scrollable area */
-      overflow-y: auto; /* Enable vertical scrolling */
-      padding: 10px;
-      background-color: #fff; /* Optional: Set a background color */
-      border: 1px solid #ddd; /* Optional: Add a border for visual distinction */
-      border-radius: 5px; /* Optional: Add border radius for a rounded corner effect */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visual effect */
-      margin: 20px 0; /* Optional: Add margin to space out from other elements */
-      
-  }
-  .text{
-    font-family: Arial, sans-serif;
-  }
-  
-  #comments::-webkit-scrollbar {
-      width: 8px; /* Width of the scrollbar */
-  }
-  
-  #comments::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.4); /* Color of the scrollbar thumb */
-      border-radius: 10px; /* Rounded corners of the scrollbar thumb */
-  }
-  
-  #comments::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1); /* Background of the scrollbar track */
-  }
-  
-    .addComment{
-      border: 1px solid #ddd;
-        padding-top: 0.6rem; 
-        padding-bottom: 0.3rem; 
-     text-align: left;
-     padding-left: 1%;
-     margin-bottom: 1rem;
-     padding-right: 1%;
-     margin-top: 1rem;
-     display: flex;
-     gap: 2%;
-     
-    }
-    
-    .addComment img{  border-radius: 50%;
-      width: 2.5rem;
-      height: 2.5rem;
-    }
-    
-    .inputandicon {
-      display: flex;
-      align-items: center; 
-      width: 100%;
-      text-align: left;
-      margin-top: -5px;
-      padding-top: -1px;
-      border: 0px solid #ddd;
-      background-color: #fafafa;
-      justify-content: space-between;
-      font-family: Arial, sans-serif;
-    }
-    
-    .inputandicon input {
-      flex: 1; /* جعل الحقل المدخل مرونة حسب المساحة المتبقية */
-      border: none; /* إزالة الحدود */
-      background-color: transparent; /* إزالة لون الخلفية */
-      outline: none; /* إزالة التأثير الذي يظهر عند التحديد */
-      font-size: 16px; /* تعيين حجم الخط */
-      padding: 10px; /* إضافة حواف للمسافة بين النص وحواف الحقل */
-      
-    }
-    
-    .inputandicon button {
-      background-color: transparent; /* إزالة اللون الخلفي */
-      border: none; /* إزالة الحدود */
-      cursor: pointer; /* جعل المؤشر عند التحويف فوق الزر يظهر على شكل يد */
-      outline: none; /* إزالة التأثير الذي يظهر عند التحديد */
-      font-family: Arial, sans-serif;
-    }
-    
-    .inputandicon button .material-icons {
-      font-size: 24px; /* حجم الرمز */
-      color: #6e6e6e; /* لون الرمز */
-      font-family: Arial, sans-serif;
-    }
-    .postDate{
-      color: #444444;
-    }
-    .userNameAnchor{
-      text-decoration: none;
-      color: rgb(0, 0, 0);
-      font-size: 18px;
-    }
-    .innn a{
-      color: white;
-      text-decoration: none;
-    }
-    .post{
-      margin: 0%;
-  
-    }
-    .edit-del-btn {
-      margin-left: auto; 
-    }
+#comments::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners of the scrollbar thumb */
+}
 
+#comments::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Background of the scrollbar track */
+}
+
+.addComment {
+  border: 1px solid #ddd;
+  padding-top: 0.6rem;
+  padding-bottom: 0.3rem;
+  text-align: left;
+  padding-left: 1%;
+  margin-bottom: 1rem;
+  padding-right: 1%;
+  margin-top: 1rem;
+  display: flex;
+  /* s */
+  height: 40px; /* قم بتعيين الارتفاع الذي ترغب فيه */
+}
+
+.addComment img {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.inputandicon {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  text-align: left;
+  margin-top: -5px;
+  padding-top: -1px;
+  border: 0px solid #ddd;
+  background-color: #fafafa;
+  justify-content: space-between;
+  font-family: Arial, sans-serif;
+}
+
+.inputandicon input {
+  flex: 1; /* جعل الحقل المدخل مرونة حسب المساحة المتبقية */
+  border: none; /* إزالة الحدود */
+  background-color: transparent; /* إزالة لون الخلفية */
+  outline: none; /* إزالة التأثير الذي يظهر عند التحديد */
+  font-size: 16px; /* تعيين حجم الخط */
+  padding: 10px; /* إضافة حواف للمسافة بين النص وحواف الحقل */
+}
+
+.inputandicon button {
+  background-color: transparent; /* إزالة اللون الخلفي */
+  border: none; /* إزالة الحدود */
+  cursor: pointer; /* جعل المؤشر عند التحويف فوق الزر يظهر على شكل يد */
+  outline: none; /* إزالة التأثير الذي يظهر عند التحديد */
+  font-family: Arial, sans-serif;
+}
+
+.inputandicon button .material-icons {
+  font-size: 24px; /* حجم الرمز */
+  color: #6e6e6e; /* لون الرمز */
+  font-family: Arial, sans-serif;
+}
+
+.postDate {
+  color: #444444;
+}
+
+.userNameAnchor {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+}
+
+.innn a {
+  color: white;
+  text-decoration: none;
+}
+
+.post {
+  margin: 0%;
+}
+
+.edit-del-btn {
+  margin-left: auto;
+}
 
 .likes-popper {
   position: fixed;
@@ -257,11 +302,11 @@
   cursor: pointer;
 }
 
-.icon button  {
+.icon button {
   font-size: 18px; /* تقليل حجم الرمز */
   color: #6e6e6e; /* تحديد لون الرمز */
   border: none; /* إزالة الحدود */
-  background-color:"red" ;
+  background-color: "red";
   cursor: pointer; /* جعل المؤشر عند التحويف فوق الرمز يظهر على شكل يد */
   outline: none; /* إزالة التأثير الذي يظهر عند تحديد الرمز */
 }

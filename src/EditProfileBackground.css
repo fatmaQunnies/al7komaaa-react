@@ -18,7 +18,7 @@
 
 .edit-profile-image-containerr button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #A1C398;
     color: white;
     border: none;
     border-radius: 5px;
@@ -27,5 +27,5 @@
 }
 
 .edit-profile-image-containerr button:hover {
-    background-color: #0056b3;
+    background-color: #ACE1AF;
 }

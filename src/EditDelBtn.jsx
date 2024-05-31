@@ -189,8 +189,8 @@ function EditDelBtn(props) {
         <div className="edit-options">
           {postOwner ? (
             <>
-              <div onClick={handleEdit}><span className="material-icons-outlined">edit</span> Edit</div>
-              <div onClick={handleDelete}><span className="material-icons-outlined">delete</span> Delete</div>
+              <div onClick={handleEdit}><span className="material-icons-outlined"></span> Edit</div>
+              <div onClick={handleDelete}><span className="material-icons-outlined"></span> Delete</div>
             </>
           ) : (
             <div onClick={handleHide}><span className="material-icons-outlined">visibility_off</span> Hide</div>

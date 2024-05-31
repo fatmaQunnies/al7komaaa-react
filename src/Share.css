@@ -26,12 +26,12 @@
     margin: 5px 0;
     padding: 10px;
     border: none;
-    background-color: #007bff;
+    background-color: #A1C398;
     color: white;
     cursor: pointer;
   }
   
   .share-popper button:hover {
-    background-color: #0056b3;
+    background-color: #ACE1AF;
   }
   

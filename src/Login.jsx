@@ -28,7 +28,7 @@ function Login(props) {
     const { setUser } = useContext(Context);
     const onSubmit = () => {
         if (password !== null && password !== '') { // Use && instead of ||
-          alert("S$$#%$#@%");
+          //alert("S$$#%$#@%");
           const headers = {
             "Project-ID": "b5366d72-777e-46be-ae9b-5c8c8ce7d992",
             "User-Name": email,
@@ -51,7 +51,7 @@ function Login(props) {
                   custom_json: {},
                   is_online: true,
                 };
-                alert(JSON.stringify(user)); // Display user object
+              //  alert(JSON.stringify(user)); // Display user object
                 setUser(user);
                 console.log(user.secret + "34365435");
                 console.log(user.username + "hjg");
@@ -61,7 +61,7 @@ function Login(props) {
               alert("Your login credentials were not correct");
               console.log("Error", e);
             });
-          alert("76876");
+          //alert("76876");
         } else {
           alert("Password cannot be empty");
         }
