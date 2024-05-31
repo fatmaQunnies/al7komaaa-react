@@ -4,7 +4,7 @@ import valley from "../assets/valley.jpeg";
 import SignUpForm from "./SignUpForm";
 import LogInForm from "./LogInForm";
 
-const AuthPage = () => {
+const AuthPage = (props) => {
   const [hasAccount, setHasAccount] = useState(false);
 
   const backgroundImage = {
@@ -12,15 +12,14 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="background-image" style={backgroundImage}>
+    <div className="background-image" >
       <div className="background-gradient-dark">
         <div style={styles.formContainerStyle}>
-          <div style={styles.titleStyle}>Pretty</div>
 
           {hasAccount ? (
-            <LogInForm onHasNoAccount={() => setHasAccount(false)} />
+            <LogInForm onHasNoAccount={() => setHasAccount(false)}   />
           ) : (
-            <SignUpForm onHasAccount={() => setHasAccount(true)} />
+            <LogInForm onHasNoAccount={() => setHasAccount(false)}   />
           )}
         </div>
       </div>

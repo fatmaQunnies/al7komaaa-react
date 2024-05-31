@@ -8,3 +8,9 @@
     height: 50px;
     border-radius: 50%;
   }
+  .userNameAnchor h2{
+    color: #3e3e3e;
+  }
+  p.bio2 {
+    color: #617f58;
+  }

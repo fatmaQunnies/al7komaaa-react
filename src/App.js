@@ -7,6 +7,7 @@ import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
 import Profile from "./Profile.jsx";
+import Privacy from "./Privacy.jsx"
 import Notification from "./Notification.jsx";
 import Likes from "./Likes.jsx";
 import Setting from "./Setting.jsx";
@@ -427,7 +428,7 @@ function App(props) {
                     </div>
 
                     <div style={{ display: "flex" }}>
-                        <h1>{userInfo.username}</h1>
+                        <h2>{userInfo.username}</h2>
                     </div>
                 </div>
                 <div className="App">
@@ -501,34 +502,39 @@ function App(props) {
                         <Route path="/editImage" element={<EditProfileImage token={token} userId={userId} />} />
                         <Route path="/editBackground" element={<EditProfileBackground token={token} userId={userId} />} />
 
-                        <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
-                        <Route path="/Messages" element={<ContextProvider>
-                            <ChatApp></ChatApp>
-                        </ContextProvider>} />
-                        <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
-                        <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId} getUserId={getUserId} getUserProfile={getUserProfile} />} />
-                    </Routes>
-                    <div className="right">
-                        {userfriend && userfriend.length > 0 ? (
-                            userfriend.map((fr) => (
-                                <RightList
-                                    key={fr.userid}
-                                    userId={fr.userid}
-                                    token={token}
-                                    info={fr}
-                                    userName={fr.username || 'Unknown User'}
-                                    link={fr.links}
-                                    userIdSign={userId}
-                                    getUserId={getUserId}
-                                    getUserProfile={getUserProfile}
-                                />
-                            ))
-                        ) : null}
-                    </div>
+                    <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
+                    <Route path="/ Privacy" element={< Privacy token={token} info={userInfo} />} />
+
+                    <Route path="/Messages" element={
+                    <ContextProvider>
+    <ChatApp  ></ChatApp>
+  </ContextProvider>
+
+} />
+                    <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
+                    <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId} getUserId={getUserId} getUserProfile={getUserProfile} />} />
+                </Routes>
+                <div className="right">
+                    {userfriend && userfriend.length > 0 ? (
+                        userfriend.map((fr) => (
+                            <RightList 
+                                key={fr.userid} 
+                                userId={fr.userid}
+                                token={token} 
+                                info={fr}
+                                userName={fr.username || 'Unknown User'} 
+                                link={fr.links} 
+                                userIdSign={userId}
+                                getUserId={getUserId}
+                                getUserProfile={getUserProfile}
+                            />
+                        ))
+                    ) : null}
                 </div>
-            </Router>
-        </ThemeProvider>
-    );
+            </div>
+        </Router>
+    </ThemeProvider>
+);
 
 }
 export default memo(App);

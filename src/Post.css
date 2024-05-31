@@ -210,10 +210,11 @@ button.send-comment .material-icons {
   height: 40px; /* قم بتعيين الارتفاع الذي ترغب فيه */
 }
 
-.addComment img {
+.addComment .image {
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
+  margin-top: -11px;
 }
 
 .inputandicon {

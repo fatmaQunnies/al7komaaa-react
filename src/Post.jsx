@@ -8,8 +8,6 @@ import ShowPostLikes from './ShowPostLikes.jsx';
 import Share from './Share.jsx';
 import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
 import Profile from "./Profile.jsx";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -26,10 +24,6 @@ function Post(props) {
   const [showSharePopper, setShowSharePopper] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
-
-  const handleInputChange = (event) => {
-    setInput(event.target.value); // تحديث قيمة الإدخال
-  };
 
   useEffect(() => {
     fetch(props.info._links["the post owner"].href, {
@@ -176,6 +170,7 @@ function Post(props) {
       console.error('Error uploading image:', error);
     }
   };
+
   const handleSend = async () => {
     try {
       const response = await fetch(props.info._links["createComment"].href, {
@@ -187,9 +182,10 @@ function Post(props) {
         body: JSON.stringify({ content: input })
       });
       const responseData = await response.json();
-
+  
       if (response.ok) {
         setReload(!reload);
+        document.getElementById(props.id).innerHTML('');
         setInput(''); // إعادة تعيين الإدخال بعد النجاح
         return responseData.id;
       } else {
@@ -199,6 +195,8 @@ function Post(props) {
       console.error('Error sending comment:', error);
     }
   };
+  
+  
 
   const handleComment = () => {
     return (
@@ -375,16 +373,9 @@ props.getUserProfile(<Profile
       </div>
 
       <div className="addComment">
-      {props.userInfo && (
-        <ImageWithToken
-          CName={"image"}
-          type={"getImage"}
-          userinfo={props.userId}
-          token={props.token}
-        />
-      )}
-      
-
+        {userInfo && (
+          <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.userId} token={props.token} />
+        )}
          {/* <div className='inputandicon'>
          <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
             <input type="file" onChange={handleFileChange}> 
@@ -394,12 +385,7 @@ props.getUserProfile(<Profile
 </div> */}
 
    <div className='inputandicon'>
-      {/* <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} /> */}
-      <input
-        type="text"
-        value={input}
-        onChange={handleInputChange} // معالجة تغيير الإدخال
-      />
+      <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
       <label htmlFor="file-upload" className="file-upload-label">
         <i className="material-icons">attach_file</i> 
         <input id="file-upload" type="file" onChange={handleFileChange} style={{ display: 'none' }} />
@@ -407,9 +393,11 @@ props.getUserProfile(<Profile
     </div>
      {/* <span className="material-icons" >attach_file</span> */}
 
-     <button class="send-comment" onClick={functionCreate}>
-  <span class="material-icons">send</span>
+<button className="send-comment" onClick={functionCreate}>
+  <span className="material-icons">send</span>
 </button>
+
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </div>
 

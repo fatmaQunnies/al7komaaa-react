@@ -1,11 +1,8 @@
-import { useState, useContext } from "react";
-
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-
 import TextInput from "./components/TextInput";
 import Button from "./components/Button";
 import Link from "./components/Link";
-
 import { Context } from "../functions/context";
 import { projectId } from "../functions/constants";
 
@@ -13,6 +10,8 @@ const LogInForm = (props) => {
   // State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [socket, setSocket] = useState(null);
+
   // Hooks
   const { setUser } = useContext(Context);
 
@@ -42,18 +41,50 @@ const LogInForm = (props) => {
             is_online: true,
           };
           setUser(user);
+          
+          // إنشاء اتصال WebSocket
+          const sessionToken = "st-34fe0ea0-ac01-47a6-9028-ad0e7d36fe25"; // استخدم الـ session token الخاص بك
+          const socketUrl = `wss://api.chatengine.io/person_v4/?session_token=${sessionToken}`;
+          const newSocket = new WebSocket(socketUrl);
+
+          newSocket.onopen = () => {
+            console.log("WebSocket connection opened");
+          };
+
+          newSocket.onmessage = (event) => {
+            console.log("Message from server:", event.data);
+          };
+
+          newSocket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+          };
+
+          newSocket.onclose = (event) => {
+            console.log("WebSocket connection closed:", event);
+          };
+
+          setSocket(newSocket);
         }
       })
       .catch((e) => console.log("Error", e));
   };
 
+  // تنظيف اتصال WebSocket عند إلغاء تحميل المكون
+  useEffect(() => {
+    return () => {
+      if (socket) {
+        socket.close();
+      }
+    };
+  }, [socket]);
+
   return (
     <div>
-      <div className="form-title">Welcome Back</div>
-
-      <div className="form-subtitle">
+      <div className="form-title">Welcome Back to UnityNet Chat</div>
+      <p>Enter the same email and password for UnityNet</p>
+      {/* <div className="form-subtitle">
         New here? <Link onClick={() => props.onHasNoAccount()}>Sign Up</Link>
-      </div>
+      </div> */}
 
       <form onSubmit={onSubmit}>
         <TextInput

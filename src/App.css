@@ -11,7 +11,7 @@ body {
   border-radius: 10px; /* إضافة زوايا مستديرة */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
   transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
-  height: 100%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
+  height: 125%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
 }
 .material-symbols-outlined{
 margin-top: 30%;
@@ -113,10 +113,11 @@ height: 30%;
   height: 3.5em;
 }
 
-.nav h1 {
+.nav h1 ,h2 {
   font-family: "Lobster", cursive;
   margin-right: auto;
   color: #3e3e3e;
+ 
 }
 
 .nav img {
@@ -299,8 +300,8 @@ text-align: center;
     font-size: 42px; 
     font-family: 'VisbyRoundCF-Heavy'; 
     letter-spacing: 0.5px; 
-    color: #e8e8e8; 
-    padding-bottom: 12px; 
+    color: #000000; 
+    padding-bottom: 0; 
 }
 
 .form-subtitle {
@@ -312,24 +313,22 @@ text-align: center;
 }
 
 .background-image {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 800px;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .background-gradient-dark {
-    width: 100vw;
-    height: 100%;
-    overflow-y: scroll;
-    background: linear-gradient(66deg, rgb(40,43,54) 0%, rgb(40,43,54) 50%, rgba(40,43,54,0.8) 100%);
+    width: 90%;
+    height: 10%;
+  
     /* ^ Built with https://cssgradient.io/ */
 }
 
 .background-gradient-light {
-    width: 100vw;
+    width: 90%;
     height: 100%;
-    overflow-y: scroll;
-    background: linear-gradient(66deg, rgba(150, 157, 166, 0.9) 0%, rgba(150, 157, 166, 0.8) 50%, rgba(150,157,166,0.7) 100%);
+ 
     /* ^ Built with https://cssgradient.io/ */
 }
