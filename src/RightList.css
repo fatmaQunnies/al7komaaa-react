@@ -1,4 +1,3 @@
-
 .right-list {
   display: flex;
   align-items: center;
@@ -16,14 +15,18 @@
 .friend-button {
   background-color: transparent;
   border: none;
-  color: #4D869C;
+  color: #A1C398 ;
   cursor: pointer;
   font-size: 20px; /* Adjust the size as needed */
+  
+}
+.friend-button:hover {
+  color: #ACE1AF;
 }
 
 
 .add-button {
-  background-color: #15d4c162;
+  background-color: #A1C398;
   text-align: center;
   border: none;
   color: white;

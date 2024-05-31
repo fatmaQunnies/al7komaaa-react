@@ -2,14 +2,16 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden; /* Hide the scrollbar */
+  height: 100vh; /* تعيين ارتفاع العنصر الأب ليكون 100% من ارتفاع نافذة العرض */
  
 }
 .Allleft {
-  border-right: 5px solid #3333333d; /* جعل الحدود على الجانب الأيمن فقط، سماكتها 5 بيكسل ولونها أسود */
+  border-right: 5px solid #ACE1AF; /* جعل الحدود على الجانب الأيمن فقط، سماكتها 5 بيكسل ولونها أسود */
   padding: 10px; /* إضافة بعض الحشوة الداخلية لتوفير مساحة بين النص والحدود */
   border-radius: 10px; /* إضافة زوايا مستديرة */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
   transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
+  height: 100%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
 }
 .material-symbols-outlined{
 margin-top: 30%;
@@ -39,7 +41,7 @@ color: white;
   width: 100%;
   height: 100vh; /* Set height to full viewport height */
   /* margin-top: 3%; */
-  background-color:#F6F5F2;
+  background-color:#FFFFFF;
    /* #F6F5F2; */
 }
 
@@ -106,14 +108,15 @@ height: 30%;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: #A1C398 ;
   color: white;
-  height: 3em;
+  height: 3.5em;
 }
 
 .nav h1 {
   font-family: "Lobster", cursive;
   margin-right: auto;
+  color: #3e3e3e;
 }
 
 .nav img {
@@ -132,15 +135,18 @@ height: 30%;
 }
 
 .search-box {
-  width: 30%;
-  height: 40px;
-  background-color: #555;
-  border: none;
-  border-radius: 20px;
-  padding: 5px 15px;
-  color: white;
+  width: 45%; /* زيادة العرض إلى 40% */
+  height: 50px; /* زيادة الارتفاع إلى 50 بكسل */
+  background-color: #f0f3f0; /* تغيير لون الخلفية */
+  border: 2px solid #a0a0a0; /* تعيين حدود بشكل أوضح */
+  border-radius: 25px; /* زيادة قيمة الزاوية لتجعلها أكثر استديلًا */
+  padding: 10px 20px; /* زيادة التباعد الداخلي لتوفير مساحة إضافية للنص */
+  color: #555555; /* تغيير لون النص */
   text-align: center;
+  font-size: 16px; /* تحسين حجم الخط */
+  font-family: Arial, sans-serif; /* تحديد نوع الخط */
 }
+
 .notification{
 position: 100;
 text-align: center;
@@ -169,7 +175,7 @@ text-align: center;
   background: rgba(255, 255, 255, 0.1); 
 } */
 #Feed {
-  height: 600px;
+  height: 800px;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
@@ -203,7 +209,7 @@ text-align: center;
 
 
 #Real {
-  height: 600px;
+  height: 800px;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
@@ -263,4 +269,67 @@ text-align: center;
 
 .notification:last-child {
   border-bottom: none;
+}
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/antd/4.21.5/antd.min.css");
+
+@font-face {
+    /* TODO: Font Family https://www.dfonts.org/assets/visby-round-font-family/ */
+    font-family: 'VisbyRoundCF-Regular';
+    src: local('VisbyRoundCF-Regular'), url(./assets/VisbyRoundCF-Regular.woff) format('woff');
+    font-weight: normal;
+}
+
+@font-face {
+    /* TODO: Font Family https://www.dfonts.org/assets/visby-round-font-family/ */
+    font-family: 'VisbyRoundCF-DemiBold';
+    src: local('VisbyRoundCF-DemiBold'), url(./assets/VisbyRoundCF-DemiBold.woff) format('woff');
+    font-weight: normal;
+}
+
+@font-face {
+    /* TODO: Font Family https://www.dfonts.org/assets/visby-round-font-family/ */
+    font-family: 'VisbyRoundCF-Heavy';
+    src: local('VisbyRoundCF-Heavy'), url(./assets/VisbyRoundCF-Heavy.woff) format('woff');
+    font-weight: normal;
+}
+
+
+.form-title { 
+    font-size: 42px; 
+    font-family: 'VisbyRoundCF-Heavy'; 
+    letter-spacing: 0.5px; 
+    color: #e8e8e8; 
+    padding-bottom: 12px; 
+}
+
+.form-subtitle {
+    font-size: 18px;
+    font-family: 'VisbyRoundCF-Regular';
+    letter-spacing: 0.5px;
+    color: #afafaf;
+    padding-bottom: 24px;
+}
+
+.background-image {
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background-gradient-dark {
+    width: 100vw;
+    height: 100%;
+    overflow-y: scroll;
+    background: linear-gradient(66deg, rgb(40,43,54) 0%, rgb(40,43,54) 50%, rgba(40,43,54,0.8) 100%);
+    /* ^ Built with https://cssgradient.io/ */
+}
+
+.background-gradient-light {
+    width: 100vw;
+    height: 100%;
+    overflow-y: scroll;
+    background: linear-gradient(66deg, rgba(150, 157, 166, 0.9) 0%, rgba(150, 157, 166, 0.8) 50%, rgba(150,157,166,0.7) 100%);
+    /* ^ Built with https://cssgradient.io/ */
 }

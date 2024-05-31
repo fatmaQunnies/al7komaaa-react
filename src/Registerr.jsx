@@ -1,8 +1,11 @@
 import './Registerr.css';
 import App from './App';
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect,useContext } from "react";
 import Login from './Login';
-
+import axios from "axios";
+import { useIsMobile } from "./functions/isMobile";
+import { Context } from "./functions/context";
+import { privateKey } from "./functions/constants";
 function Registerr(props) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -13,6 +16,55 @@ function Registerr(props) {
     const [goToLogin, setGoToLogin] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('token') || '');
 
+    const [avatar, setAvatar] = useState(undefined);
+    const { setUser } = useContext(Context);
+
+const isMobile = useIsMobile();
+const [isLoade, setIsLoade] = useState(true);
+
+
+
+
+    const onSubmit = () => {
+
+        console.log("sss");
+        const userJson = {
+          email: email,
+          username: userName,
+          first_name: userName,
+          last_name: userName,
+          secret: password,
+          avatar: null,
+          custom_json: {},
+          is_online: true,
+        };
+    
+        let formData = new FormData();
+        formData.append("email", email);
+        formData.append("username", email);
+        formData.append("first_name", userName);
+        formData.append("last_name", userName);
+        formData.append("secret", password);
+        if (avatar) {
+          formData.append("avatar", avatar, avatar.name);
+        }
+    
+        const headers = { "Private-Key": privateKey };
+    
+        axios
+          .post("https://api.chatengine.io/users/", formData, {
+            headers,
+          })
+          .then((r) => {
+            if (r.status === 201) {
+              userJson.avatar = r.data.avatar;
+              setUser(userJson);
+            }
+          })
+          .catch((e) => console.log("Error", e));
+      };
+    
+    
     const handleSignUp = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/auth/signup', {
@@ -28,6 +80,7 @@ function Registerr(props) {
             });
 
             if (response.ok) {
+                // <SignUpForm  userName={userName} password={password} email={email}/>
                 setIsRegister(true);
                 setErrorMessage(response.message || 'Register Done');
                 handleLogin(); 
@@ -114,7 +167,7 @@ function Registerr(props) {
                     </div>
                     <div className="remember-forgot"></div>
                     <div id='dd'>{errorMessage && <p>{errorMessage}</p>}</div>
-                    <button type="submit" className="btn" onClick={handleSignUp}>Sign up</button>
+                    <button type="submit" className="btn" onClick={() => { handleSignUp(); onSubmit(); }}>Sign up</button>
                     <div className="login-register">
                         <div style={{ display: "flex" }}>Do you have an account? <div className='register' onClick={() => { setGoToLogin(true) }}> Login </div></div>
                     </div>

@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import "./EditDelBtn.css";
 import Modal from './Modal';
 import ImageWithToken from "./ImageWithToken";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 function EditDelBtn(props) {
   const [showOptions, setShowOptions] = useState(false);
@@ -187,12 +189,15 @@ function EditDelBtn(props) {
         <div className="edit-options">
           {postOwner ? (
             <>
-              <div onClick={handleEdit}><span className="material-icons-outlined">edit</span> Edit</div>
-              <div onClick={handleDelete}><span className="material-icons-outlined">delete</span> Delete</div>
+              <div onClick={handleEdit}><span className="material-icons-outlined"></span> Edit</div>
+              <div onClick={handleDelete}><span className="material-icons-outlined"></span> Delete</div>
             </>
-          ) : (
-            <div onClick={handleHide}><span className="material-icons-outlined">visibility_off</span> Hide</div>
-          )}
+           ) :
+           
+           // (
+          //   <div onClick={handleHide}><span className="material-icons-outlined">visibility_off</span> Hide</div>
+          // )
+        null}
         </div>
       )}
       <Modal show={showModal} onClose={() => setShowModal(false)}>

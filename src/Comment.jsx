@@ -3,7 +3,8 @@ import './Comment.css';
 import ImageWithToken from "./ImageWithToken.jsx";
 import EditDelBtn from "./EditDelBtn.jsx";
 import './EditDelBtn.css';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 function Comment(props) {
   return (
     <div className="comment">
@@ -23,7 +24,7 @@ function Comment(props) {
             info={props.info} 
           />
           
-   <div onClick={replyfunction}>Reply</div>
+   {/* <div onClick={replyfunction}>Reply</div> */}
         </div>
 
 
