@@ -67,6 +67,7 @@ height: 30%;
   overflow-y: scroll; /* Enable vertical scrolling */
   padding: 10px; /* Add padding as needed */
   scrollbar-width: none; /* Hide scrollbar in Firefox */
+  /* width: 80%; */
 }
 
 .right::-webkit-scrollbar {

@@ -164,7 +164,7 @@ function App(props) {
             console.log("No more links available to load more posts.");
             return;
         }
-
+    
         try {
             const response = await fetch(readMoreReal._links["read more"].href, {
                 method: "GET",
@@ -173,16 +173,16 @@ function App(props) {
                     "Content-Type": "application/json",
                 },
             });
-
+    
             if (response.ok) {
                 const responseData = await response.json();
-
+    
                 // Check if responseData._embedded and responseData._embedded.posts exist
                 if (responseData._embedded && Array.isArray(responseData._embedded.posts)) {
                     const newPosts = responseData._embedded.posts.filter((newPost) => {
                         return !realContent.some((oldPost) => oldPost.id === newPost.id);
                     });
-
+    
                     if (newPosts.length > 0) {
                         setRealContent([...realContent, ...newPosts]);
                     } else {
@@ -192,13 +192,12 @@ function App(props) {
                     console.log("No more posts available.");
                 }
             } else {
-                console.error("Error:", response.statusText);
+                console.log("", response.statusText);
             }
         } catch (error) {
         }
     };
-
-
+    
 
 
     useEffect(() => {
@@ -510,7 +509,7 @@ function App(props) {
   </ContextProvider>
 
 } />
-                    <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
+                    <Route path="/Likes" element={<Likes token={token} userImage={userImage} userId={userId}/>} />
                     <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId} getUserId={getUserId} getUserProfile={getUserProfile} />} />
                 </Routes>
                 <div className="right">

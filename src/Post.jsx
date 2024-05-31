@@ -49,7 +49,7 @@ function Post(props) {
         });
 
         if (!response.ok) {
-          throw new Error(`Error fetching post comments: ${response.statusText}`);
+          console.log('');
         }
 
         const data = await response.json();
@@ -58,7 +58,7 @@ function Post(props) {
         setPostComment(comments);
         setReadMore(data);
       } catch (error) {
-        console.error('Error fetching comments:', error);
+        console.log('fetching comments:');
       }
     };
 
