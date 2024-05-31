@@ -7,6 +7,7 @@ import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
 import Profile from "./Profile.jsx";
+import Privacy from "./Privacy.jsx"
 import Notification from "./Notification.jsx";
 import Likes from "./Likes.jsx";
 import Setting from "./Setting.jsx";
@@ -502,6 +503,8 @@ function App(props) {
                         <Route path="/editBackground" element={<EditProfileBackground token={token} userId={userId} />} />
 
                     <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
+                    <Route path="/ Privacy" element={< Privacy token={token} info={userInfo} />} />
+
                     <Route path="/Messages" element={
                     <ContextProvider>
     <ChatApp  ></ChatApp>
