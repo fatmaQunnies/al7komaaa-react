@@ -502,9 +502,12 @@ function App(props) {
                         <Route path="/editBackground" element={<EditProfileBackground token={token} userId={userId} />} />
 
                     <Route path="/editProfile" element={<EditProfile token={token} info={userInfo} />} />
-                    <Route path="/Messages" element={<ContextProvider>
+                    <Route path="/Messages" element={
+                    <ContextProvider>
     <ChatApp  ></ChatApp>
-  </ContextProvider>} />
+  </ContextProvider>
+
+} />
                     <Route path="/Likes" element={<Likes token={token} userImage={userImage} />} />
                     <Route path="/Search" element={<Search result={searchArray} token={token} userIdSign={userId} getUserId={getUserId} getUserProfile={getUserProfile} />} />
                 </Routes>
