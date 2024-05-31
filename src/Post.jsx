@@ -407,11 +407,9 @@ props.getUserProfile(<Profile
     </div>
      {/* <span className="material-icons" >attach_file</span> */}
 
-        <button onClick={functionCreate}>
-          <span className="material-symbols-outlined">
-            send
-          </span>
-        </button>
+     <button class="send-comment" onClick={functionCreate}>
+  <span class="material-icons">send</span>
+</button>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </div>
 

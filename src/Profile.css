@@ -157,14 +157,14 @@ body, html {
     margin: 0 auto;
     height: 3px;
     width: 100%;
-    background: black;
+    background: #A1C398;
     position: absolute;
     bottom: 0;
     left: 0;
 }
 
 .toggle-buttons button:not(.active) {
-    color: gray;
+    color: #A1C398;
 }
 
 .sharee img {
@@ -195,18 +195,18 @@ body, html {
     padding: 10px 20px;
     margin: 0 10px;
     border: none;
-    background-color: #aaaaaa;
+    background-color: #A1C398;
     cursor: pointer;
     font-size: 16px;
 }
 
 .view-switch button.active {
-    background-color: #007bff;
+    background-color: #ACE1AF;
     color: #000000;
 }
 
 .view-switch button:hover {
-    background-color: #0056b3;
+    background-color: #ACE1AF;
     color: #000000;
 }
 
@@ -382,18 +382,18 @@ body, html {
     padding: 10px 20px;
     margin: 0 10px;
     border: none;
-    background-color: #aaaaaa;
+    background-color: #A1C398 ;
     cursor: pointer;
     font-size: 16px;
 }
 
 .view-switch button.active {
-    background-color: #007bff;
+    background-color: #BBBBBB ;
     color: #000000;
 }
 
 .view-switch button:hover {
-    background-color: #0056b3;
+    background-color: #BBBBBB;
     color: #000000;
 }
 

@@ -11,6 +11,7 @@ const CustomChatCard = (props) => {
   const messageText = props.chat.last_message.text;
   const hasNotification =
     props.chat.last_message.sender_username !== props.username;
+
   return (
     <ChatCard
       title={`${firstName} ${lastName}`}
@@ -24,8 +25,8 @@ const CustomChatCard = (props) => {
       avatarUsername={username}
       avatarStyle={{
         boxShadow: otherMember?.is_online
-          ? "rgb(24 144 255 / 35%) "
-          : "rgb(245 34 45 / 35%) ",
+          ? "rgb(24 144 255 / 35%) 0px 2px 7px"
+          : "rgb(245 34 45 / 35%) 0px 2px 7px",
         border: otherMember?.is_online
           ? "1px solid rgb(24 144 255)"
           : "1px solid rgb(245 34 45)",

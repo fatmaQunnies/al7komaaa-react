@@ -1,4 +1,3 @@
-
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +6,7 @@ body {
  
 }
 .Allleft {
-  border-right: 5px solid #3333333d; /* جعل الحدود على الجانب الأيمن فقط، سماكتها 5 بيكسل ولونها أسود */
+  border-right: 5px solid #ACE1AF; /* جعل الحدود على الجانب الأيمن فقط، سماكتها 5 بيكسل ولونها أسود */
   padding: 10px; /* إضافة بعض الحشوة الداخلية لتوفير مساحة بين النص والحدود */
   border-radius: 10px; /* إضافة زوايا مستديرة */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
@@ -42,7 +41,7 @@ color: white;
   width: 100%;
   height: 100vh; /* Set height to full viewport height */
   /* margin-top: 3%; */
-  background-color:#F6F5F2;
+  background-color:#FFFFFF;
    /* #F6F5F2; */
 }
 
@@ -109,14 +108,15 @@ height: 30%;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background-color: #333;
+  background-color: #A1C398 ;
   color: white;
-  height: 3em;
+  height: 3.5em;
 }
 
 .nav h1 {
   font-family: "Lobster", cursive;
   margin-right: auto;
+  color: #3e3e3e;
 }
 
 .nav img {
@@ -135,15 +135,18 @@ height: 30%;
 }
 
 .search-box {
-  width: 30%;
-  height: 40px;
-  background-color: #555;
-  border: none;
-  border-radius: 20px;
-  padding: 5px 15px;
-  color: white;
+  width: 45%; /* زيادة العرض إلى 40% */
+  height: 50px; /* زيادة الارتفاع إلى 50 بكسل */
+  background-color: #f0f3f0; /* تغيير لون الخلفية */
+  border: 2px solid #a0a0a0; /* تعيين حدود بشكل أوضح */
+  border-radius: 25px; /* زيادة قيمة الزاوية لتجعلها أكثر استديلًا */
+  padding: 10px 20px; /* زيادة التباعد الداخلي لتوفير مساحة إضافية للنص */
+  color: #555555; /* تغيير لون النص */
   text-align: center;
+  font-size: 16px; /* تحسين حجم الخط */
+  font-family: Arial, sans-serif; /* تحديد نوع الخط */
 }
+
 .notification{
 position: 100;
 text-align: center;

@@ -10,7 +10,7 @@
 }
 
 .setting-container button {
-  background-color: #4CAF50; /* Green */
+  background-color: #A1C398; /* Green */
   border: none;
   color: white;
   padding: 10px 20px;
@@ -22,7 +22,7 @@
 }
 
 .setting-container button:hover {
-  background-color: #45a049;
+  background-color: #ACE1AF;
 }
 
 .c2 {
