@@ -88,7 +88,7 @@ function Like(props) {
           }}
           className="like-button"
         >
-          {reaction ? reaction : (isLiked ? 'Dislike' : 'Like')}
+          {reaction ? reaction : (isLiked ? 'Dislike' : <span className="material-icons">favorite_border</span>)}
         </button>
       </div>
     </>
