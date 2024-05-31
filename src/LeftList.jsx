@@ -27,7 +27,7 @@ function LeftList(props) {
       setNumfeiend(data);
       console.log("number friend" + numfeiend)
     })
-    .catch(error => console.error('Error fetching data:', error));
+   
   }, [props.reload]);
   
   return (

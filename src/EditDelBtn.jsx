@@ -194,10 +194,10 @@ function EditDelBtn(props) {
             </>
            ) :
            
-           // (
-          //   <div onClick={handleHide}><span className="material-icons-outlined">visibility_off</span> Hide</div>
-          // )
-        null}
+           (
+            <div onClick={handleHide}><span className="material-icons-outlined">visibility_off</span> you not the owner</div>
+          )
+       }
         </div>
       )}
       <Modal show={showModal} onClose={() => setShowModal(false)}>

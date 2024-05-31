@@ -49,7 +49,7 @@ function Friends(props) {
                 });
                 setFriendStatuses(statuses);
             })
-            .catch(error => console.error('Error fetching friends:', error));
+            .catch(error => console.log(' fetching friends:'));
     };
 
     const fetchRequests = () => {

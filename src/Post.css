@@ -207,14 +207,14 @@ button.send-comment .material-icons {
   margin-top: 1rem;
   display: flex;
   /* s */
-  height: 40px; /* قم بتعيين الارتفاع الذي ترغب فيه */
+  height: 50px; /* قم بتعيين الارتفاع الذي ترغب فيه */
 }
 
 .addComment .image {
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
-  margin-top: -11px;
+  margin-top: -7px;
 }
 
 .inputandicon {
@@ -310,4 +310,57 @@ button.send-comment .material-icons {
   background-color: "red";
   cursor: pointer; /* جعل المؤشر عند التحويف فوق الرمز يظهر على شكل يد */
   outline: none; /* إزالة التأثير الذي يظهر عند تحديد الرمز */
+}
+
+/* Styles for the scrollable likes popper */
+.likes-popper-content {
+  max-height: 400px; /* Set the maximum height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  background-color: #fff; /* Optional: Set a background color */
+  border: 1px solid #ddd; /* Optional: Add a border for visual distinction */
+  border-radius: 5px; /* Optional: Add border radius for a rounded corner effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for better visual effect */
+  margin: 2px 0; /* Optional: Add margin to space out from other elements */
+}
+
+/* Custom scrollbar styling */
+.likes-popper-content::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.likes-popper-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners of the scrollbar thumb */
+}
+
+.likes-popper-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); /* Background of the scrollbar track */
+}
+
+/* Styles for each like item */
+.show-post-like {
+  border-bottom: 1px solid #ddd; /* خط خفيف أسفل كل عنصر */
+  padding-bottom: 10px; /* بعض الحواف السفلية لتباعد أفضل */
+  margin-bottom: 10px; /* بعض الحواف السفلية لتباعد أفضل */
+}
+
+/* إزالة الحد السفلي من العنصر الأخير */
+.show-post-like:last-child {
+  border-bottom: none;
+}
+.like {
+  position: relative; /* Set position to relative to use absolute positioning for the pseudo-element */
+  padding-bottom: 10px; /* إضافة بعض الحواف السفلية لتباعد أفضل */
+  margin-bottom: 10px; /* إضافة بعض الحواف السفلية لتباعد أفضل */
+}
+
+.like::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 70%; /* طول الخط السفلي */
+  height: 1px;
+  background-color: #444444; /* لون الخط السفلي */
+  transform: translateX(-50%); /* لتوسيط الخط السفلي */
 }

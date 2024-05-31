@@ -195,7 +195,6 @@ function App(props) {
                 console.error("Error:", response.statusText);
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
         }
     };
 
@@ -213,7 +212,7 @@ function App(props) {
                 setRealContent(data._embedded.posts);
                 setReadMoreReal(data);
             })
-            .catch((error) => console.error("Error fetching data:", error));
+            .catch((error) => console.log("fetching data:"));
     }, [reload]);
 
     const handReadMoreReal = async () => {

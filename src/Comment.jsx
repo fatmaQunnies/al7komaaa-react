@@ -23,6 +23,7 @@ function Comment(props) {
             userId={props.userId} 
             info={props.info} 
           />
+          {/* <div >replay</div> */}
           
    {/* <div onClick={replyfunction}>Reply</div> */}
         </div>

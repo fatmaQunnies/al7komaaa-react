@@ -28,22 +28,22 @@ const LogInForm = (props) => {
       .get("https://api.chatengine.io/users/me/", {
         headers,
       })
-      .then((r) => {
-        if (r.status === 200) {
+      .then((response) => {
+        if (response.status === 200) {
           const user = {
-            first_name: r.data.first_name,
-            last_name: r.data.last_name,
+            first_name: response.data.first_name,
+            last_name: response.data.last_name,
             email: email,
             username: email,
             secret: password,
-            avatar: r.data.avatar,
+            avatar: response.data.avatar,
             custom_json: {},
             is_online: true,
           };
           setUser(user);
-          
+
           // إنشاء اتصال WebSocket
-          const sessionToken = "st-34fe0ea0-ac01-47a6-9028-ad0e7d36fe25"; // استخدم الـ session token الخاص بك
+          const sessionToken = response.data.session_token; // استخدم الـ session token من الاستجابة
           const socketUrl = `wss://api.chatengine.io/person_v4/?session_token=${sessionToken}`;
           const newSocket = new WebSocket(socketUrl);
 
@@ -66,7 +66,13 @@ const LogInForm = (props) => {
           setSocket(newSocket);
         }
       })
-      .catch((e) => console.log("Error", e));
+      .catch((error) => {
+        if (error.response) {
+          console.error("Error response data:", error.response.data);
+          console.error("Error response status:", error.response.status);
+          console.error("Error response headers:", error.response.headers);
+        }
+      });
   };
 
   // تنظيف اتصال WebSocket عند إلغاء تحميل المكون
@@ -82,9 +88,6 @@ const LogInForm = (props) => {
     <div>
       <div className="form-title">Welcome Back to UnityNet Chat</div>
       <p>Enter the same email and password for UnityNet</p>
-      {/* <div className="form-subtitle">
-        New here? <Link onClick={() => props.onHasNoAccount()}>Sign Up</Link>
-      </div> */}
 
       <form onSubmit={onSubmit}>
         <TextInput

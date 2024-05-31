@@ -10,20 +10,19 @@ function ImageWithToken(props) {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${props.token}`
+                      }
+                    });
+            
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const imageUrl = URL.createObjectURL(blob);
+                        setImageSrc(imageUrl);
+                    } else {
+                        console.log('Failed to fetch the image');
                     }
-                });
-
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const imageUrl = URL.createObjectURL(blob);
-                    setImageSrc(imageUrl);
-                } else {
-                    console.error('Error fetching image:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching image:', error);
-            }
-        };
+                } catch (error) {
+                    console.log("An error occurred:", error);
+                }}
 
         fetchImage();
     }, []);
@@ -32,18 +31,21 @@ function ImageWithToken(props) {
 
   useEffect(() => {
     const fetchVideo = async () => {
+       try{
       const response = await fetch(`http://localhost:8080/${props.type}/${props.userinfo}`, {
         headers: {
-          'Authorization': `Bearer ${props.token}` // تعديل هذا الهيدر حسب احتياجاتك
+          'Authorization': `Bearer ${props.token}` 
         }
-      });
-      const blob = await response.blob();
+      });    const blob = await response.blob();
       const url = URL.createObjectURL(blob);
-      if (videoRef.current) { // التحقق من وجود الفيديو في DOM
+      if (videoRef.current) { 
         videoRef.current.src = url;
-      }    };
-
+      }    
     fetchVideo();
+    } catch (error) {
+    }};
+
+  
   }, [props.type, props.userinfo, props.token]);
 
 // alert(`http://localhost:8080/${props.type}/${props.userinfo}`);
@@ -58,7 +60,7 @@ function ImageWithToken(props) {
 //               </source>
 //           </video>
            
-<video controls class="video" ref={videoRef}>
+<video controls className="video" ref={videoRef}>
 Your browser does not support the video tag.
 </video>
            

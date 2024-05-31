@@ -31,7 +31,7 @@ const ChatsPage = () => {
   };
 
   return (
-    <div className="background-image" style={backgroundImage}>
+    <div className="background-image" >
       <div className="background-gradient-light">
         <div
           style={{
@@ -40,7 +40,7 @@ const ChatsPage = () => {
             left: isMobile ? "0px" : "calc(50vw - 3vw - 1.5vw - 35vw)",
             height: isMobile ? "100vh" : "80vh",
             width: isMobile ? "100vw" : "calc(100vw - 10.5vw - 10.5vw)",
-            backgroundColor: "grey",
+           
           }}
         >
           <div
@@ -49,7 +49,7 @@ const ChatsPage = () => {
               height: "100%",
               position: "absolute",
               top: "0px",
-              left: "0px",
+              left: "-12%",
               backgroundColor: "rgb(40,43,54)",
             }}
           >
@@ -58,10 +58,10 @@ const ChatsPage = () => {
 
           <div
             style={{
-              width: isMobile ? "100vw" : "calc(100vw - 6vw)",
+              width: isMobile ? "100vw" : "100%",
               position: "absolute",
               top: "0px",
-              left: isMobile ? "0px" : "6vw",
+              left: isMobile ? "0px" : "-5%",
               height: "100%", // Fill parent height
             }}
           >
