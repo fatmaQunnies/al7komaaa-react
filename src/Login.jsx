@@ -17,8 +17,8 @@ function Login(props) {
 
     async function handleGoogle(response) {
         console.log(response)
-        const res = await fetch('http://localhost:8080/token', {
-            method: 'GET',
+        const res = await fetch('http://localhost:8080/api/auth/token', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             }
