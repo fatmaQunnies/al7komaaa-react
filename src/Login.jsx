@@ -5,7 +5,6 @@ import { memo } from "react";
 import Registerr from './Registerr';
 import { GoogleLogin } from '@react-oauth/google';
 
-// import Chat from '../src/chat/Chat'
 function Login(props) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -13,21 +12,34 @@ function Login(props) {
     const [isRegister, setIsRegister] = useState(false);
     const [token, setToken] = useState(localStorage.getItem('token') || '');
     const [errorMessage, setErrorMessage] = useState('');
-    const [email, setEmail] = useState("kjknnihnokmlnmkmm@gmail.com");
 
     async function handleGoogle(response) {
-        console.log(response)
-        const res = await fetch('http://localhost:8080/token', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+        console.log(response);
+        try {
+            const res = await fetch('http://localhost:8080/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    token: response.credential
+                })
+            });
+            if (!res.ok) {
+                throw new Error('Failed to fetch token');
             }
-        })
-        .then((response) => console.log(response));
+            const data = await res.json();
+            setToken(data.accessToken);
+            localStorage.setItem('token', data.accessToken);
+            setIsLoggedIn(true);
+        } catch (error) {
+            console.error('Error during Google login:', error);
+            setErrorMessage('Error during Google login: ' + error.message);
+        }
     }
 
     const handleLogin = async (e) => {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault();
 
         try {
             const response = await fetch('http://localhost:8080/api/auth/signin', {
@@ -45,8 +57,8 @@ function Login(props) {
                 const userInfoData = await response.json();
                 setIsLoggedIn(true);
                 setToken(userInfoData.accessToken);
-                localStorage.setItem('token', userInfoData.accessToken); // Store token in localStorage
-                setErrorMessage(''); // Clear any previous error messages
+                localStorage.setItem('token', userInfoData.accessToken);
+                setErrorMessage('');
             } else {
                 const errorData = await response.json();
                 if (errorData.message === "Bad credentials") {
@@ -102,16 +114,15 @@ function Login(props) {
                         <div id='dd'>{errorMessage && <p>{errorMessage}</p>}</div>
                         <button type="submit" className="btn">Login</button>
                         <div className="login-register">
-                            <div style={{ display: "flex"}}>Don't have an account? <div className='register' onClick={() => setIsRegister(true)}> Register </div></div>
+                            <div style={{ display: "flex" }}>Don't have an account? <div className='register' onClick={() => setIsRegister(true)}> Register </div></div>
                         </div>
                     </form>
                 </div>
             </div>
             <div>
                 <GoogleLogin
-                    clientId="930083034754-4m7h0a0778gqa96haqr7i3qg37bgjhf7.apps.googleusercontent.com"
-                    onSuccess={(credentialResponse) => handleGoogle(credentialResponse)}
-                    onError={(error) => console.log(error)}
+                    onSuccess={handleGoogle}
+                    onError={(error) => setErrorMessage('Google login failed: ' + error.message)}
                 />
             </div>
         </div>

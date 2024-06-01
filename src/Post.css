@@ -87,6 +87,7 @@ button.send-comment .material-icons {
   border: none;
   background-color: transparent;
   /* width: 100%; */
+
   color: #fafafa;
   /* text-align: center; */
   border-radius: 5px;
@@ -120,11 +121,12 @@ background-color: white;
 /* Styles for the like count */
 .numberLikeComment {
   display: flex;
-  margin-left: 6%;
-  gap: 40%;
+  margin-left: 1%;
+  gap: 4%;
   font-size: 14px;
   position: relative; /* Needed for absolute positioning of like count */
   z-index: 1; /* Ensure the like count is above other elements */
+  margin-top: 10px;
 }
 
 .post {
@@ -162,17 +164,20 @@ background-color: white;
   margin: 0px;
   padding-top: 10px;
   width: 100%;
-  height: 80%;
+  height: 50%;
   margin-bottom: 10px;
   border-radius: 40px;
+  display: block;
+
 }
 
 .actions {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 8px; /* مسافة بين الأيقونات */
-  margin-top: 10px;
+  /* gap: 8px;  */
+  margin-top: -10px;
+
 }
 
 .icon {
@@ -184,7 +189,7 @@ background-color: white;
 
 .material-icons {
   font-size: 24px;
-  color: #A1C398;
+  color: #91af88 ;
 }
 
 .addComment .inputandicon {
@@ -240,7 +245,7 @@ background-color: white;
   padding-left: 1%;
   margin-bottom: 1rem;
   padding-right: 1%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   display: flex;
 
   height: 50px;}
@@ -340,12 +345,14 @@ background-color: white;
 
 .icon button {
   font-size: 18px; /* تقليل حجم الرمز */
-  color: #6e6e6e; /* تحديد لون الرمز */
+  color: #809c78  ; /* تحديد لون الرمز */
   border: none; /* إزالة الحدود */
-  background-color: "red";
+  /* background-color: "red"; */
   cursor: pointer; /* جعل المؤشر عند التحويف فوق الرمز يظهر على شكل يد */
   outline: none; /* إزالة التأثير الذي يظهر عند تحديد الرمز */
+
 }
+
 
 /* Styles for the scrollable likes popper */
 .likes-popper-content {

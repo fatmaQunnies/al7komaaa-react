@@ -12,7 +12,7 @@ body {
   border-radius: 10px; /* إضافة زوايا مستديرة */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* إضافة تأثير الظل لزيادة العمق */
   transition: box-shadow 0.3s ease-in-out; /* إضافة تأثير الانتقال لجعل التغييرات أكثر سلاسة */
-  height: 84%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
+  height: 97%; /* تعيين الارتفاع ليكون 100% من العنصر الأب */
   width: 170px;
 }
 .material-symbols-outlined{
@@ -180,7 +180,7 @@ text-align: center;
   background: rgba(255, 255, 255, 0.1); 
 } */
 #Feed {
-  height: 800px;
+  height: 700px;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */
@@ -214,7 +214,7 @@ text-align: center;
 
 
 #Real {
-  height: 800px;
+  height: 700px;
   overflow-y: scroll;
   padding: 10px;
   scrollbar-width: none; /* إخفاء شريط التمرير في Firefox */

@@ -195,7 +195,7 @@ function EditDelBtn(props) {
            ) :
            
            (
-            <div onClick={handleHide}><span className="material-icons-outlined">visibility_off</span> you not the owner</div>
+            <div onClick={handleHide}><span className="material-icons-outlined"></span> you'r not the owner</div>
           )
        }
         </div>
