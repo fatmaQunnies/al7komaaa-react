@@ -18,10 +18,10 @@ function ImageWithToken(props) {
                     const imageUrl = URL.createObjectURL(blob);
                     setImageSrc(imageUrl);
                 } else {
-                    console.error('Error fetching image:', response.statusText);
+                    console.log(' fetching image:', response.statusText);
                 }
             } catch (error) {
-                console.error('Error fetching image:', error);
+                console.log(' fetching image:', error);
             }
         };
 
@@ -32,20 +32,32 @@ function ImageWithToken(props) {
 
   useEffect(() => {
     const fetchVideo = async () => {
+      // try {
       const response = await fetch(`http://localhost:8080/${props.type}/${props.userinfo}`, {
         headers: {
-          'Authorization': `Bearer ${props.token}` // تعديل هذا الهيدر حسب احتياجاتك
+          'Authorization': `Bearer ${props.token}` 
         }
+      })
+      .then(response => response.blob())
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        if (videoRef.current) {
+          videoRef.current.src = url;
+        }
+        // Cleanup function to revoke the object URL
+        return () => {
+          URL.revokeObjectURL(url);
+        };
+      })
+      .catch(error => {
+        console.log("Error fetching video:", error);
       });
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      if (videoRef.current) { // التحقق من وجود الفيديو في DOM
-        videoRef.current.src = url;
-      }    };
+    };
 
     fetchVideo();
   }, [props.type, props.userinfo, props.token]);
 
+  
 // alert(`http://localhost:8080/${props.type}/${props.userinfo}`);
     return (
         // <img className={props.CName} src={imageSrc} alt="centered" />
@@ -58,7 +70,7 @@ function ImageWithToken(props) {
 //               </source>
 //           </video>
            
-<video controls class="video" ref={videoRef}>
+<video controls className="video" ref={videoRef}>
 Your browser does not support the video tag.
 </video>
            

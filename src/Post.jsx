@@ -365,11 +365,19 @@ props.getUserProfile(<Profile
         <div onClick={showLike}>{postLike.length} Likes </div>
         <div onClick={toggleComments}>{numberComment} Comments</div>
       </div>
-
       <div className="actions">
-        <div>{handleLike()}</div>
-        <div className="innn"><a href={`#${props.id}`}>Comment</a></div>
-        <div onClick={handleShareClick}>Share</div>
+        <div  className="icon">
+        {handleLike()}
+          {/* <span className="material-icons">favorite_border</span> */}
+        </div>
+        <div className="innn">
+          <a href={`#${props.id}`} className="icon">
+            <span className="material-icons">comment</span>
+          </a>
+        </div>
+        <div onClick={handleShareClick} className="icon">
+          <span className="material-icons">share</span>
+        </div>
       </div>
 
       <div className="addComment">
