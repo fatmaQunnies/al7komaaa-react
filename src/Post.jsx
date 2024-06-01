@@ -49,7 +49,7 @@ function Post(props) {
         });
 
         if (!response.ok) {
-          console.log('');
+          throw new Error(`Error fetching post comments: ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -58,7 +58,7 @@ function Post(props) {
         setPostComment(comments);
         setReadMore(data);
       } catch (error) {
-        console.log('fetching comments:');
+        console.error('Error fetching comments:', error);
       }
     };
 
@@ -291,7 +291,18 @@ props.getUserProfile(<Profile
                     />);
                     
 
-      
+           
+               
+                 
+            // <Route path="/profile" element={
+            //     <>
+            //         {/* <CreatePost token={token} userInfo={userInfo}></CreatePost> */}
+                    
+
+            //     </>
+                
+            // } />
+   
 };
 
   
@@ -317,7 +328,15 @@ props.getUserProfile(<Profile
                     {props.info.userName}
                 </Link>
             </div>
-        
+        {/* 
+        </div> */}
+{/* <Link to={`/profile/${userInfo?.userid}`} className="userNameAnchor">
+            {userInfo?.username}
+                  </Link> */}
+                  
+{/* <Router>
+      <Route path="/Setting" element={<Profile token={props.token} key={props.info.userid} userId={props.info.userid} userinfo={props.info} />} />
+    </Router> */}
 
 
           <p className="postDate">{props.info.timestamp}</p>
@@ -346,8 +365,6 @@ props.getUserProfile(<Profile
         <div onClick={showLike}>{postLike.length} Likes </div>
         <div onClick={toggleComments}>{numberComment} Comments</div>
       </div>
-
-
       <div className="actions">
         <div  className="icon">
         {handleLike()}
@@ -362,20 +379,18 @@ props.getUserProfile(<Profile
           <span className="material-icons">share</span>
         </div>
       </div>
-      {/* ////
-
-      <div className="actions">
-        <div>{handleLike()}</div>
-
-        <div className="innn"><a href={`#${props.id}`}>Comment</a></div>
-        <div onClick={handleShareClick}>Share</div>
-      </div> */}
 
       <div className="addComment">
         {userInfo && (
           <ImageWithToken CName={"image"} type={"getImage"} userinfo={props.userId} token={props.token} />
         )}
-      
+         {/* <div className='inputandicon'>
+         <input id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+            <input type="file" onChange={handleFileChange}> 
+
+
+</input>
+</div> */}
 
    <div className='inputandicon'>
       <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />

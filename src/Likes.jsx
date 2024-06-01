@@ -24,12 +24,11 @@ function Likes(props) {
         .catch(error => console.log(' fetching data:', error));
     }, []);
 
-
     return (
         <div className="likes">
            
-            {listUserLikes.map((no) => (
-                <div className={"likesDiv"}>
+            {listUserLikes.map((no,index) => (
+                <div   key={index} className={"likesDiv"}>
                     {/* <p>{no.image}</p>
                     <p>{no.video}</p>
                     <p>{no.timestamp}</p>
