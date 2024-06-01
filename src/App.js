@@ -158,7 +158,6 @@ function App(props) {
 
     };
 
-
     const handReadMore2 = async () => {
         if (!readMoreReal._links || !readMoreReal._links["read more"] || !readMoreReal._links["read more"].href) {
             console.log("No more links available to load more posts.");
@@ -475,7 +474,7 @@ function App(props) {
                         {/* <Route path="/Notification" element={<Notification className="notification" token={token} />} /> */}
                         <Route path="/Reel" element={
                             <div id="Real" ref={feedRef2} onScroll={handleScroll2}>
-                                <CreateReal token={token} userInfo={userInfo} />
+                                <CreateReal token={token} userInfo={userInfo}  userId={userId}/>
                                 {realContent.map((post) => (
                                     <Post
                                         className="post"

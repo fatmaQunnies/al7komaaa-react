@@ -10,19 +10,20 @@ function ImageWithToken(props) {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${props.token}`
-                      }
-                    });
-            
-                    if (response.ok) {
-                        const blob = await response.blob();
-                        const imageUrl = URL.createObjectURL(blob);
-                        setImageSrc(imageUrl);
-                    } else {
-                        console.log('Failed to fetch the image');
                     }
-                } catch (error) {
-                    console.log("An occurred:", error);
-                }}
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const imageUrl = URL.createObjectURL(blob);
+                    setImageSrc(imageUrl);
+                } else {
+                    console.log(' fetching image:', response.statusText);
+                }
+            } catch (error) {
+                console.log(' fetching image:', error);
+            }
+        };
 
         fetchImage();
     }, []);
@@ -31,23 +32,32 @@ function ImageWithToken(props) {
 
   useEffect(() => {
     const fetchVideo = async () => {
-       try{
+      // try {
       const response = await fetch(`http://localhost:8080/${props.type}/${props.userinfo}`, {
         headers: {
           'Authorization': `Bearer ${props.token}` 
         }
-      });    const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      if (videoRef.current) { 
-        videoRef.current.src = url;
-      }    
-    fetchVideo();
-    } catch (error) {
-    }};
+      })
+      .then(response => response.blob())
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        if (videoRef.current) {
+          videoRef.current.src = url;
+        }
+        // Cleanup function to revoke the object URL
+        return () => {
+          URL.revokeObjectURL(url);
+        };
+      })
+      .catch(error => {
+        console.log("Error fetching video:", error);
+      });
+    };
 
-  
+    fetchVideo();
   }, [props.type, props.userinfo, props.token]);
 
+  
 // alert(`http://localhost:8080/${props.type}/${props.userinfo}`);
     return (
         // <img className={props.CName} src={imageSrc} alt="centered" />
