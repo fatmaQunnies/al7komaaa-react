@@ -61,7 +61,7 @@ button.send-comment .material-icons {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #A1C398; /* لون الزر */
+  background-color: #ffffff; /* لون الزر */
   color: white; /* لون النص */
   border: none;
   padding: 10px;
@@ -83,29 +83,40 @@ button.send-comment .material-icons {
 }
 
 .like-button {
-  margin-top: 1px;
+  /* margin-top: 1px; */
   border: none;
   background-color: transparent;
-  width: 100%;
+  /* width: 100%; */
   color: #fafafa;
-  text-align: center;
+  /* text-align: center; */
   border-radius: 5px;
   cursor: pointer;
   position: relative; /* Needed for absolute positioning of reaction popup */
   z-index: 1; /* Ensure the like button is above other elements */
 }
 
+
+
+.like-button button{
+background-color: white;
+}
 /* Styles for the reaction popup */
 .reaction-popup {
-  background-color: white;
+  background-color: rgba(241, 238, 238, 0.708);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   z-index: 2; /* Ensure the popup is above the like button */
   display: flex; /* Display buttons side by side */
   justify-content: space-between; /* Space buttons evenly */
-  padding: 10px;
+  padding-bottom: 16px;
+
 }
 
+.reaction-popup button{
+  background-color: white;
+ 
+  border: 4px #444444;
+}
 /* Styles for the like count */
 .numberLikeComment {
   display: flex;
@@ -168,7 +179,7 @@ button.send-comment .material-icons {
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .material-icons {
