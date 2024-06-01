@@ -67,13 +67,16 @@ function CreatePost(props) {
   };
 
   const functionCreate = async () => {
-    const id = await addContent(input);
-    if (id) {
-      if (selectedFile) {
-        await handleUpload(id);
+    if (input !== null && input !== '') {
+      const id = await addContent(input);
+      if (id) {
+        if (selectedFile) {
+          await handleUpload(id);
+        }
       }
     }
   };
+  
 
   return (
     <div className="post">
