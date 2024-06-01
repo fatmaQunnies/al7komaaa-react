@@ -10,10 +10,10 @@ import Button from "./components/Button";
 import Link from "./components/Link";
 
 const SignUpForm = (props) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState(props.userName);
+  const [lastName, setLastName] = useState(props.userName);
+  const [email, setEmail] = useState(props.email);
+  const [password, setPassword] = useState(props.password);
   const [avatar, setAvatar] = useState(undefined);
   const { setUser } = useContext(Context);
   const isMobile = useIsMobile();
