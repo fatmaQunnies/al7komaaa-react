@@ -3,28 +3,28 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
-  gap: 10px;
   width: 100%;
+  /* padding-right: 20%; */
 }
 
 .username {
   text-align: left;
   flex-grow: 1; 
-
+  margin-left: 20%; 
 }
 
 .friend-button {
   background-color: transparent;
   border: none;
-  color: #A1C398 ;
+  color: #A1C398;
   cursor: pointer;
   font-size: 20px; /* Adjust the size as needed */
-  
+  margin-left: 5px; /* Reduce space between username and icon */
 }
+
 .friend-button:hover {
   color: #A1C398;
 }
-
 
 .add-button {
   background-color: #A1C398;
@@ -35,9 +35,9 @@
   text-decoration: none;
   font-size: 16px;
   cursor: pointer;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
-a.userNameAnchor{
-  color:#3e3e3e ;
+a.userNameAnchor {
+  color: #3e3e3e;
 }

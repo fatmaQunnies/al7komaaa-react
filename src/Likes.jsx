@@ -21,7 +21,7 @@ function Likes(props) {
             setlistUserLikes(data._embedded.posts);
             console.log(data._embedded.posts+"like post");
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.log(' fetching data:', error));
     }, []);
 
 
@@ -40,6 +40,8 @@ function Likes(props) {
                     className="post"
                     key={no.id}
                     id={no.id}
+                    
+                    userId={props.userId}
                     token={props.token}
                     info={no}
                     userName={no.userName}

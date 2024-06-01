@@ -21,7 +21,7 @@ function ImageWithToken(props) {
                         console.log('Failed to fetch the image');
                     }
                 } catch (error) {
-                    console.log("An error occurred:", error);
+                    console.log("An occurred:", error);
                 }}
 
         fetchImage();
