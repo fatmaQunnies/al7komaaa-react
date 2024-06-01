@@ -156,21 +156,46 @@ button.send-comment .material-icons {
   border-radius: 40px;
 }
 
-.actions div {
-  margin-right: 12px;
-}
-
 .actions {
-  align-items: center;
-  border: none;
-  background-color: #A1C398;
-  color: white;
-  cursor: pointer;
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px; /* مسافة بين الأيقونات */
   margin-top: 10px;
 }
+
+.icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.material-icons {
+  font-size: 24px;
+  color: #A1C398;
+}
+
+.addComment .inputandicon {
+  display: flex;
+  align-items: center;
+}
+
+.addComment .file-upload-label {
+  cursor: pointer;
+}
+
+.send-comment {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.send-comment .material-icons {
+  font-size: 24px;
+  color: #A1C398;
+}
+
 
 #comments {
   max-height: 400px; /* Set the maximum height for the scrollable area */
@@ -206,9 +231,8 @@ button.send-comment .material-icons {
   padding-right: 1%;
   margin-top: 1rem;
   display: flex;
-  /* s */
-  height: 50px; /* قم بتعيين الارتفاع الذي ترغب فيه */
-}
+
+  height: 50px;}
 
 .addComment .image {
   border-radius: 50%;

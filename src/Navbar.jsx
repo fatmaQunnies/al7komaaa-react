@@ -3,33 +3,50 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUserFriends, faUser, faFilm, faCog, faEnvelope, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 function Navbar() {
   return (
-    <div className="navbar" >
+    <div className="navbar">
       <ul>
         <li>
-          <Link to="/feed">Feed</Link>
+          <Link to="/feed">
+            <FontAwesomeIcon icon={faHome} /> Home
+          </Link>
+        </li> 
+        <li>
+          <Link to="/Reel">
+            <FontAwesomeIcon icon={faFilm} /> Reel
+          </Link>
+        </li>
+        
+        <li>
+          <Link to="/Friends">
+            <FontAwesomeIcon icon={faUserFriends} /> Friends
+          </Link>
+        </li>
+        
+       
+       
+        <li>
+          <Link to="/Messages">
+            <FontAwesomeIcon icon={faEnvelope} />  Messages  
+          </Link>
         </li>
         <li>
-          <Link to="/Friends">Friends</Link>
+          <Link to="/Likes">
+            <FontAwesomeIcon icon={faThumbsUp} /> Likes
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/profile">
+            <FontAwesomeIcon icon={faUser} />  Profile
+          </Link>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-        {/* <li>
-          <Link to="/Notification">Notification</Link>
-        </li> */}
-        <li>
-          <Link to="/Reel">Reel</Link>
-        </li>
-        <li>
-          <Link to="/Setting">Setting</Link>
-        </li>
-        <li>
-          <Link to="/Messages">Messages</Link>
-        </li>
-        <li>
-          <Link to="/Likes">Likes</Link>
+          <Link to="/Setting">
+            <FontAwesomeIcon icon={faCog} /> Setting
+          </Link>
         </li>
       </ul>
     </div>
