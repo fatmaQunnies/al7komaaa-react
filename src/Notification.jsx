@@ -8,6 +8,7 @@ function Notification(props) {
 
     useEffect(() => {
         console.log("USEEFFECT == notification");
+        
         fetch("http://localhost:8080/notifications", {
             headers: {
                 'Authorization': 'Bearer ' + props.token
@@ -15,8 +16,10 @@ function Notification(props) {
         })
             .then(response => response.json())
             .then(data => {
-                setlistNotification(data);
-                console.log([...data] + "yyyyyyyyyyy");
+                const reversedData = data.reverse();
+
+                setlistNotification(reversedData);
+                console.log([...reversedData] + "yyyyyyyyyyy");
             })
             .catch(error => console.error('Error fetching data:', error));
     }, [props.token]);

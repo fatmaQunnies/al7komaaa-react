@@ -370,13 +370,13 @@ props.getUserProfile(<Profile
         {handleLike()}
           {/* <span className="material-icons">favorite_border</span> */}
         </div>
-        <div className="innn">
-          <a href={`#${props.id}`} className="icon">
-            <span className="material-icons">comment</span>
+        <div className="like-button">
+          <a href={`#${props.id}`} >
+            <button className='ii'><span className="material-icons">comment</span></button>
           </a>
         </div>
-        <div onClick={handleShareClick} className="icon">
-          <span className="material-icons">share</span>
+        <div onClick={handleShareClick} className="like-button">
+          <button><span className="material-icons">share</span></button>
         </div>
       </div>
 
