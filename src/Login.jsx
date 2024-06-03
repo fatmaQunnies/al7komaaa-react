@@ -14,28 +14,14 @@ function Login(props) {
     const [errorMessage, setErrorMessage] = useState('');
 
     async function handleGoogle(response) {
-        console.log(response);
-        try {
-            const res = await fetch('http://localhost:8080/token', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    token: response.credential
-                })
-            });
-            if (!res.ok) {
-                throw new Error('Failed to fetch token');
+        console.log(response)
+        const res = await fetch('http://localhost:8080/api/auth/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             }
-            const data = await res.json();
-            setToken(data.accessToken);
-            localStorage.setItem('token', data.accessToken);
-            setIsLoggedIn(true);
-        } catch (error) {
-            console.error('Error during Google login:', error);
-            setErrorMessage('Error during Google login: ' + error.message);
-        }
+        })
+        .then((response) => console.log(response));
     }
 
     const handleLogin = async (e) => {
