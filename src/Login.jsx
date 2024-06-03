@@ -50,11 +50,11 @@ function Login(props) {
                 if (errorData.message === "Bad credentials") {
                     setErrorMessage("Username or Password is incorrect");
                 } else {
-                    setErrorMessage(errorData.message || 'Error during login');
+                    setErrorMessage(errorData.message || 'Username or Password is incorrect');
                 }
             }
         } catch (error) {
-            setErrorMessage('Error: ' + error.message);
+            setErrorMessage('Error: Username or Password is incorrect' );
         }
     };
 

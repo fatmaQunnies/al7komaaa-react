@@ -89,7 +89,9 @@ function Profile(props) {
         })
         .then(response => response.json())
         .then(data => {
-            setUserShares(data);
+            const reversedData = data.reverse();
+
+            setUserShares(reversedData);
         })
         .catch(error => console.error('Error fetching data:', error));
     }, [props.userId, props.token, render]);
@@ -121,7 +123,9 @@ function Profile(props) {
             }
             const data = await response.json();
             if (data._embedded && data._embedded.posts) {
-                setUserPosts(data._embedded.posts);
+                const reversedData = data._embedded.posts.reverse();
+
+                setUserPosts(reversedData);
             } else {
                 setUserPosts([]);
             }
