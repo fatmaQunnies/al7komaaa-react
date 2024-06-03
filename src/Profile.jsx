@@ -257,7 +257,7 @@ function Profile(props) {
                             ))}
                         </div>
                     ) : (
-                        <div className="post">
+                        <div className="infoo">
                             <p><strong>Username:</strong> {props.userinfo.username}</p>
                             <p><strong>Full Name:</strong> {props.userinfo.fullname}</p>
                             <p><strong>Bio:</strong> {props.userinfo.bio}</p>

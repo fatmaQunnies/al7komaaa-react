@@ -416,3 +416,20 @@ body, html {
     margin-right: 0; 
   }
   
+  .infoo{
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px #A1C398;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 80%;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }

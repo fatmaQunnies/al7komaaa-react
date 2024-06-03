@@ -51,7 +51,7 @@
 .c8 {
     margin-left: auto;
     padding: 5px 10px;
-    background-color: #007bff;
+    background-color: #A1C398;
     color: white;
     border: none;
     border-radius: 5px;
@@ -60,7 +60,7 @@
 }
 
 .c8:hover {
-    background-color: #ACE1AF;
+    background-color: #BBBBBB ;
 }
 
 .userNameAnchor {

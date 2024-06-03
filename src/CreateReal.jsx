@@ -3,6 +3,9 @@ import './CreatePost.css';
 import ImageWithToken from "./ImageWithToken.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function CreateReal(props) {
   const [input, setInput] = useState('');
@@ -74,9 +77,18 @@ function CreateReal(props) {
  if (id && input) {
       
         await addContent(input,id);
-
-    
     }
+
+    toast.success('Reel created successfully', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false, 
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored"
+    });
   };
 
   return (
@@ -85,27 +97,30 @@ function CreateReal(props) {
         <ImageWithToken CName={"centered-image"} type={"getImage"} userinfo={props.userId} token={props.token}></ImageWithToken>
         <a className="userNameAnchor" href="/Profile">{props.userInfo.username}</a>
       </div>
-
+  
       <textarea
         className="postContent"
         placeholder="Write the post content"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-
+  
       <div className={`edit-profile-image-container ${showUpload ? 'show-upload' : ''}`}>
         <p>Please upload an video</p>
         <input type="file" onChange={handleFileChange} />
       </div>
-
+  
       <div className="buttons">
         <button id="upload-button" onClick={() => setShowUpload(!showUpload)}>
           {showUpload ? "Cancel Upload" : "Upload video"}
         </button>
         <button onClick={functionCreate}>Create Reel</button>
       </div>
+  
+      <ToastContainer />
     </div>
   );
+  
 }
 
 export default CreateReal;
