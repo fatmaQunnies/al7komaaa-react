@@ -12,17 +12,17 @@ function EditDelBtn(props) {
   const [showModal, setShowModal] = useState(false);
   const [editContent, setEditContent] = useState(props.info.content);
   const [enableToDelete, setEnableToDelete] = useState(false);
-// alert(props.id);
+  const [message, setMessage] = useState('');
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
   const isOwner = () => {
-   
     if (props.ownerPost === props.userId) {
       setPostOwner(true);
     } else {
       setPostOwner(false);
     }
-   
   };
-// alert(props.token);
+
   useEffect(() => {
     isOwner();
 
@@ -49,91 +49,82 @@ function EditDelBtn(props) {
     setShowOptions(false);
   };
 
-  const handleDelete = () => {
-    console.log ("delete buttomj");
-    if(props.type == "post"){
-      console.log ("delete post");
-    fetch(`http://localhost:8080/post/${props.id}`, {
-      
-      method: 'DELETE',
-      headers: {
-        'Authorization': 'Bearer ' + props.token
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        props.renderFunction();
-      }
-    })
-    .catch(error => console.error('Error removing post:', error));
-  }
-  else if (props.type == "comment"){
-    console.log ("delete comment");
-    fetch(`http://localhost:8080/post/comment/${props.id}`, {
-    
-    method: 'DELETE',
-    headers: {
-      
-      'Authorization': 'Bearer ' + props.token
-    }
-  })
-  .then(response => {
-    if (response.ok) {
-      props.renderFunction();
-    }
-  })
-  .catch(error => console.error('Error removing post:', error));
-
-  }
-
-};
-
-  const handleHide = () => {
-    console.log("Hide clicked");
-    // Implement your hide functionality here
+  const confirmDelete = () => {
+    setShowDeleteConfirmation(true);
+    setShowOptions(false);
   };
 
-  const handleSave = async () => {
-   
-    console.log ("delete buttomj");
-    if(props.type == "post"){
-      console.log ("delete post");
-       try {
-      const response = await fetch(`http://localhost:8080/post/${props.id}/editPost`, {
-        method: 'PUT',
+const handleDelete = async () => {
+  if (props.type === "post") {
+    console.log("delete post");
+    try {
+      const response = await fetch(`http://localhost:8080/post/${props.id}`, {
+        method: 'DELETE',
         headers: {
-          Authorization: 'Bearer ' + props.token,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ content: editContent })
+          'Authorization': 'Bearer ' + props.token
+        }
       });
-
       if (response.ok) {
-        const data = await response.text();
-        console.log("Content updated:", data);
-        setShowModal(false);
-        props.renderFunction(); // Re-render the parent component
-      } else {
-        console.error('Error:', response.statusText);
+        props.renderFunction();
+        setMessage('Post deleted successfully.');
       }
     } catch (error) {
-      console.error('Error updating content:', error);
+      console.error('Error removing post:', error);
     }
-    if(enableToDelete==true){
-      const response = await fetch(`http://localhost:8080/post/deleteImage/${props.id}`, {
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Bearer ' + props.token,
-      'Content-Type': 'application/json'
-    },
-   
-  });
-    }} else if (props.type == "comment"){
-      console.log ("delete comment");
+  } else if (props.type === "comment") {
+    console.log("delete comment");
+    try {
+      const response = await fetch(`http://localhost:8080/post/comment/${props.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + props.token
+        }
+      });
+      if (response.ok) {
+        props.renderFunction();
+        setMessage('Comment deleted successfully.');
+      }
+    } catch (error) {
+      console.error('Error removing post:', error);
+    }
+  }
+  setShowDeleteConfirmation(false); // تأكد من وجود هذا السطر هنا
+};
 
 
+  const handleSave = async () => {
+    if (props.type === "post") {
+      try {
+        const response = await fetch(`http://localhost:8080/post/${props.id}/editPost`, {
+          method: 'PUT',
+          headers: {
+            Authorization: 'Bearer ' + props.token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ content: editContent })
+        });
 
-
+        if (response.ok) {
+          const data = await response.text();
+          console.log("Content updated:", data);
+          setShowModal(false);
+          props.renderFunction(); // Re-render the parent component
+        } else {
+          console.error('Error:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error updating content:', error);
+      }
+      if (enableToDelete) {
+        await fetch(`http://localhost:8080/post/deleteImage/${props.id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'Bearer ' + props.token,
+            'Content-Type': 'application/json'
+          },
+        });
+      }
+    } else if (props.type === "comment") {
       try {
         const response = await fetch(`http://localhost:8080/post/${props.id}/comment/edit`, {
           method: 'PUT',
@@ -141,36 +132,30 @@ function EditDelBtn(props) {
             Authorization: 'Bearer ' + props.token,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(editContent )
+          body: JSON.stringify({ content: editContent })
         });
-  
+
         if (response.ok) {
           const data = await response.text();
           console.log("Content updated:", data);
           setShowModal(false);
-          props.renderFunction(); 
+          props.renderFunction();
         } else {
           console.error('Error:', response.statusText);
         }
       } catch (error) {
         console.error('Error updating content:', error);
       }
-      if(enableToDelete==true){
-        const response = await fetch(`http://localhost:8080/post/commentImage/${props.id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: 'Bearer ' + props.token,
-        'Content-Type': 'application/json'
-      },
-     
-    });
+      if (enableToDelete) {
+        await fetch(`http://localhost:8080/post/commentImage/${props.id}`, {
+          method: 'DELETE',
+          headers: {
+            Authorization: 'Bearer ' + props.token,
+            'Content-Type': 'application/json'
+          },
+        });
       }
-
-
-
-
     }
-
   };
 
   const handleEnableToDelete = () => {
@@ -178,9 +163,7 @@ function EditDelBtn(props) {
   };
 
   return (
-    
     <div className="edit-container" ref={containerRef}>
-     
       <div className="edit" onClick={toggleOptions}>
         <span className="material-icons-outlined">edit</span>
       </div>
@@ -190,19 +173,24 @@ function EditDelBtn(props) {
           {postOwner ? (
             <>
               <div onClick={handleEdit}><span className="material-icons-outlined"></span> Edit</div>
-              <div onClick={handleDelete}><span className="material-icons-outlined"></span> Delete</div>
+              <div onClick={confirmDelete}><span className="material-icons-outlined"></span> Delete </div>
             </>
-           ) :
-           
-           (
-            <div onClick={handleHide}><span className="material-icons-outlined"></span> you'r not the owner</div>
-          )
-       }
+           ) : (
+            <div><span className="material-icons-outlined"></span> you're not the owner</div>
+          )}
         </div>
       )}
+
+      {showDeleteConfirmation && (
+        <div className="confirmation-dialog">
+          <p>Are you sure you want to delete this item?</p>
+          <button onClick={handleDelete}>Yes</button>
+          <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
+        </div>
+      )}
+
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        
-        <h2>Edit </h2>
+        <h2>Edit</h2>
         <textarea
           placeholder={props.info.content}
           value={editContent}
@@ -211,22 +199,21 @@ function EditDelBtn(props) {
           cols="50"
         />
         <div style={{ position: 'relative' }}>
-        {props.type === "comment" ? (
-  <ImageWithToken
-    CName="editeimage"
-    type="post/commentImage"
-    userinfo={props.id}
-    token={props.token}
-  />
-) : (
-  <ImageWithToken
-    CName="editeimage"
-    type="post/postImage"
-    userinfo={props.info.id}
-    token={props.token}
-  />
-)}
-
+          {props.type === "comment" ? (
+            <ImageWithToken
+              CName="editimage"
+              type="post/commentImage"
+              userinfo={props.id}
+              token={props.token}
+            />
+          ) : (
+            <ImageWithToken
+              CName="editimage"
+              type="post/postImage"
+              userinfo={props.info.id}
+              token={props.token}
+            />
+          )}
           <button className="close-btn" onClick={handleEnableToDelete}>X</button>
         </div>
         <div className="modal-actions">
@@ -234,6 +221,7 @@ function EditDelBtn(props) {
           <button onClick={() => setShowModal(false)}>Cancel</button>
         </div>
       </Modal>
+      {message && <p>{message}</p>}
     </div>
   );
 }
