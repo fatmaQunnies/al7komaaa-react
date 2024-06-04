@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Friends.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCog } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 
 function Friends(props) {
     const [friends, setFriends] = useState([]);
