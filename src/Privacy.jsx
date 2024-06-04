@@ -13,7 +13,7 @@ function Privacy(props) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${props.token}`
         },
-        body: JSON.stringify({ isPrivate }) // Need to stringify the boolean value
+        body:  isPrivate  // Need to stringify the boolean value
       });
 
       if (response.ok) {
