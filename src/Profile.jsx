@@ -252,6 +252,7 @@ function Profile(props) {
                                     userImage={props.userImage}
                                     userName={props.userinfo.username}
                                     userId={props.userId}
+                                    userIdSign={props.userIdSign}
                                     renderFunction={renderFunction}
                                 />
                             ))}

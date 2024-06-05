@@ -67,6 +67,7 @@ const handleDelete = async () => {
       if (response.ok) {
         props.renderFunction();
         setMessage('Post deleted successfully.');
+        props.reload(); 
       }
     } catch (error) {
       console.error('Error removing post:', error);
@@ -83,12 +84,12 @@ const handleDelete = async () => {
       if (response.ok) {
         props.renderFunction();
         setMessage('Comment deleted successfully.');
-      }
+        props.reload();       } 
     } catch (error) {
       console.error('Error removing post:', error);
     }
   }
-  setShowDeleteConfirmation(false); // تأكد من وجود هذا السطر هنا
+  setShowDeleteConfirmation(false); 
 };
 
 

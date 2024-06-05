@@ -37,7 +37,7 @@ function ShowShare(props) {
                         id={postContent.id}
                         token={props.token}
                         info={postContent}
-                        userId={props.userId}
+                        userId={props.userIdSign}
                         userImage={props.userImage}
                         renderFunction={props.renderFunction}
                         type={postContent.video != null ? "Real" : "post"}

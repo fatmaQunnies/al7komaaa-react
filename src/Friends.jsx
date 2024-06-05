@@ -51,7 +51,7 @@ function Friends(props) {
                 });
                 setFriendStatuses(statuses);
             })
-            .catch(error => console.log(' fetching friends:'));
+            .catch(error => console.log('Error fetching friends:', error));
     };
 
     const fetchRequests = () => {
@@ -118,6 +118,14 @@ function Friends(props) {
                 'Authorization': 'Bearer ' + props.token
             }
         })
+        .then(response => {
+            if (response.ok) {
+                // Filter out the accepted friend request from the state
+                setRequests(prevRequests => prevRequests.filter(request => request.sender.userid !== userid)); // تمت إضافة هذا السطر لإزالة الطلب المقبول من الشاشة
+                setReload(prevReload => !prevReload); // تمت إضافة هذا السطر لإعادة تحميل البيانات
+            }
+        })
+        .catch(error => console.error('Error accepting friend request:', error)); // تم تعديل الرسالة في حالة وجود خطأ
     };
 
     const handleRejectFriend = (userid) => {
@@ -128,7 +136,6 @@ function Friends(props) {
             }
         }).then(() => setReload(prevReload => !prevReload));
     };
-
 
     //////
     return (

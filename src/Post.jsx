@@ -228,7 +228,7 @@ function Post(props) {
     return (
       <>
         {postComment.map(comment => (
-          <Comment token={props.token} key={comment.id} id={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
+          <Comment reload={fun} token={props.token} key={comment.id} id={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
         ))}
       </>
     );
