@@ -103,14 +103,17 @@ function Login(props) {
                             <div style={{ display: "flex" }}>Don't have an account? <div className='register' onClick={() => setIsRegister(true)}> Register </div></div>
                         </div>
                     </form>
-                </div>
-            </div>
-            <div>
+                    <div>
                 <GoogleLogin
                     onSuccess={handleGoogle}
                     onError={(error) => setErrorMessage('Google login failed: ' + error.message)}
                 />
             </div>
+            
+                </div>
+                
+            </div>
+           
         </div>
     );
 }
