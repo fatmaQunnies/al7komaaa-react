@@ -5,7 +5,6 @@ import { memo } from "react";
 import Registerr from './Registerr';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
 
 function Login(props) {
     const [userName, setUserName] = useState('');
@@ -24,7 +23,9 @@ function Login(props) {
                 'Content-Type': 'application/json'
             }
         })
-        console.log(res);
+        const json = await res.text();
+        setToken(json);
+        localStorage.setItem('token', json)
     }
 
     const handleLogin = async (e) => {
