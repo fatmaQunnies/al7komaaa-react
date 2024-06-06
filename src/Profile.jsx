@@ -89,7 +89,9 @@ function Profile(props) {
         })
         .then(response => response.json())
         .then(data => {
-            setUserShares(data);
+            const reversedData = data.reverse();
+
+            setUserShares(reversedData);
         })
         .catch(error => console.error('Error fetching data:', error));
     }, [props.userId, props.token, render]);
@@ -121,7 +123,9 @@ function Profile(props) {
             }
             const data = await response.json();
             if (data._embedded && data._embedded.posts) {
-                setUserPosts(data._embedded.posts);
+                const reversedData = data._embedded.posts.reverse();
+
+                setUserPosts(reversedData);
             } else {
                 setUserPosts([]);
             }
@@ -248,12 +252,13 @@ function Profile(props) {
                                     userImage={props.userImage}
                                     userName={props.userinfo.username}
                                     userId={props.userId}
+                                    userIdSign={props.userIdSign}
                                     renderFunction={renderFunction}
                                 />
                             ))}
                         </div>
                     ) : (
-                        <div className="post">
+                        <div className="infoo">
                             <p><strong>Username:</strong> {props.userinfo.username}</p>
                             <p><strong>Full Name:</strong> {props.userinfo.fullname}</p>
                             <p><strong>Bio:</strong> {props.userinfo.bio}</p>

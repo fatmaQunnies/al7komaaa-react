@@ -29,11 +29,6 @@ function Likes(props) {
            
             {listUserLikes.map((no,index) => (
                 <div   key={index} className={"likesDiv"}>
-                    {/* <p>{no.image}</p>
-                    <p>{no.video}</p>
-                    <p>{no.timestamp}</p>
-                    <p>{no.content}</p>
-                    <p>{no.id}</p> */}
                   
                   <Post
                     className="post"

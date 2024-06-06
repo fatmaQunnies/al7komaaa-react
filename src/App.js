@@ -3,6 +3,8 @@ import "./App.css";
 import Post from "./Post.jsx";
 import LeftList from "./LeftList.jsx";
 import Notfound from "./Notfound.jsx";
+import { darkTheme, lightTheme } from './theme.jsx';
+
 import RightList from "./RightList.jsx";
 import Navbar from "./Navbar.jsx";
 import Friends from "./Friends.jsx";
@@ -296,33 +298,45 @@ function App(props) {
     };
 
 
-    const darkTheme = createTheme({
-        palette: {
-            mode: 'dark',
-            primary: {
-                main: '#ACE1AF',
-            },
-            secondary: {
-                main: red[500],
-            },
-            text: {
-                primary: '#FFFFFF',
-            },
-            background: {
-                default: '#303030',
-            },
-        },
-    });
+    // const darkTheme = createTheme({
+    //     palette: {
+    //         mode: 'dark',
+    //         primary: {
+    //             main: '#ACE1AF',
+    //         },
+    //         secondary: {
+    //             main: red[500],
+    //         },
+    //         text: {
+    //             primary: '#FFFFFF',
+    //         },
+    //         background: {
+    //             default: '#303030',
+    //         },
+    //     },
+    // });
 
-    const [darkMode, setDarkMode] = useState(false);
+    // const [darkMode, setDarkMode] = useState(false);
+    const storedThemePreference = localStorage.getItem('isDarkMode') === 'true';
+    const [isDarkMode, setIsDarkMode] = useState(storedThemePreference);
+
+    const toggleTheme = () => {
+        setIsDarkMode(prevMode => {
+            const newMode = !prevMode;
+            // Store the updated theme preference in localStorage
+            localStorage.setItem('isDarkMode', newMode);
+            return newMode;
+        });
+    };
+
 
     const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
+        setIsDarkMode(!isDarkMode);
     };
 
     const theme = createTheme({
         palette: {
-            mode: darkMode ? 'dark' : 'light',
+            mode: isDarkMode ? 'dark' : 'light',
             primary: {
                 main: '#ACE1AF',
             },
@@ -330,10 +344,10 @@ function App(props) {
                 main: red[500],
             },
             text: {
-                primary: darkMode ? '#ffffff' : '#000000',
+                primary: isDarkMode ? '#ffffff' : '#000000',
             },
             background: {
-                default: darkMode ? '#303030' : '#f5f5f5',
+                default: isDarkMode ? '#303030' : '#f5f5f5',
             },
         },
     });
@@ -388,11 +402,13 @@ function App(props) {
 
 
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
+        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+    
+        <CssBaseline />
+
             <Router>
                 <div className="nav">
-                    <Switch checked={darkMode} onChange={toggleDarkMode} />
+                    <Switch checked={isDarkMode} onChange={toggleDarkMode} />
                     <h1 style={{ fontFamily: "Lobster, cursive" }}>UnityNet</h1>
                     <div className="search-container">
                         <input
@@ -530,7 +546,8 @@ function App(props) {
                 </div>
             </div>
         </Router>
-    </ThemeProvider>
+        </ThemeProvider>
+
 );
 
 }

@@ -14,7 +14,7 @@
 }
 
 .button-cta:hover {
-    background-color: #ACE1AF;
+    background-color: #BBBBBB ;
 }
 
 .button-cta.remove-friend {
@@ -22,7 +22,7 @@
 }
 
 .button-cta.remove-friend:hover {
-    background-color: #ACE1AF;
+    background-color: #BBBBBB ;
 }
 .friends-list {
     display: flex;
@@ -51,7 +51,7 @@
     border-radius: 4px;
 }
 .add-button:hover {
-    background-color: #ACE1AF;
+    background-color: #BBBBBB ;
 }
 .posts {
     height: 560px; 
@@ -100,3 +100,13 @@
 color: #3e3e3e;
   }
  
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.icon {
+  margin: 0 10px;
+  cursor: pointer;
+}

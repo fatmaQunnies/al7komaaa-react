@@ -3,6 +3,8 @@ import './CreatePost.css';
 import ImageWithToken from "./ImageWithToken.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function CreatePost(props) {
   const [input, setInput] = useState('');
@@ -73,10 +75,19 @@ function CreatePost(props) {
         if (selectedFile) {
           await handleUpload(id);
         }
+        toast.success('Post created successfully', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false, 
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored"
+        });
       }
     }
   };
-  
 
   return (
     <div className="post">
@@ -103,6 +114,7 @@ function CreatePost(props) {
         </button>
         <button onClick={functionCreate}>Create Post</button>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -8,6 +8,9 @@ import ShowPostLikes from './ShowPostLikes.jsx';
 import Share from './Share.jsx';
 import { BrowserRouter as Router, Route,Link } from 'react-router-dom';
 import Profile from "./Profile.jsx";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Post(props) {
   const [userInfo, setUserInfo] = useState(null);
@@ -171,6 +174,31 @@ function Post(props) {
     }
   };
 
+  // const handleSend = async () => {
+  //   try {
+  //     const response = await fetch(props.info._links["createComment"].href, {
+  //       method: 'POST',
+  //       headers: {
+  //         Authorization: 'Bearer ' + props.token,
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ content: input })
+  //     });
+  //     const responseData = await response.json();
+  
+  //     if (response.ok) {
+  //       setReload(!reload);
+  //       document.getElementById(props.id).innerHTML('');
+  //       setInput(''); // إعادة تعيين الإدخال بعد النجاح
+  //       return responseData.id;
+  //     } else {
+  //       console.error('Error:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error sending comment:', error);
+  //   }
+  // };
+  
   const handleSend = async () => {
     try {
       const response = await fetch(props.info._links["createComment"].href, {
@@ -185,8 +213,7 @@ function Post(props) {
   
       if (response.ok) {
         setReload(!reload);
-        document.getElementById(props.id).innerHTML('');
-        setInput(''); // إعادة تعيين الإدخال بعد النجاح
+        setInput(''); // Reset the input field after success
         return responseData.id;
       } else {
         console.error('Error:', response.statusText);
@@ -195,14 +222,13 @@ function Post(props) {
       console.error('Error sending comment:', error);
     }
   };
-  
-  
+    
 
   const handleComment = () => {
     return (
       <>
         {postComment.map(comment => (
-          <Comment token={props.token} key={comment.id} id={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
+          <Comment reload={fun} token={props.token} key={comment.id} id={comment.id} renderFunction={props.renderFunction} userId={props.userId} comment={comment} info={userInfo} input={input} />
         ))}
       </>
     );
@@ -224,7 +250,17 @@ function Post(props) {
       });
 
       if (response.ok) {
-        console.log('Post shared successfully');
+        toast.success('Post shared successfully', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false, 
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored"
+        });
+
       } else {
         console.error('Error sharing post:', response.statusText);
       }
@@ -370,13 +406,13 @@ props.getUserProfile(<Profile
         {handleLike()}
           {/* <span className="material-icons">favorite_border</span> */}
         </div>
-        <div className="innn">
-          <a href={`#${props.id}`} className="icon">
-            <span className="material-icons">comment</span>
+        <div className="like-button">
+          <a href={`#${props.id}`} >
+            <button className='ii'><span className="material-icons">comment</span></button>
           </a>
         </div>
-        <div onClick={handleShareClick} className="icon">
-          <span className="material-icons">share</span>
+        <div onClick={handleShareClick} className="like-button">
+          <button><span className="material-icons">share</span></button>
         </div>
       </div>
 
@@ -393,7 +429,13 @@ props.getUserProfile(<Profile
 </div> */}
 
    <div className='inputandicon'>
-      <input className='text' id={props.id} type="text" placeholder="Enter your comment" onChange={e => setInput(e.target.value)} />
+   <input
+  type="text"
+  value={input}
+  onChange={(e) => setInput(e.target.value)}
+  id={props.id}
+/>
+
       <label htmlFor="file-upload" className="file-upload-label">
         <i className="material-icons">attach_file</i> 
         <input id="file-upload" type="file" onChange={handleFileChange} style={{ display: 'none' }} />

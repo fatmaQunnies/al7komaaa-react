@@ -15,7 +15,7 @@ function Comment(props) {
         </div>
         <div className="edit-del-btn">
           <EditDelBtn 
-            token={props.token} 
+            token={props.token}    //
             type={"comment"} 
             id={props.id} 
             renderFunction={props.renderFunction} 
