@@ -4,6 +4,8 @@ import App from './App';
 import { memo } from "react";
 import Registerr from './Registerr';
 import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 function Login(props) {
     const [userName, setUserName] = useState('');
@@ -14,14 +16,15 @@ function Login(props) {
     const [errorMessage, setErrorMessage] = useState('');
 
     async function handleGoogle(response) {
-        console.log(response)
+        const email = jwtDecode(response.credential).email.toString();
         const res = await fetch('http://localhost:8080/api/auth/token', {
             method: 'POST',
+            body: email,
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then((response) => console.log(response));
+        console.log(res);
     }
 
     const handleLogin = async (e) => {
@@ -105,7 +108,7 @@ function Login(props) {
                     </form>
                     <div>
                 <GoogleLogin
-                    onSuccess={handleGoogle}
+                    onSuccess={(credentialResopnse) => handleGoogle(credentialResopnse)}
                     onError={(error) => setErrorMessage('Google login failed: ' + error.message)}
                 />
             </div>
